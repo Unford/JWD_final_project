@@ -1,6 +1,5 @@
 package by.epam.bartenderhelper.db;
 
-import by.epam.bartenderhelper.util.PropertyManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,49 +8,61 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static by.epam.bartenderhelper.util.PropertyManager.APP_CONFIG;
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
     private static final String POOL_SIZE_PROPERTY_NAME = "pool.size";
+    private static final int DEFAULT_POOL_SIZE = 8;
 
     private static ConnectionPool instance;
 
     private static final AtomicBoolean initCheck = new AtomicBoolean(false);
     private static final ReentrantLock initLock = new ReentrantLock(true);
+
     private static final Timer timer = new Timer(true);
+    private static final ReentrantLock timerLock = new ReentrantLock(true);
+    private static final Condition timerCondition = timerLock.newCondition();
 
     private BlockingQueue<ProxyConnection> availableConnections;
     private BlockingQueue<ProxyConnection> busyConnections;
-    private int poolSize = 8;
+
+    private int poolSize;
 
     private ConnectionPool(){
         availableConnections = new LinkedBlockingQueue<>();
         busyConnections = new LinkedBlockingQueue<>();
 
-        try {//todo
-            poolSize = Integer.parseInt(PropertyManager.APP_CONFIG.getString(POOL_SIZE_PROPERTY_NAME));
-        } catch (NumberFormatException e){
+        try {
+            poolSize = Integer.parseInt(APP_CONFIG.getString(POOL_SIZE_PROPERTY_NAME));
+        } catch (NumberFormatException | MissingResourceException e){
+            poolSize = DEFAULT_POOL_SIZE;
             logger.log(Level.ERROR, "Can't get pool size from property file, default pool size = {}", poolSize);
         }
 
         for (int i = 0; i < poolSize; i++) {
             try {
-                availableConnections.offer(ProxyConnectionCreator.create());
+                ProxyConnection proxyConnection = ProxyConnectionCreator.create();
+                availableConnections.offer(proxyConnection);
             } catch (SQLException e) {
                 logger.log(Level.ERROR, "{} proxy connection wasn't created", i, e);
             }
         }
+
         if (availableConnections.isEmpty()){
             logger.log(Level.FATAL, "Connection pool is empty");
             throw new RuntimeException("Connection pool is empty");
         }
 
-        timer.schedule(new TimeController(new ArrayList<>(availableConnections)),//todo
+        timer.schedule(new TimeController(),
                 TimeUnit.HOURS.toMillis(1),
                 TimeUnit.MINUTES.toMillis(30));
 
@@ -74,8 +85,12 @@ public class ConnectionPool {
     }
 
     public Connection takeConnection(){
+
         ProxyConnection connection = null;
         try {
+            while (timerLock.isLocked()){//todo
+                timerCondition.await();
+            }
            connection = availableConnections.take();
            busyConnections.offer(connection);
         } catch (InterruptedException e) {
@@ -89,6 +104,9 @@ public class ConnectionPool {
         boolean result = false;
         if (connection instanceof ProxyConnection proxyConnection){
             try {
+                while (timerLock.isLocked()){//todo
+                    timerCondition.await();
+                }
                result = busyConnections.remove(proxyConnection);
                if (result){
                    availableConnections.put(proxyConnection);
@@ -110,8 +128,7 @@ public class ConnectionPool {
             try {
                 availableConnections.take().realClose();
             } catch (SQLException e) {
-                logger.log(Level.ERROR, "SQL error while destroy {} connection", i, e);
-                throw new RuntimeException("SQL error while destroy connection pool", e);//todo
+                logger.log(Level.ERROR, "SQL error while close {} connection", i, e);
             } catch (InterruptedException e) {
                 logger.log(Level.ERROR, "destroying pool was interrupted", e);
                 Thread.currentThread().interrupt();
@@ -136,27 +153,30 @@ public class ConnectionPool {
     }
 
     private class TimeController extends TimerTask {
-        private List<ProxyConnection> connections;
-
-        public TimeController(Collection<ProxyConnection> connections){
-            this.connections = new ArrayList<>(connections);
-        }
-
         @Override
-        public void run() {//todo
-            if (busyConnections.size() + availableConnections.size() != connections.size()){
-                logger.log(Level.WARN, "Time controller found connection leak!");
-                connections.stream()
-                        .dropWhile(c -> busyConnections.contains(c) || availableConnections.contains(c))
-                        .forEach(c -> {
-                            try {
-                                availableConnections.put(c);
-                            } catch (InterruptedException e) {
-                                logger.log(Level.ERROR, "Time controller was interrupted", e);
-                                Thread.currentThread().interrupt();
-                            }
-                        });
+        public void run() {
+            try {
+                timerLock.lock();
+                int currentPoolSize = busyConnections.size() + availableConnections.size();
+                if (currentPoolSize != poolSize){
+                    logger.warn("Time controller found connection leak, expected size = {}, actual = {}", poolSize, currentPoolSize);
+                    for (int i = currentPoolSize; i <= poolSize; i++) {
+                        try {
+                            ProxyConnection proxyConnection = ProxyConnectionCreator.create();
+                            availableConnections.offer(proxyConnection);
+                        } catch (SQLException e) {
+                            logger.log(Level.ERROR, "{} proxy connection wasn't created", i, e);
+                        }
+                    }
+                    if (availableConnections.isEmpty() && busyConnections.isEmpty()){//todo
+                        logger.log(Level.FATAL, "Connection pool is empty");
+                        throw new RuntimeException("Connection pool is empty");
+                    }
+                }
+            }finally {
+                timerLock.unlock();
             }
+            timerCondition.signalAll();
         }
     }
 }

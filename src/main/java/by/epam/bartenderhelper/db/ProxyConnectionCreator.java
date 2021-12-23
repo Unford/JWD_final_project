@@ -31,7 +31,7 @@ class ProxyConnectionCreator {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
             logger.log(Level.FATAL, "Database driver not found {}", DB_DRIVER, e);
-            throw new RuntimeException("Database driver not found " + DB_DRIVER, e);
+            throw new ExceptionInInitializerError(e);
         }
     }
     private ProxyConnectionCreator(){}
