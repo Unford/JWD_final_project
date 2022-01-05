@@ -1,9 +1,13 @@
 package by.epam.bartenderhelper;
 
 import java.io.*;
-import java.sql.Connection;
+import java.sql.*;
 
 import by.epam.bartenderhelper.db.ConnectionPool;
+import com.password4j.BCryptFunction;
+import com.password4j.Hash;
+import com.password4j.Password;
+import com.password4j.types.BCrypt;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.apache.logging.log4j.Level;
@@ -22,16 +26,18 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         logger.log(Level.INFO, "Hello logger");
-        Connection connection = ConnectionPool.getInstance().takeConnection();
-        ConnectionPool.getInstance().destroyPool();
-        ConnectionPool.getInstance().releaseConnection(connection);
-        Connection connection1 = ConnectionPool.getInstance().takeConnection();
+      //  Connection connection = ConnectionPool.getInstance().takeConnection();
+        //ConnectionPool.getInstance().releaseConnection(connection);
+
+
+
 
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
+
     }
 
     public void destroy() {

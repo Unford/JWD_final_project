@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public enum PropertyManager {//fixme
-    APP_CONFIG(ResourceBundle.getBundle("config/app_config", new Locale("", "")));
+    APP_CONFIG(ResourceBundle.getBundle("config/app_config"));
 
     private ResourceBundle bundle;
     PropertyManager(ResourceBundle bundle) {

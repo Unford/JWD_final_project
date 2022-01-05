@@ -126,6 +126,7 @@ public class ConnectionPool {
         timer.purge();
         for (int i = 0; i < poolSize; i++) {
             try {
+
                 availableConnections.take().realClose();
             } catch (SQLException e) {
                 logger.log(Level.ERROR, "SQL error while close {} connection", i, e);
@@ -136,10 +137,7 @@ public class ConnectionPool {
         }
         deregisterDrivers();
 
-        instance = null;//todo
-        initCheck.set(false);
-
-        logger.log(Level.INFO, "Destroying pool is finished");
+        logger.log(Level.INFO, "Destroying pool is finished, actual size = {}", availableConnections.size());
     }
 
     private void deregisterDrivers() {

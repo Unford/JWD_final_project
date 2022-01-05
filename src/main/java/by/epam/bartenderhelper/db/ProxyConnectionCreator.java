@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-class ProxyConnectionCreator {
+final class ProxyConnectionCreator {
     private static final Logger logger = LogManager.getLogger();
     private static final String DRIVER_PROPERTY_NAME = "db.driver";
     private static final String URL_PROPERTY_NAME = "db.url";
