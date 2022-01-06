@@ -5,7 +5,7 @@ import java.io.Serializable;
 public abstract class AbstractDaoEntity implements Serializable, Cloneable {
     protected final long id;
 
-    protected AbstractDaoEntity(long id){
+    AbstractDaoEntity(long id){
         this.id = id;
     }
 

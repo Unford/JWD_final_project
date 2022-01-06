@@ -7,7 +7,7 @@ public final class Photo extends AbstractDaoEntity {
     private final byte[] data;
 
     private Photo(PhotoBuilder builder){
-        super(builder.photoId);//todo
+        super(builder.photoId);
         this.name = builder.name;
         this.data = builder.data;
     }

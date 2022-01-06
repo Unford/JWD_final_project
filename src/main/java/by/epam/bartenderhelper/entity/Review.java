@@ -2,59 +2,68 @@ package by.epam.bartenderhelper.entity;
 
 import java.time.Instant;
 
-public final class Comment extends AbstractDaoEntity {
+public final class Review extends AbstractDaoEntity {
     private final String message;
+    private final int score;
     private final Instant timestamp;
-    private final User author;
+    private final long authorId;
 
-    private Comment(CommentBuilder builder){
+    private Review(CommentBuilder builder){
         super(builder.commentId);
         this.message = builder.message;
+        this.score = builder.score;
         this.timestamp = builder.timestamp;
-        this.author = builder.author;
+        this.authorId = builder.authorId;
     }
 
     public String getMessage() {
         return message;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public Instant getTimestamp() {
         return timestamp;
     }
 
-    public User getAuthor() {
-        return author;
+    public long getAuthorId() {
+        return authorId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Comment)) return false;
+        if (!(o instanceof Review)) return false;
         if (!super.equals(o)) return false;
 
-        Comment comment = (Comment) o;
+        Review review = (Review) o;
 
-        if (message != null ? !message.equals(comment.message) : comment.message != null) return false;
-        if (timestamp != null ? !timestamp.equals(comment.timestamp) : comment.timestamp != null) return false;
-        return author != null ? author.equals(comment.author) : comment.author == null;
+        if (score != review.score) return false;
+        if (authorId != review.authorId) return false;
+        if (message != null ? !message.equals(review.message) : review.message != null) return false;
+        return timestamp != null ? timestamp.equals(review.timestamp) : review.timestamp == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + score;
         result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (int) (authorId ^ (authorId >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Comment{");
-        sb.append("commentId=").append(id);
+        final StringBuilder sb = new StringBuilder("Review{");
+        sb.append("reviewId=").append(id);
         sb.append(", message='").append(message).append('\'');
+        sb.append(", score=").append(score);
         sb.append(", timestamp=").append(timestamp);
-        sb.append(", author=").append(author);
+        sb.append(", authorId=").append(authorId);
         sb.append('}');
         return sb.toString();
     }
@@ -62,8 +71,9 @@ public final class Comment extends AbstractDaoEntity {
     public static class CommentBuilder {
         private long commentId;
         private String message;
+        private int score;
         private Instant timestamp;
-        private User author;
+        private long authorId;
 
         public CommentBuilder commentId(long commentId){
             this.commentId = commentId;
@@ -75,18 +85,23 @@ public final class Comment extends AbstractDaoEntity {
             return this;
         }
 
+        public CommentBuilder score(int score){
+            this.score = score;
+            return this;
+        }
+
         public CommentBuilder timestamp(Instant timestamp){
             this.timestamp = timestamp;
             return this;
         }
 
-        public CommentBuilder author(User author){
-            this.author = author;
+        public CommentBuilder authorId(long authorId){
+            this.authorId = authorId;
             return this;
         }
 
-        public Comment build() {
-            return new Comment(this);
+        public Review build() {
+            return new Review(this);
         }
     }
 

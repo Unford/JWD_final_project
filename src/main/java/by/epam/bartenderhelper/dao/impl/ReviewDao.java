@@ -1,28 +1,28 @@
 package by.epam.bartenderhelper.dao.impl;
 
 import by.epam.bartenderhelper.dao.AbstractDao;
-import by.epam.bartenderhelper.entity.Comment;
+import by.epam.bartenderhelper.entity.Review;
 
 import java.util.List;
 
-public class CommentDao extends AbstractDao<Comment> {
+public class ReviewDao extends AbstractDao<Review> {
     @Override
-    public List<Comment> findAll() {
+    public List<Review> findAll() {
         return null;
     }
 
     @Override
-    public Comment findById(long id) {
+    public Review findById(long id) {
         return null;
     }
 
     @Override
-    public boolean create(Comment entity) {
+    public boolean create(Review entity) {
         return false;
     }
 
     @Override
-    public Comment update(Comment entity) {
+    public Review update(Review entity) {
         return null;
     }
 

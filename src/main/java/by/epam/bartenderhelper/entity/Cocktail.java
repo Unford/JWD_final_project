@@ -1,6 +1,5 @@
 package by.epam.bartenderhelper.entity;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public final class Cocktail extends AbstractDaoEntity {
@@ -9,10 +8,9 @@ public final class Cocktail extends AbstractDaoEntity {
     private final String recipe;
     private final boolean verified;
     private final Photo photo;
-    private final User author;
-    private final BigDecimal rating;
-    private final List<Comment> comments;
-    private final List<Ingredient> ingredients;
+    private final long authorId;
+    private final List<Long> reviews;
+    private final List<Long> ingredients;
 
     private Cocktail(CocktailBuilder builder) {
         super(builder.cocktailId);
@@ -21,9 +19,8 @@ public final class Cocktail extends AbstractDaoEntity {
         this.recipe = builder.recipe;
         this.verified = builder.verified;
         this.photo = builder.photo;
-        this.author = builder.author;
-        this.rating = builder.rating;
-        this.comments = builder.comments;
+        this.authorId = builder.authorId;
+        this.reviews = builder.reviews;
         this.ingredients = builder.ingredients;
     }
 
@@ -47,56 +44,19 @@ public final class Cocktail extends AbstractDaoEntity {
         return photo;
     }
 
-    public User getAuthor() {
-        return author;
+    public long getAuthorId() {
+        return authorId;
     }
 
-    public BigDecimal getRating() {
-        return rating;
+    public List<Long> getReviews() {
+        return List.copyOf(reviews);
     }
 
-    public List<Comment> getComments() {
-        return List.copyOf(comments);
-    }
-
-    public List<Ingredient> getIngredients() {
+    public List<Long> getIngredients() {
         return List.copyOf(ingredients);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cocktail)) return false;
-        if (!super.equals(o)) return false;
 
-        Cocktail cocktail = (Cocktail) o;
-
-        if (verified != cocktail.verified) return false;
-        if (name != null ? !name.equals(cocktail.name) : cocktail.name != null) return false;
-        if (description != null ? !description.equals(cocktail.description) : cocktail.description != null)
-            return false;
-        if (recipe != null ? !recipe.equals(cocktail.recipe) : cocktail.recipe != null) return false;
-        if (photo != null ? !photo.equals(cocktail.photo) : cocktail.photo != null) return false;
-        if (author != null ? !author.equals(cocktail.author) : cocktail.author != null) return false;
-        if (rating != null ? !rating.equals(cocktail.rating) : cocktail.rating != null) return false;
-        if (comments != null ? !comments.equals(cocktail.comments) : cocktail.comments != null) return false;
-        return ingredients != null ? ingredients.equals(cocktail.ingredients) : cocktail.ingredients == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (recipe != null ? recipe.hashCode() : 0);
-        result = 31 * result + (verified ? 1 : 0);
-        result = 31 * result + (photo != null ? photo.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        result = 31 * result + (comments != null ? comments.hashCode() : 0);
-        result = 31 * result + (ingredients != null ? ingredients.hashCode() : 0);
-        return result;
-    }
 
     @Override
     public String toString() {
@@ -107,9 +67,8 @@ public final class Cocktail extends AbstractDaoEntity {
         sb.append(", recipe='").append(recipe).append('\'');
         sb.append(", verified=").append(verified);
         sb.append(", photo=").append(photo);
-        sb.append(", author=").append(author);
-        sb.append(", rating=").append(rating);
-        sb.append(", comments=").append(comments);
+        sb.append(", authorId=").append(authorId);
+        sb.append(", comments=").append(reviews);
         sb.append(", ingredients=").append(ingredients);
         sb.append('}');
         return sb.toString();
@@ -122,10 +81,9 @@ public final class Cocktail extends AbstractDaoEntity {
         private String recipe;
         private boolean verified;
         private Photo photo;
-        private User author;
-        private BigDecimal rating;
-        private List<Comment> comments;
-        private List<Ingredient> ingredients;
+        private long authorId;
+        private List<Long> reviews;
+        private List<Long> ingredients;
 
         public CocktailBuilder cocktailId(long cocktailId){
             this.cocktailId = cocktailId;
@@ -157,22 +115,17 @@ public final class Cocktail extends AbstractDaoEntity {
             return this;
         }
 
-        public CocktailBuilder author(User author){
-            this.author = author;
+        public CocktailBuilder authorId(long authorId){
+            this.authorId = authorId;
             return this;
         }
 
-        public CocktailBuilder rating(BigDecimal rating){
-            this.rating = rating;
+        public CocktailBuilder comments(List<Long> reviews){
+            this.reviews = reviews;
             return this;
         }
 
-        public CocktailBuilder comments(List<Comment> comments){
-            this.comments = comments;
-            return this;
-        }
-
-        public CocktailBuilder ingredients(List<Ingredient> ingredients){
+        public CocktailBuilder ingredients(List<Long> ingredients){
             this.ingredients = ingredients;
             return this;
         }

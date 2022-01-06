@@ -1,6 +1,5 @@
 package by.epam.bartenderhelper.entity;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public final class User extends AbstractDaoEntity {
@@ -8,11 +7,11 @@ public final class User extends AbstractDaoEntity {
     private final String firstName;
     private final String lastName;
     private final String email;
-    private final BigDecimal rating;
     private final Role role;
     private final Status status;
     private final Photo photo;
-    private final List<Cocktail> cocktails;
+    private final List<Long> reviews;
+    private final List<Long> cocktails;
 
     private User(UserBuilder builder) {
         super(builder.userId);
@@ -20,10 +19,10 @@ public final class User extends AbstractDaoEntity {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.email = builder.email;
-        this.rating = builder.rating;
         this.role = builder.role;
         this.status = builder.status;
         this.photo = builder.photo;
+        this.reviews = builder.reviews;
         this.cocktails = builder.cocktails;
     }
 
@@ -33,9 +32,10 @@ public final class User extends AbstractDaoEntity {
         BARTENDER
     }
 
-    public enum Status {//todo bool
+    public enum Status {
         BANNED,
         WORKING,
+        DELETED
     }
 
     public String getLogin() {
@@ -54,10 +54,6 @@ public final class User extends AbstractDaoEntity {
         return email;
     }
 
-    public BigDecimal getRating() {
-        return rating;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -70,8 +66,12 @@ public final class User extends AbstractDaoEntity {
         return photo;
     }
 
-    public List<Cocktail> getCocktails() {
+    public List<Long> getCocktails() {
         return List.copyOf(cocktails);
+    }
+
+    public List<Long> getReviews() {
+        return List.copyOf(reviews);
     }
 
     @Override
@@ -86,10 +86,10 @@ public final class User extends AbstractDaoEntity {
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (rating != null ? !rating.equals(user.rating) : user.rating != null) return false;
         if (role != user.role) return false;
         if (status != user.status) return false;
         if (photo != null ? !photo.equals(user.photo) : user.photo != null) return false;
+        if (reviews != null ? !reviews.equals(user.reviews) : user.reviews != null) return false;
         return cocktails != null ? cocktails.equals(user.cocktails) : user.cocktails == null;
     }
 
@@ -100,10 +100,10 @@ public final class User extends AbstractDaoEntity {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + (reviews != null ? reviews.hashCode() : 0);
         result = 31 * result + (cocktails != null ? cocktails.hashCode() : 0);
         return result;
     }
@@ -116,10 +116,10 @@ public final class User extends AbstractDaoEntity {
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
-        sb.append(", rating=").append(rating);
         sb.append(", role=").append(role);
         sb.append(", status=").append(status);
         sb.append(", photo=").append(photo);
+        sb.append(", reviews=").append(reviews);
         sb.append(", cocktails=").append(cocktails);
         sb.append('}');
         return sb.toString();
@@ -131,11 +131,11 @@ public final class User extends AbstractDaoEntity {
         private String firstName;
         private String lastName;
         private String email;
-        private BigDecimal rating;
         private Role role;
         private Status status;
         private Photo photo;
-        private List<Cocktail> cocktails;
+        private List<Long> reviews;
+        private List<Long> cocktails;
 
         public UserBuilder userId(long userId){
             this.userId = userId;
@@ -162,8 +162,8 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
-        public UserBuilder rating(BigDecimal rating){
-            this.rating = rating;
+        public UserBuilder reviews(List<Long> reviews){
+            this.reviews = reviews;
             return this;
         }
 
@@ -182,7 +182,7 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
-        public UserBuilder cocktails(List<Cocktail> cocktails){
+        public UserBuilder cocktails(List<Long> cocktails){
             this.cocktails = cocktails;
             return this;
         }

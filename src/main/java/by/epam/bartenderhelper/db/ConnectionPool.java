@@ -22,6 +22,7 @@ public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
     private static final String POOL_SIZE_PROPERTY_NAME = "pool.size";
     private static final int DEFAULT_POOL_SIZE = 8;
+    private static final long DEFAULT_TIMER_DELAY = TimeUnit.MINUTES.toMillis(90);
 
     private static ConnectionPool instance;
 
@@ -61,10 +62,7 @@ public class ConnectionPool {
             logger.log(Level.FATAL, "Connection pool is empty");
             throw new RuntimeException("Connection pool is empty");
         }
-
-        timer.schedule(new TimeController(),
-                TimeUnit.HOURS.toMillis(1),
-                TimeUnit.MINUTES.toMillis(30));
+        timer.schedule(new TimeController(), DEFAULT_TIMER_DELAY);
 
         logger.info("Connection pool created expected size = {}, actual = {}", availableConnections.size(), poolSize);
     }
@@ -88,7 +86,7 @@ public class ConnectionPool {
 
         ProxyConnection connection = null;
         try {
-            while (timerLock.isLocked()){//todo
+            while (timerLock.isLocked()){
                 timerCondition.await();
             }
            connection = availableConnections.take();
@@ -104,7 +102,7 @@ public class ConnectionPool {
         boolean result = false;
         if (connection instanceof ProxyConnection proxyConnection){
             try {
-                while (timerLock.isLocked()){//todo
+                while (timerLock.isLocked()){
                     timerCondition.await();
                 }
                result = busyConnections.remove(proxyConnection);
@@ -119,8 +117,8 @@ public class ConnectionPool {
         return result;
     }
 
-    public void destroyPool() {//todo
-        logger.log(Level.INFO, "Destroying pool is started");
+    public void destroyPool() {
+        logger.log(Level.DEBUG, "Destroying pool is started");
 
         timer.cancel();
         timer.purge();
@@ -137,7 +135,7 @@ public class ConnectionPool {
         }
         deregisterDrivers();
 
-        logger.log(Level.INFO, "Destroying pool is finished, actual size = {}", availableConnections.size());
+        logger.log(Level.DEBUG, "Destroying pool is finished, actual size = {}", availableConnections.size());
     }
 
     private void deregisterDrivers() {
@@ -166,7 +164,7 @@ public class ConnectionPool {
                             logger.log(Level.ERROR, "{} proxy connection wasn't created", i, e);
                         }
                     }
-                    if (availableConnections.isEmpty() && busyConnections.isEmpty()){//todo
+                    if (availableConnections.isEmpty() && busyConnections.isEmpty()){
                         logger.log(Level.FATAL, "Connection pool is empty");
                         throw new RuntimeException("Connection pool is empty");
                     }
