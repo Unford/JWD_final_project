@@ -4,7 +4,10 @@
     <title>Title</title>
 </head>
 <body>
+
 <h1>MAIN</h1>
 <a href="jsp/registration.jsp">reg</a>
+
+
 </body>
 </html>
