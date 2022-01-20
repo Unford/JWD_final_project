@@ -4,6 +4,7 @@ import by.epam.bartenderhelper.exception.DaoException;
 import by.epam.bartenderhelper.model.dao.AbstractDao;
 import by.epam.bartenderhelper.model.entity.Ingredient;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +32,10 @@ public class IngredientDao extends AbstractDao<Ingredient> {
     @Override
     public boolean deleteById(long id) throws DaoException {
         return false;
+    }
+
+    @Override
+    protected Ingredient mapEntity(ResultSet resultSet) {
+        return null;
     }
 }

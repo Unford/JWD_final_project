@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public abstract class AbstractDao <T extends AbstractDaoEntity> {
     public boolean delete(T entity) throws DaoException {
         return deleteById(entity.getId());
     }
+
+    protected abstract T mapEntity(ResultSet resultSet);
 
     void setConnection (Connection connection){
         this.connection = connection;

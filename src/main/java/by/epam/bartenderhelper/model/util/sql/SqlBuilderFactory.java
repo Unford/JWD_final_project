@@ -9,9 +9,9 @@ import by.epam.bartenderhelper.model.util.sql.query.impl.InsertQueryImpl;
 import by.epam.bartenderhelper.model.util.sql.query.impl.SelectQueryImpl;
 import by.epam.bartenderhelper.model.util.sql.query.impl.UpdateQueryImpl;
 
-public final class SqlQueryFactory {
+public final class SqlBuilderFactory {
 
-    private SqlQueryFactory(){}
+    private SqlBuilderFactory(){}
 
     public static Select select(boolean distinct){
         return new SelectQueryImpl(distinct);

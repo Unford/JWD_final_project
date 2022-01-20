@@ -4,7 +4,7 @@ import by.epam.bartenderhelper.model.dao.AbstractDao;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.exception.DaoException;
 import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.SqlQueryFactory;
+import by.epam.bartenderhelper.model.util.sql.SqlBuilderFactory;
 import by.epam.bartenderhelper.model.util.sql.Table;
 import by.epam.bartenderhelper.model.util.sql.query.JoinType;
 import by.epam.bartenderhelper.model.util.sql.query.LogicOperator;
@@ -21,7 +21,7 @@ public class UserDao extends AbstractDao<User> {//todo
     private static final String COCKTAILS_CONCAT = "cocktails";
     private static final String REVIEWS_CONCAT = "reviews";
 
-    private static final String FIND_ALL_USERS_QUERY = SqlQueryFactory.select()
+    private static final String FIND_ALL_USERS_QUERY = SqlBuilderFactory.select()
             .selectColumns(Table.USERS)
             .selectColumn(Column.PHOTO_DATA)
             .selectColumn(Column.PHOTO_NAME)
@@ -34,7 +34,7 @@ public class UserDao extends AbstractDao<User> {//todo
             .groupBy(Column.USER_ID)
             .toString();
 
-    private static final String FIND_BY_USER_ID_QUERY = SqlQueryFactory.select()
+    private static final String FIND_BY_USER_ID_QUERY = SqlBuilderFactory.select()
             .selectColumns(Table.USERS)
             .selectColumn(Column.PHOTO_DATA)
             .selectColumn(Column.PHOTO_NAME)
@@ -48,16 +48,16 @@ public class UserDao extends AbstractDao<User> {//todo
             .groupBy(Column.USER_ID)
             .toString();
 
-    private static final String CREATE_USER_QUERY = SqlQueryFactory.insert(Table.USERS)
+    private static final String CREATE_USER_QUERY = SqlBuilderFactory.insert(Table.USERS)
             .setColumns(Table.USERS)
             .toString();
 
-    private static final String UPDATE_USER_QUERY = SqlQueryFactory.update(Table.USERS)
+    private static final String UPDATE_USER_QUERY = SqlBuilderFactory.update(Table.USERS)
             .setAll(Table.USERS)
             .where(Column.USER_ID, LogicOperator.EQUALS)
             .toString();
 
-    private static final String DELETE_USER_BY_ID_QUERY = SqlQueryFactory.delete()
+    private static final String DELETE_USER_BY_ID_QUERY = SqlBuilderFactory.delete()
             .from(Table.USERS)
             .where(Column.USER_ID, LogicOperator.EQUALS)
             .toString();
@@ -68,7 +68,7 @@ public class UserDao extends AbstractDao<User> {//todo
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS_QUERY)) {
             while (resultSet.next()) {
-                User user = mapToUser(resultSet);
+                User user = mapEntity(resultSet);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class UserDao extends AbstractDao<User> {//todo
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()){
                 if (resultSet.next()){
-                    user = Optional.ofNullable(mapToUser(resultSet));
+                    user = Optional.ofNullable(mapEntity(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -138,7 +138,9 @@ public class UserDao extends AbstractDao<User> {//todo
         return false;
     }
 
-    private User mapToUser(ResultSet resultSet) {
+    @Override
+    protected User mapEntity(ResultSet resultSet) {
         return null;
     }
+
 }
