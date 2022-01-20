@@ -24,7 +24,7 @@ public abstract class AbstractDao <T extends AbstractDaoEntity> {
         return deleteById(entity.getId());
     }
 
-    protected abstract T mapEntity(ResultSet resultSet);
+    protected abstract T mapEntity(ResultSet resultSet) throws DaoException;
 
     void setConnection (Connection connection){
         this.connection = connection;

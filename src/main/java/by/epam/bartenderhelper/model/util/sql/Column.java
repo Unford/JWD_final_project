@@ -114,6 +114,11 @@ public enum Column {
         return type;
     }
 
+    @Override
+    public String toString(){
+        return getName();
+    }
+
     public enum Type{
         ID,
         REQUIRED,

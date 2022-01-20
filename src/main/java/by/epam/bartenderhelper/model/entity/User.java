@@ -182,9 +182,17 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
+        public UserBuilder role(String role){
+            return role(Role.valueOf(role));
+        }
+
         public UserBuilder status(Status status){
             this.status = status;
             return this;
+        }
+
+        public UserBuilder status(String status){
+            return status(Status.valueOf(status));
         }
 
         public UserBuilder photo(Photo photo){
