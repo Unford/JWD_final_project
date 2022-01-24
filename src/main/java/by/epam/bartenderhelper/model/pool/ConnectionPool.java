@@ -124,7 +124,6 @@ public class ConnectionPool {
         timer.purge();
         for (int i = 0; i < poolSize; i++) {
             try {
-
                 availableConnections.take().realClose();
             } catch (SQLException e) {
                 logger.log(Level.ERROR, "SQL error while close {} connection", i, e);
@@ -152,8 +151,11 @@ public class ConnectionPool {
         @Override
         public void run() {
             try {
+
                 timerLock.lock();
                 int currentPoolSize = busyConnections.size() + availableConnections.size();
+                logger.debug("Time controller run, actual = {}", currentPoolSize);
+
                 if (currentPoolSize != poolSize){
                     logger.warn("Time controller found connection leak, expected size = {}, actual = {}", poolSize, currentPoolSize);
                     for (int i = currentPoolSize; i <= poolSize; i++) {
@@ -169,10 +171,10 @@ public class ConnectionPool {
                         throw new RuntimeException("Connection pool is empty");
                     }
                 }
+                timerCondition.signalAll();
             }finally {
                 timerLock.unlock();
             }
-            timerCondition.signalAll();
         }
     }
 }

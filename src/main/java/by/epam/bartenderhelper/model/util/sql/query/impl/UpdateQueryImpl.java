@@ -27,7 +27,7 @@ public class UpdateQueryImpl extends CommonSqlQueryImpl<Update> implements Updat
     @Override
     public Update setAll(Table table) {
         Column[] columns = Arrays.stream(table.getColumns())
-                .filter(column -> column.getType() != Column.Type.ID)
+                .filter(column -> column.getType() == Column.Type.REQUIRED)
                 .toArray(Column[]::new);
         return setAll(columns);
     }

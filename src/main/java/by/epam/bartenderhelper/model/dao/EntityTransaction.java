@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-class EntityTransaction implements AutoCloseable {//todo rename
+public class EntityTransaction implements AutoCloseable {//todo rename
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 

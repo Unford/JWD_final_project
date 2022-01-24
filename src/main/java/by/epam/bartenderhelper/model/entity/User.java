@@ -182,8 +182,8 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
-        public UserBuilder role(String role){
-            return role(Role.valueOf(role));
+        public UserBuilder role(Object role){//todo
+            return role(Role.valueOf(role.toString().toUpperCase()));
         }
 
         public UserBuilder status(Status status){
@@ -191,8 +191,8 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
-        public UserBuilder status(String status){
-            return status(Status.valueOf(status));
+        public UserBuilder status(Object status){//todo
+            return status(Status.valueOf(status.toString().toUpperCase()));
         }
 
         public UserBuilder photo(Photo photo){

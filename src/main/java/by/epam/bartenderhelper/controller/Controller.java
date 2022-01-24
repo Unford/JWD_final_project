@@ -1,5 +1,10 @@
 package by.epam.bartenderhelper.controller;
 
+import by.epam.bartenderhelper.controller.command.Command;
+import by.epam.bartenderhelper.controller.command.CommandType;
+import by.epam.bartenderhelper.controller.command.RequestParameter;
+import by.epam.bartenderhelper.controller.command.Router;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +26,17 @@ public class Controller extends HttpServlet {//
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response){//todo
-
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {//todo
+        String stringCommand = request.getParameter(RequestParameter.COMMAND);
+        Command command = CommandType.defineCommand(stringCommand);
+        Router router = command.execute(request);
+        switch (router.getType()){
+            case FORWARD -> {
+                RequestDispatcher dispatcher = request.getRequestDispatcher(router.getPage());
+                dispatcher.forward(request, response);
+            }
+            case REDIRECT -> response.sendRedirect(router.getPage());
+            default -> response.sendError(404);
+        }
     }
 }

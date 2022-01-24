@@ -1,13 +1,14 @@
 package by.epam.bartenderhelper.controller.command;
 
+import static by.epam.bartenderhelper.controller.command.PagePath.INDEX;
+
 public class Router {
-    enum DispathType {
+    public enum RouterType {
         FORWARD, REDIRECT
     }
-    //private String page = INDEX;todo
-    private String page = "index.jsp";
+    private String page = INDEX;
 
-    private DispathType type = DispathType.FORWARD;
+    private RouterType type = RouterType.FORWARD;
 
     public String getPage() {
         return page;
@@ -17,11 +18,11 @@ public class Router {
         this.page = page;
     }
 
-    public DispathType getType() {
+    public RouterType getType() {
         return type;
     }
 
-    public void setRedirect() {
-        this.type = DispathType.REDIRECT;
+    public void setType(RouterType type) {
+        this.type = type;
     }
 }

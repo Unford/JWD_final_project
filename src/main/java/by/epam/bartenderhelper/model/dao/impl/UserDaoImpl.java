@@ -1,6 +1,7 @@
 package by.epam.bartenderhelper.model.dao.impl;
 
 import by.epam.bartenderhelper.model.dao.AbstractDao;
+import by.epam.bartenderhelper.model.dao.UserDao;
 import by.epam.bartenderhelper.model.entity.Photo;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.exception.DaoException;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDao extends AbstractDao<User> {//todo
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     private static final String COCKTAILS_CONCAT = "cocktails";
     private static final String REVIEWS_CONCAT = "reviews";
     private static final String DEFAULT_CONCAT_DELIMITER = ",";
@@ -27,7 +28,7 @@ public class UserDao extends AbstractDao<User> {//todo
             .selectColumn(Column.PHOTO_DATA)
             .selectColumn(Column.PHOTO_NAME)
             .groupConcat(Column.USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(Column.USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
+            .groupConcat(Column.USERS_REVIEWS_REVIEW_ID, REVIEWS_CONCAT)
             .from(Table.USERS)
             .join(JoinType.LEFT, Table.PHOTOS).using(Column.PHOTO_ID)
             .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(Column.USERS_COCKTAILS_USER_ID, Column.USER_ID)
@@ -55,6 +56,11 @@ public class UserDao extends AbstractDao<User> {//todo
 
     private static final String UPDATE_USER_QUERY = SqlBuilderFactory.update(Table.USERS)
             .setAll(Table.USERS)
+            .where(Column.USER_ID, LogicOperator.EQUALS)
+            .toString();
+
+    private static final String UPDATE_USER_PASSWORD_QUERY = SqlBuilderFactory.update(Table.USERS)
+            .set(Column.USER_PASSWORD)
             .where(Column.USER_ID, LogicOperator.EQUALS)
             .toString();
 
@@ -100,13 +106,7 @@ public class UserDao extends AbstractDao<User> {//todo
     public boolean create(User entity) throws DaoException {//todo
         int result;
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
-            statement.setString(1, entity.getLogin());
-            statement.setString(2, entity.getFirstName());
-            statement.setString(3, entity.getLastName());
-            statement.setString(4, entity.getEmail());
-            statement.setString(5, entity.getRole().toString());
-            statement.setString(6, entity.getStatus().toString());
-            statement.setLong(7, entity.getPhoto().getId());
+            setPreparedStatement(statement, entity);
             result = statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Create user query error", e);
@@ -119,17 +119,26 @@ public class UserDao extends AbstractDao<User> {//todo
     public boolean update(User entity) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_QUERY)) {
-            statement.setString(1, entity.getLogin());
-            statement.setString(2, entity.getFirstName());
-            statement.setString(3, entity.getLastName());
-            statement.setString(4, entity.getEmail());
-            statement.setString(5, entity.getRole().toString());
-            statement.setString(6, entity.getStatus().toString());
-            statement.setLong(7, entity.getPhoto().getId());
+            setPreparedStatement(statement, entity);
+            statement.setLong(8, entity.getId());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Update user query error", e);
             throw new DaoException("Update user query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
+    public boolean updatePassword(long id, byte[] password) throws DaoException{
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_PASSWORD_QUERY)) {
+            statement.setBytes(1, password);
+            statement.setLong(2, id);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Update user password query error", e);
+            throw new DaoException("Update user password query error", e);
         }
         return result > 0;
     }
@@ -153,11 +162,12 @@ public class UserDao extends AbstractDao<User> {//todo
             Blob photoBlob = resultSet.getBlob(Column.PHOTO_DATA.getName());
             return new User.UserBuilder()
                     .userId(resultSet.getLong(Column.USER_ID.getName()))
+                    .login(resultSet.getString(Column.USER_LOGIN.getName()))
                     .firstName(resultSet.getString(Column.USER_FIRST_NAME.getName()))
                     .lastName(resultSet.getString(Column.USER_LAST_NAME.getName()))
                     .email(resultSet.getString(Column.USER_EMAIL.getName()))
-                    .role(resultSet.getString(Column.USER_ROLE.getName()))
-                    .status(resultSet.getString(Column.USER_STATUS.getName()))
+                    .role(resultSet.getObject(Column.USER_ROLE.getName()))
+                    .status(resultSet.getObject(Column.USER_STATUS.getName()))
                     .photo(new Photo.PhotoBuilder()
                             .photoId(resultSet.getLong(Column.USER_PHOTO_ID.getName()))
                             .name(resultSet.getString(Column.PHOTO_NAME.getName()))
@@ -172,7 +182,21 @@ public class UserDao extends AbstractDao<User> {//todo
         }
     }
 
-    private List<Long> toListId(String column, String delimiter) {//todo
-        return Arrays.stream(column.split(delimiter)).map(Long::parseLong).toList();
+    private List<Long> toListId(String column, String delimiter) {//todo rename
+        List<Long> idList = column != null ? Arrays.stream(column.split(delimiter))
+                .map(Long::parseLong)
+                .toList() : new ArrayList<>();
+        return idList;
     }
+
+    private void setPreparedStatement(PreparedStatement statement, User entity) throws SQLException {
+        statement.setString(1, entity.getLogin());
+        statement.setString(2, entity.getFirstName());
+        statement.setString(3, entity.getLastName());
+        statement.setString(4, entity.getEmail());
+        statement.setString(5, entity.getRole().toString());
+        statement.setString(6, entity.getStatus().toString());
+        statement.setLong(7, entity.getPhoto().getId());
+    }
+
 }
