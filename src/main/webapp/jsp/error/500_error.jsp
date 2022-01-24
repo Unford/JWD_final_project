@@ -354,6 +354,11 @@
         <h2 class="error-subtitle">
             <fmt:message key="error.500.subtitle" bundle="${lang}"/>
         </h2>
+        <a href="${pageContext.request.contextPath}">
+            <button class="btn-primary">
+                <fmt:message key="error.back" bundle="${lang}"/>
+            </button>
+        </a>
     </div>
 
 </main>
