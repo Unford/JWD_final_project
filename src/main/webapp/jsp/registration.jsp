@@ -3,6 +3,7 @@
 
 <fmt:setBundle basename="page_content" var="lang"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,7 +17,8 @@
 <jsp:include page="include/header.jsp"/>
 
     <main>
-        <form class="container g-3 needs-validation justify-content-center " novalidate action="">
+        <form class="container g-3 needs-validation justify-content-center " novalidate action="${pageContext.request.contextPath}/controller" METHOD="post">
+            <input type="hidden" name="command" value="sign_up">
             <div class="row text-center">
                 <div class="col-md-12">
                     <h3><fmt:message key="sign_up.title" bundle="${lang}"/></h3>
@@ -26,11 +28,11 @@
             <div class="row justify-content-center">
                 <div class="col-md-4 ">
                     <label for="first_name" class="form-label"><fmt:message key="sign_up.first_name" bundle="${lang}"/></label>
-                    <input type="text" class="form-control" id="first_name" required>
+                    <input type="text" class="form-control" id="first_name" required name="first_name">
                 </div>
                 <div class="col-md-4 ">
                     <label for="last_name" class="form-label"><fmt:message key="sign_up.last_name" bundle="${lang}"/></label>
-                    <input type="text" class="form-control" id="last_name" required>
+                    <input type="text" class="form-control" id="last_name" required name="last_name">
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -44,7 +46,7 @@
                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                       </svg>
                 </span>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" class="form-control" id="email" required name="email">
                     </div>
                 </div>
 
@@ -60,7 +62,7 @@
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                   </svg></span>
                         <input type="text" class="form-control" id="validationCustomUsername"
-                               aria-describedby="inputGroupPrepend2" required min="4" max="30">
+                               aria-describedby="inputGroupPrepend2" required min="4" max="30" name="username">
                     </div>
                 </div>
             </div>
@@ -76,7 +78,7 @@
                               </svg>
                         </span>
                         <input type="password" class="form-control" id="validationPass" required
-                               aria-describedby="passwordHelpBlock" min="8" max="30">
+                               aria-describedby="passwordHelpBlock" min="8" max="30" name="password">
                     </div>
 
                 </div>
