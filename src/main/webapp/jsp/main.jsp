@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setBundle basename="page_content" var="lang"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="page_content" var="lang"/>
+
 <html>
 <head>
     <title><fmt:message key="main.title" bundle="${lang}"/></title>

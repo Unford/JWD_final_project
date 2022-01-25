@@ -1,18 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setBundle basename="page_content" var="lang"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="page_content" var="lang"/>
 
 
 <header class="p-3 mb-2 border-bottom bg-dark">
     <div class="container-fluid">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="#" class="d-flex align-items-center mb-2 mb-lg-0 ms-lg-0 text-white text-decoration-none">
-                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <svg style="width:32px;height:32px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M7.5,7L5.5,5H18.5L16.5,7M11,13V19H6V21H18V19H13V13L21,5V3H3V5L11,13Z" />
                 </svg>
-                <fmt:message key="header.title" bundle="${lang}"/>
+               <h3><fmt:message key="header.title" bundle="${lang}"/></h3>
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
