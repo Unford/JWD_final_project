@@ -7,7 +7,7 @@ public final class User extends AbstractDaoEntity {
     private final String firstName;
     private final String lastName;
     private final String email;
-    private final Role role;
+    private final UserRole userRole;
     private final Status status;
     private final Photo photo;
     private final List<Long> reviews;
@@ -19,23 +19,14 @@ public final class User extends AbstractDaoEntity {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.email = builder.email;
-        this.role = builder.role;
+        this.userRole = builder.userRole;
         this.status = builder.status;
         this.photo = builder.photo;
         this.reviews = builder.reviews;
         this.cocktails = builder.cocktails;
     }
 
-    public enum Role {
-        ADMIN,
-        CLIENT,
-        BARTENDER;
 
-        @Override
-        public String toString(){
-            return super.toString().toLowerCase();
-        }
-    }
 
     public enum Status {
         BANNED,
@@ -45,6 +36,9 @@ public final class User extends AbstractDaoEntity {
         @Override
         public String toString(){
             return super.toString().toLowerCase();
+        }
+        public static Status defineStatus(Object from){
+            return Status.valueOf(from.toString().toUpperCase());
         }
     }
 
@@ -64,8 +58,8 @@ public final class User extends AbstractDaoEntity {
         return email;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return userRole;
     }
 
     public Status getStatus() {
@@ -96,7 +90,7 @@ public final class User extends AbstractDaoEntity {
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (role != user.role) return false;
+        if (userRole != user.userRole) return false;
         if (status != user.status) return false;
         if (photo != null ? !photo.equals(user.photo) : user.photo != null) return false;
         if (reviews != null ? !reviews.equals(user.reviews) : user.reviews != null) return false;
@@ -110,7 +104,7 @@ public final class User extends AbstractDaoEntity {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (reviews != null ? reviews.hashCode() : 0);
@@ -126,7 +120,7 @@ public final class User extends AbstractDaoEntity {
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
-        sb.append(", role=").append(role);
+        sb.append(", role=").append(userRole);
         sb.append(", status=").append(status);
         sb.append(", photo=").append(photo);
         sb.append(", reviews=").append(reviews);
@@ -141,7 +135,7 @@ public final class User extends AbstractDaoEntity {
         private String firstName;
         private String lastName;
         private String email;
-        private Role role;
+        private UserRole userRole;
         private Status status;
         private Photo photo;
         private List<Long> reviews;
@@ -177,22 +171,14 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
-        public UserBuilder role(Role role){
-            this.role = role;
+        public UserBuilder role(UserRole userRole){
+            this.userRole = userRole;
             return this;
-        }
-
-        public UserBuilder role(Object role){//todo
-            return role(Role.valueOf(role.toString().toUpperCase()));
         }
 
         public UserBuilder status(Status status){
             this.status = status;
             return this;
-        }
-
-        public UserBuilder status(Object status){//todo
-            return status(Status.valueOf(status.toString().toUpperCase()));
         }
 
         public UserBuilder photo(Photo photo){

@@ -5,6 +5,7 @@ import by.epam.bartenderhelper.model.dao.UserDao;
 import by.epam.bartenderhelper.model.entity.Photo;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.exception.DaoException;
+import by.epam.bartenderhelper.model.entity.UserRole;
 import by.epam.bartenderhelper.model.util.sql.Column;
 import by.epam.bartenderhelper.model.util.sql.SqlBuilderFactory;
 import by.epam.bartenderhelper.model.util.sql.Table;
@@ -166,8 +167,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
                     .firstName(resultSet.getString(Column.USER_FIRST_NAME.getName()))
                     .lastName(resultSet.getString(Column.USER_LAST_NAME.getName()))
                     .email(resultSet.getString(Column.USER_EMAIL.getName()))
-                    .role(resultSet.getObject(Column.USER_ROLE.getName()))
-                    .status(resultSet.getObject(Column.USER_STATUS.getName()))
+                    .role(UserRole.defineRole(resultSet.getObject(Column.USER_ROLE.getName())))
+                    .status(User.Status.defineStatus(resultSet.getObject(Column.USER_STATUS.getName())))
                     .photo(new Photo.PhotoBuilder()
                             .photoId(resultSet.getLong(Column.USER_PHOTO_ID.getName()))
                             .name(resultSet.getString(Column.PHOTO_NAME.getName()))
