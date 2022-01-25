@@ -28,11 +28,11 @@
             <div class="row justify-content-center">
                 <div class="col-md-4 ">
                     <label for="first_name" class="form-label"><fmt:message key="sign_up.first_name" bundle="${lang}"/></label>
-                    <input type="text" class="form-control" id="first_name" required name="first_name">
+                    <input type="text" class="form-control" id="first_name" required name="first_name" minlength="2" maxlength="30">
                 </div>
                 <div class="col-md-4 ">
                     <label for="last_name" class="form-label"><fmt:message key="sign_up.last_name" bundle="${lang}"/></label>
-                    <input type="text" class="form-control" id="last_name" required name="last_name">
+                    <input type="text" class="form-control" id="last_name" required name="last_name" minlength="2" maxlength="30">
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -62,7 +62,7 @@
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                   </svg></span>
                         <input type="text" class="form-control" id="validationCustomUsername"
-                               aria-describedby="inputGroupPrepend2" required min="4" max="30" name="username">
+                               aria-describedby="inputGroupPrepend2" required minlength="4" maxlength="30" name="username" pattern="/[a-zA-Z][A-Za-z\d\p[[:punct:]]&&[^<>/{}()\[\]]]/">
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                               </svg>
                         </span>
                         <input type="password" class="form-control" id="validationPass" required
-                               aria-describedby="passwordHelpBlock" min="8" max="30" name="password">
+                               aria-describedby="passwordHelpBlock" minlength="8" maxlength="30" name="password">
                     </div>
 
                 </div>
@@ -91,7 +91,7 @@
                     <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                   </svg>
                   </span>
-                        <input type="password" class="form-control" id="validationRepeatPass" required minlength="8" max="30">
+                        <input type="password" class="form-control" id="validationRepeatPass" required minlength="8" maxlength="30">
                     </div>
 
                 </div>
