@@ -41,19 +41,19 @@ public class EntityTransaction implements AutoCloseable {//todo rename
         }
     }
 
-    public void commit() throws DaoException {
+    public void commit() {
         try {
             connection.commit();
         } catch (SQLException e) {
-            throw new DaoException(e);
+            logger.error("commit has been failed", e);
         }
     }
 
-    public void rollback() throws DaoException {
+    public void rollback() {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            throw new DaoException(e);
+            logger.error("rollback has been failed", e);
         }
     }
 }

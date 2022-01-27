@@ -5,4 +5,6 @@ public final class PagePath {
 
     public static final String INDEX = "index.jsp";
     public static final String MAIN = "jsp/main.jsp";
+    public static final String SIGN_UP = "jsp/registration.jsp";
+
 }

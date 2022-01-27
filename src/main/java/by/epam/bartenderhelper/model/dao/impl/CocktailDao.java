@@ -26,7 +26,7 @@ public class CocktailDao extends AbstractDao<Cocktail> {
 
     @Override
     public boolean update(Cocktail entity) throws DaoException {
-        return false;
+        return true;
     }
 
     @Override

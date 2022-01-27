@@ -25,7 +25,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     private static final String REVIEWS_CONCAT = "reviews";
     private static final String DEFAULT_CONCAT_DELIMITER = ",";
 
-
+    //todo
     private static final String FIND_ALL_USERS_QUERY = SqlBuilderFactory.select()
             .selectColumns(Table.USERS)
             .selectColumn(PHOTO_DATA)
@@ -72,6 +72,34 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
 
+    private static final String FIND_USER_BY_USERNAME = SqlBuilderFactory.select()
+            .selectColumns(Table.USERS)
+            .selectColumn(PHOTO_DATA)
+            .selectColumn(PHOTO_NAME)
+            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
+            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
+            .from(Table.USERS)
+            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
+            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
+            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+            .where(USER_USERNAME, LogicOperator.EQUALS)
+            .groupBy(USER_ID)
+            .toString();
+
+    private static final String FIND_USER_BY_EMAIL = SqlBuilderFactory.select()
+            .selectColumns(Table.USERS)
+            .selectColumn(PHOTO_DATA)
+            .selectColumn(PHOTO_NAME)
+            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
+            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
+            .from(Table.USERS)
+            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
+            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
+            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+            .where(USER_EMAIL, LogicOperator.EQUALS)
+            .groupBy(USER_ID)
+            .toString();
+
     @Override
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
@@ -108,9 +136,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     @Override
     public boolean create(User entity) throws DaoException {//todo
         int result;
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             setPreparedStatement(statement, entity);
             result = statement.executeUpdate();
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    entity.setId(resultSet.getLong(1));
+                }
+            }
         } catch (SQLException e) {
             logger.error("Create user query error", e);
             throw new DaoException("Create user query error", e);
@@ -133,10 +166,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     }
 
     @Override
-    public boolean updatePassword(long id, byte[] password) throws DaoException{
+    public boolean updatePassword(long id, String password) throws DaoException{
         int result;
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_PASSWORD_QUERY)) {
-            statement.setBytes(1, password);
+            statement.setString(1, password);
             statement.setLong(2, id);
             result = statement.executeUpdate();
         } catch (SQLException e) {
@@ -144,6 +177,40 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
             throw new DaoException("Update user password query error", e);
         }
         return result > 0;
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) throws DaoException {
+        Optional<User> user = Optional.empty();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_USERNAME)) {
+            statement.setString(1, username);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = Optional.ofNullable(mapEntity(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Find user by username query error", e);
+            throw new DaoException("Find user by username query error", e);
+        }
+        return user;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) throws DaoException {//todo duplicate
+        Optional<User> user = Optional.empty();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = Optional.ofNullable(mapEntity(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Find user by username query error", e);
+            throw new DaoException("Find user by username query error", e);
+        }
+        return user;
     }
 
     @Override
@@ -165,7 +232,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
             Blob photoBlob = resultSet.getBlob(PHOTO_DATA.getName());
             return new User.UserBuilder()
                     .userId(resultSet.getLong(USER_ID.getName()))
-                    .login(resultSet.getString(USER_LOGIN.getName()))
+                    .username(resultSet.getString(USER_USERNAME.getName()))
                     .firstName(resultSet.getString(USER_FIRST_NAME.getName()))
                     .lastName(resultSet.getString(USER_LAST_NAME.getName()))
                     .email(resultSet.getString(USER_EMAIL.getName()))
@@ -174,7 +241,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
                     .photo(new Photo.PhotoBuilder()
                             .photoId(resultSet.getLong(USER_PHOTO_ID.getName()))
                             .name(resultSet.getString(PHOTO_NAME.getName()))
-                            .data(photoBlob.getBytes(1, (int) photoBlob.length()))
+                            .data(photoBlob != null ? photoBlob.getBytes(1, (int) photoBlob.length()) : null)
                             .build())
                     .reviews(toListId(resultSet.getString(REVIEWS_CONCAT), DEFAULT_CONCAT_DELIMITER))
                     .cocktails(toListId(resultSet.getString(COCKTAILS_CONCAT), DEFAULT_CONCAT_DELIMITER))
@@ -193,13 +260,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     }
 
     private void setPreparedStatement(PreparedStatement statement, User entity) throws SQLException {
-        statement.setString(1, entity.getLogin());
+        statement.setString(1, entity.getUsername());
         statement.setString(2, entity.getFirstName());
         statement.setString(3, entity.getLastName());
         statement.setString(4, entity.getEmail());
         statement.setString(5, entity.getRole().toString());
         statement.setString(6, entity.getStatus().toString());
-        statement.setLong(7, entity.getPhoto().getId());
     }
 
 }

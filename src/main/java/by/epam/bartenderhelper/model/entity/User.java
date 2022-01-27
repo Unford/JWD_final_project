@@ -3,7 +3,7 @@ package by.epam.bartenderhelper.model.entity;
 import java.util.List;
 
 public final class User extends AbstractDaoEntity {
-    private final String login;
+    private final String username;
     private final String firstName;
     private final String lastName;
     private final String email;
@@ -15,7 +15,7 @@ public final class User extends AbstractDaoEntity {
 
     private User(UserBuilder builder) {
         super(builder.userId);
-        this.login = builder.login;
+        this.username = builder.username;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.email = builder.email;
@@ -42,8 +42,8 @@ public final class User extends AbstractDaoEntity {
         }
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
     public String getFirstName() {
@@ -86,7 +86,7 @@ public final class User extends AbstractDaoEntity {
 
         User user = (User) o;
 
-        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
@@ -100,7 +100,7 @@ public final class User extends AbstractDaoEntity {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
@@ -116,7 +116,7 @@ public final class User extends AbstractDaoEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("userId=").append(id);
-        sb.append(", login='").append(login).append('\'');
+        sb.append(", login='").append(username).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
@@ -131,7 +131,7 @@ public final class User extends AbstractDaoEntity {
 
     public static class UserBuilder {
         private long userId;
-        private String login;
+        private String username;
         private String firstName;
         private String lastName;
         private String email;
@@ -146,8 +146,8 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
-        public UserBuilder login(String login){
-            this.login = login;
+        public UserBuilder username(String username){
+            this.username = username;
             return this;
         }
 

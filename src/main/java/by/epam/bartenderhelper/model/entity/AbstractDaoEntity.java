@@ -3,7 +3,7 @@ package by.epam.bartenderhelper.model.entity;
 import java.io.Serializable;
 
 public abstract class AbstractDaoEntity implements Serializable, Cloneable {
-    protected final long id;
+    protected long id;
 
     AbstractDaoEntity(long id){
         this.id = id;
@@ -11,6 +11,10 @@ public abstract class AbstractDaoEntity implements Serializable, Cloneable {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
