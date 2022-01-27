@@ -1,6 +1,6 @@
 package by.epam.bartenderhelper.model.pool;
 
-import static by.epam.bartenderhelper.model.util.PropertyManager.APP_CONFIG;
+import static by.epam.bartenderhelper.model.util.ResourceManager.APP_CONFIG;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

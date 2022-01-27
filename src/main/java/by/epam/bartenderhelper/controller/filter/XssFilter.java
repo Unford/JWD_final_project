@@ -22,19 +22,16 @@ public class XssFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
 
         class CustomHttpServletRequest extends HttpServletRequestWrapper{
-
-            private final Map<String, String[]> modifiableParameters;
             private final Map<String, String[]> allParameters;
 
             public CustomHttpServletRequest(ServletRequest request) {
                 super((HttpServletRequest) request);
-                modifiableParameters = new HashMap<>();
                 allParameters = new HashMap<>();
                 allParameters.putAll(request.getParameterMap());
             }
 
             public void addParameter(String name, String parameter) {
-                modifiableParameters.put(name, new String[]{parameter});
+                allParameters.put(name, new String[]{parameter});
             }
 
             @Override
@@ -48,7 +45,6 @@ public class XssFilter implements Filter {
 
             @Override
             public Map<String, String[]> getParameterMap() {
-                allParameters.putAll(modifiableParameters);
                 return Collections.unmodifiableMap(allParameters);
             }
 

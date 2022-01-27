@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="page_content" var="lang"/>
@@ -33,31 +34,38 @@
                 <input type="search" class="form-control" placeholder="<fmt:message key="header.search" bundle="${lang}"/>..." aria-label="Search">
             </form>
 
-            <div class="dropdown text-end">
-                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    <li><a class="dropdown-item" href="#"><fmt:message key="header.profile" bundle="${lang}"/></a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#"><fmt:message key="header.sign_out" bundle="${lang}"/></a></li>
-                </ul>
-            </div>
-            <div class="dropdown text-end " >
-                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser12" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>
-                </a>
+            <c:choose>
+                <c:when test="${sessionScope.user.role != 'GUEST'}">
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                            <li><a class="dropdown-item" href="#"><fmt:message key="header.profile" bundle="${lang}"/></a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><fmt:message key="header.sign_out" bundle="${lang}"/></a></li>
+                        </ul>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="dropdown text-end " >
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser12" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                        </a>
 
-                <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#"><fmt:message key="header.log_in" bundle="${lang}"/></a></li>
-                    <li><hr class="dropdown-divider"></li>
+                        <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#"><fmt:message key="header.log_in" bundle="${lang}"/></a></li>
+                            <li><hr class="dropdown-divider"></li>
 
-                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/registration.jsp"><fmt:message key="header.log_up" bundle="${lang}"/></a></li>
-                </ul>
-            </div>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/registration.jsp"><fmt:message key="header.log_up" bundle="${lang}"/></a></li>
+                        </ul>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
         </div>
 
     </div>

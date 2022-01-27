@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setBundle basename="page_content" var="lang"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
@@ -19,6 +20,7 @@
     <main>
         <form class="container g-3 needs-validation justify-content-center " novalidate action="${pageContext.request.contextPath}/controller" METHOD="post">
             <input type="hidden" name="command" value="sign_up">
+
             <div class="row text-center">
                 <div class="col-md-12">
                     <h3><fmt:message key="sign_up.title" bundle="${lang}"/></h3>
@@ -28,13 +30,26 @@
             <div class="row justify-content-center">
                 <div class="col-md-4 ">
                     <label for="first_name" class="form-label"><fmt:message key="sign_up.first_name" bundle="${lang}"/></label>
-                    <input type="text" class="form-control" id="first_name" required name="first_name" minlength="2" maxlength="30">
+                    <input type="text" class="form-control <c:if test="${empty requestScope.parameters.first_name and not empty requestScope.parameters}">is-invalid</c:if>"
+                           id="first_name" required name="first_name" minlength="2" maxlength="30"
+                            value="${requestScope.parameters.get("first_name")}">
+                <div class="invalid-feedback">
+                    Please provide a valid first name.
                 </div>
+</div>
+
                 <div class="col-md-4 ">
                     <label for="last_name" class="form-label"><fmt:message key="sign_up.last_name" bundle="${lang}"/></label>
-                    <input type="text" class="form-control" id="last_name" required name="last_name" minlength="2" maxlength="30">
+                    <input type="text" class="form-control <c:if test="${empty requestScope.parameters.last_name and not empty requestScope.parameters}">is-invalid</c:if>"
+                    id="last_name" required name="last_name" minlength="2" maxlength="30"
+
+                           value="${requestScope.parameters.get("last_name")}">
+                        <div class="invalid-feedback">
+                            Please provide a valid last name.
+                        </div>
                 </div>
             </div>
+
             <div class="row justify-content-center">
 
                 <div class="col-md-8">
@@ -46,8 +61,14 @@
                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                       </svg>
                 </span>
-                        <input type="email" class="form-control" id="email" required name="email">
+                        <input type="email" class="form-control <c:if test="${empty requestScope.parameters.email and not empty requestScope.parameters }"> is-invalid</c:if>"
+                               id="email" required name="email"
+                               value="${requestScope.parameters.get("email")}">
+                        <div class="invalid-feedback">
+                            Please provide a valid email.
+                        </div>
                     </div>
+
                 </div>
 
             </div>
@@ -56,14 +77,21 @@
                 <div class="col-md-8">
                     <label for="validationCustomUsername" class="form-label"><fmt:message key="sign_up.username" bundle="${lang}"/></label>
                     <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend2"><svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="16" height="16" fill="currentColor"
-                                                                            class="bi bi-person" viewBox="0 0 16 16">
+                <span class="input-group-text" id="inputGroupPrepend2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                  </svg></span>
-                        <input type="text" class="form-control" id="validationCustomUsername"
-                               aria-describedby="inputGroupPrepend2" required minlength="4" maxlength="30" name="username" pattern="/[a-zA-Z][A-Za-z\d\p[[:punct:]]&&[^<>/{}()\[\]]]/">
+                  </svg>
+                </span>
+                        <input type="text" class="form-control <c:if test="${empty requestScope.parameters.username and not empty requestScope.parameters }">is-invalid</c:if>"
+                               id="validationCustomUsername"
+                               aria-describedby="inputGroupPrepend2" required minlength="4" maxlength="30"
+                               name="username" pattern="[A-Za-z\d\p[[:punct:]]&&[^<>/{}()\[\]]]{4,30}"
+                               value="${requestScope.parameters.get('username')}">
+                        <div class="invalid-feedback">
+                            Please provide a valid username.
+                        </div>
                     </div>
+
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -77,13 +105,18 @@
                                 <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                               </svg>
                         </span>
-                        <input type="password" class="form-control" id="validationPass" required
+                        <input type="password" class="form-control <c:if test="${empty requestScope.parameters.password and not empty requestScope.parameters }">is-invalid</c:if>>"
+                               id="validationPass" required
                                aria-describedby="passwordHelpBlock" minlength="8" maxlength="30" name="password">
+                        <div class="invalid-feedback">
+                            Please provide a valid password.
+                        </div>
                     </div>
 
                 </div>
                 <div class="col-md-4">
-                    <label for="validationRepeatPass" class="form-label"><fmt:message key="sign_up.rep_password" bundle="${lang}"/></label>
+                    <label for="validationRepeatPass" class="form-label">
+                        <fmt:message key="sign_up.rep_password" bundle="${lang}"/></label>
                     <div class="input-group has-validation">
                 <span class="input-group-text" id="inputGroupPrepend4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -92,6 +125,9 @@
                   </svg>
                   </span>
                         <input type="password" class="form-control" id="validationRepeatPass" required minlength="8" maxlength="30">
+                        <div class="invalid-feedback">
+                            Please confirm a password.
+                        </div>
                     </div>
 
                 </div>
@@ -127,6 +163,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-<script src="../js/formValidation.js"></script>
+<script src="${pageContext.request.contextPath}/js/formValidation.js"></script>
 </body>
 </html>

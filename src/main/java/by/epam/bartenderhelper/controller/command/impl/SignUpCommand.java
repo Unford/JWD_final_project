@@ -24,32 +24,47 @@ public class SignUpCommand implements Command {
         Router router = new Router();
         Map<String, String> parameters = extractParameters(request);//todo
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
-        if (validator.isFormSignUpValid(parameters)){
+        if (validator.isFormSignUpValid(parameters)) {
             UserService service = UserServiceImpl.getInstance();
             try {
-                if (!service.isUniqueEmail(parameters.get(EMAIL))){
-                    logger.debug("Email: {} isn't unique", parameters.get(EMAIL));
+                String email = parameters.get(EMAIL);
+                String username = parameters.get(USERNAME);
+                boolean uniqueParameters = true;
+                if (!service.isUniqueEmail(email)) {
+                    logger.debug("Email: {} isn't unique", email);
+                    request.setAttribute(NOT_UNIQUE_EMAIL, true);
+                    uniqueParameters = false;
+                }
+                if (!service.isUniqueUsername(username)) {
+                    logger.debug("Username: {} isn't unique", username);
+                    request.setAttribute(NOT_UNIQUE_USERNAME, true);
+                    uniqueParameters = false;
                 }
 
-                if (!service.isUniqueUsername(parameters.get(USERNAME))){
-                    logger.debug("Username: {} isn't unique", parameters.get(USERNAME));
+                if (uniqueParameters) {
+                    service.createAccount(new User.UserBuilder()
+                                    .role(UserRole.CLIENT)
+                                    .email(parameters.get(EMAIL))
+                                    .firstName(parameters.get(FIRST_NAME))
+                                    .lastName(parameters.get(LAST_NAME))
+                                    .username(parameters.get(USERNAME))
+                                    .status(User.Status.WORKING).build(),
+                            parameters.get(PASSWORD));
+
+                    router.setPage(PagePath.MAIN);//todo
+                    router.setType(Router.RouterType.REDIRECT);
+                    return router;
                 }
 
-                service.createAccount(new User.UserBuilder()
-                        .role(UserRole.CLIENT)
-                        .email(parameters.get(EMAIL))
-                        .firstName(parameters.get(FIRST_NAME))
-                        .lastName(parameters.get(LAST_NAME))
-                        .username(parameters.get(USERNAME))
-                        .status(User.Status.WORKING).build(), parameters.get(PASSWORD));
             } catch (ServiceException e) {
                 logger.error(e);
                 throw new CommandException(e);
             }
-        }else {
-            router.setPage(PagePath.SIGN_UP);
-            router.setType(Router.RouterType.REDIRECT);
+
         }
+        request.setAttribute(OLD_PARAMETERS, parameters);
+        router.setPage(PagePath.SIGN_UP);
+
         return router;
     }
 }

@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static by.epam.bartenderhelper.model.util.PropertyManager.APP_CONFIG;
+import static by.epam.bartenderhelper.model.util.ResourceManager.APP_CONFIG;
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();

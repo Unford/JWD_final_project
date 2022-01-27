@@ -34,7 +34,7 @@ public class Controller extends HttpServlet {//
         try {
             router = command.execute(request);
         } catch (CommandException e) {
-            response.sendError(500);
+            response.sendError(500);//todo
         }
         switch (router.getType()){
             case FORWARD -> {
