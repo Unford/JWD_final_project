@@ -44,7 +44,7 @@
                        </c:choose>"
                        id="first_name" required name="first_name" minlength="2" maxlength="30"
                        value="${requestScope.parameters.get("first_name")}"
-                       pattern="[А-ЯA-Zа-яa-z]{2,30}">
+                       pattern="[А-ЯA-Z][а-яa-z]{1,29}">
                 <div class="invalid-feedback">
                     <fmt:message key="sign_up.error.first_name" bundle="${lang}"/>
                 </div>
@@ -64,7 +64,7 @@
                        </c:choose>"
                        id="last_name" required name="last_name" minlength="2" maxlength="30"
                        value="${requestScope.parameters.get("last_name")}"
-                       pattern="[А-ЯA-Zа-яa-z]{2,30}">
+                       pattern="[А-ЯA-Z][а-яa-z]{1,29}">
 
                 <div class="invalid-feedback">
                     <fmt:message key="sign_up.error.last_name" bundle="${lang}"/>

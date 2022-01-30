@@ -9,7 +9,8 @@
 <header class="p-3 mb-2 border-bottom bg-dark">
     <div class="container-fluid">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="${pageContext.request.contextPath}/jsp/main.jsp" class="d-flex align-items-center mb-2 mb-lg-0 ms-lg-0 text-white text-decoration-none">
+            <a href="${pageContext.request.contextPath}/jsp/main.jsp"
+               class="d-flex align-items-center mb-2 mb-lg-0 ms-lg-0 text-white text-decoration-none">
 
                 <svg style="width:32px;height:32px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M7.5,7L5.5,5H18.5L16.5,7M11,13V19H6V21H18V19H13V13L21,5V3H3V5L11,13Z"/>
@@ -36,10 +37,12 @@
                         </c:choose>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown08">
-                        <li><a class="dropdown-item <c:if test="${sessionScope.locale eq 'en'}">active</c:if>" href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en">
+                        <li><a class="dropdown-item <c:if test="${sessionScope.locale eq 'en'}">active</c:if>"
+                               href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en">
                             <span class="flag-icon flag-icon-us me-2"></span>
                             <fmt:message key="header.language.eng" bundle="${lang}"/></a></li>
-                        <li><a class="dropdown-item <c:if test="${sessionScope.locale eq 'ru'}">active</c:if>" href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru">
+                        <li><a class="dropdown-item <c:if test="${sessionScope.locale eq 'ru'}">active</c:if>"
+                               href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru">
                             <span class="flag-icon flag-icon-ru me-2"></span>
                             <fmt:message key="header.language.ru" bundle="${lang}"/></a></li>
                     </ul>
@@ -85,7 +88,7 @@
                         </a>
 
                         <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalSignIn">
                                 <fmt:message key="header.log_in" bundle="${lang}"/>
                             </a></li>
                             <li>
@@ -103,3 +106,82 @@
 
     </div>
 </header>
+<c:if test="${sessionScope.user.role eq 'GUEST'}">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalSignIn">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-5 shadow">
+                <div class="modal-header  border-bottom-0 bg-dark">
+                    <h3 class="modal-title ms-4 text-white"><fmt:message key="header.title" bundle="${lang}"/></h3>
+
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-5 pt-2 pb-0">
+                    <form method="post" action="${pageContext.request.contextPath}/controller"
+                          class="container g-3 needs-validation justify-content-center " novalidate>
+                        <input type="hidden" name="command" value="log_in">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-4" id="floatingInput"
+                                   placeholder="name@example.com"
+                                   required maxlength="40"
+                                   minlength="2"
+                                   pattern="([A-Za-z\d\.\-_&%$#@!*,]{4,30})|([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$)"
+                                   name="login"
+                            >
+
+                            <label for="floatingInput">
+                                <fmt:message key="logIn.login" bundle="${lang}"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                </svg>
+                            </label>
+                            <div class="invalid-feedback">
+                                <fmt:message key="logIn.error.login" bundle="${lang}"/>
+                            </div>
+                        </div>
+                        <div class="form-floating">
+
+                            <input type="password" class="form-control rounded-4" id="floatingPassword"
+                                   name="password"
+                                   placeholder="Password"
+                                   required
+                                   maxlength="30"
+                                   minlength="8"
+                                   pattern="[A-Za-z\d\.\-_&%$#@!*,]{8,30}">
+                            <label for="floatingPassword">
+                                <fmt:message key="logIn.password" bundle="${lang}"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-key" viewBox="0 0 16 16">
+                                    <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                            </label>
+                            <div class="invalid-feedback">
+                                <fmt:message key="logIn.error.password" bundle="${lang}"/>
+                            </div>
+                        </div>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary mt-2" type="submit">
+                            <fmt:message key="logIn.submit" bundle="${lang}"/>
+                        </button>
+                        <a href=""><fmt:message key="logIn.forgotPass" bundle="${lang}"/></a>
+                        <hr class="my-4">
+                        <div class="d-grid  d-md-flex justify-content-md-center">
+                            <a href="${pageContext.request.contextPath}/jsp/registration.jsp">
+                                <button class=" btn btn-lg rounded-4 btn-success" type="button">
+                                    <fmt:message key="logIn.sign_up" bundle="${lang}"/>
+                                </button>
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="${pageContext.request.contextPath}/js/logInFormValidation.js"></script>
+</c:if>
+
