@@ -22,6 +22,9 @@ public final class RequestParameter {
     public static final String NOT_UNIQUE_EMAIL = "unique_email_error";
     public static final String NOT_UNIQUE_USERNAME = "unique_username_error";
 
+    //header
+    public static final String NEW_LOCALE = "locale";
+
 
     public static Map<String, String> extractParameters(HttpServletRequest request){
         Map<String, String> parameters = new HashMap<>();

@@ -1,5 +1,6 @@
 package by.epam.bartenderhelper.controller.command;
 
+import by.epam.bartenderhelper.controller.command.impl.ChangeLocaleCommand;
 import by.epam.bartenderhelper.controller.command.impl.DefaultCommand;
 import by.epam.bartenderhelper.controller.command.impl.LogInCommand;
 import by.epam.bartenderhelper.controller.command.impl.SignUpCommand;
@@ -9,11 +10,12 @@ import org.apache.logging.log4j.Logger;
 public enum CommandType {
     LOG_IN(new LogInCommand()),
     SIGN_UP(new SignUpCommand()),
-    DEFAULT_COMMAND(new DefaultCommand());
+    DEFAULT_COMMAND(new DefaultCommand()),
+    CHANGE_LOCALE(new ChangeLocaleCommand());
 
     private static final Logger logger = LogManager.getLogger();
 
-    private Command command;
+    private final Command command;
 
     CommandType(Command command) {
         this.command = command;

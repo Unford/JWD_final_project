@@ -7,12 +7,13 @@ import java.util.Map;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 
 public class UserFormValidatorImpl implements UserFormValidator {
+
     private static final String INVALID_VALUE_PARAMETER = "";
-    private static final String SAFE_SYMBOL_REGEX = "[A-Za-zs\\d\\p{Punct}&&[^<>/{}()\\[\\]]]";
+    private static final String SAFE_SYMBOL_REGEX = "[\\p{Alpha}\\d\\p{Punct}&&[^<>/{}()\\[\\]]]";
     private static final String USERNAME_REGEX = SAFE_SYMBOL_REGEX + "{4,30}";
     private static final String PASSWORD_REGEX = SAFE_SYMBOL_REGEX + "{8,30}";
-    private static final String NAME_REGEX = "[А-ЯA-Z][а-яa-z]{1,30}";
-    private static final String EMAIL_REGEX = "(([A-Za-z\\d._]+){5,25}@([a-z]+){3,7}\\.([a-z]+){2,3})";//todo change
+    private static final String NAME_REGEX = "[А-Я\\p{Upper}]а-я\\p{Lower}]{2,30}";
+    private static final String EMAIL_REGEX = "[\\p{Lower}\\d._%+-]+@[\\p{Lower}\\d.-]+\\.[\\p{Lower}]{2,4}$";
 
     private static UserFormValidatorImpl instance;
 
@@ -70,7 +71,7 @@ public class UserFormValidatorImpl implements UserFormValidator {
 
     @Override
     public boolean isEmailValid(String email) {
-        return email != null && email.matches(EMAIL_REGEX);
+        return email != null && email.length() <= 40 && email.matches(EMAIL_REGEX);
     }
 }
 

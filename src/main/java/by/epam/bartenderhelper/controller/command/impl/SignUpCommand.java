@@ -30,6 +30,7 @@ public class SignUpCommand implements Command {
                 String email = parameters.get(EMAIL);
                 String username = parameters.get(USERNAME);
                 boolean uniqueParameters = true;
+
                 if (!service.isUniqueEmail(email)) {
                     logger.debug("Email: {} isn't unique", email);
                     request.setAttribute(NOT_UNIQUE_EMAIL, true);
