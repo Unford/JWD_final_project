@@ -25,6 +25,10 @@ public final class RequestParameter {
     //header
     public static final String NEW_LOCALE = "locale";
 
+    //log in
+
+    public static final String LOGIN = "login";
+
 
     public static Map<String, String> extractParameters(HttpServletRequest request){
         Map<String, String> parameters = new HashMap<>();

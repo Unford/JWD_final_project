@@ -55,6 +55,20 @@ public class UserFormValidatorImpl implements UserFormValidator {
     }
 
     @Override
+    public boolean isFormLogInValid(Map<String, String> parameters) {
+        boolean result = true;
+        if (!isUsernameValid(parameters.get(LOGIN)) && !isEmailValid(parameters.get(LOGIN))) {
+            parameters.put(LOGIN, INVALID_VALUE_PARAMETER);
+            result = false;
+        }
+        if (!isPasswordValid(parameters.get(PASSWORD))) {
+            parameters.put(PASSWORD, INVALID_VALUE_PARAMETER);
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
     public boolean isUsernameValid(String username) {
         return username != null && username.matches(USERNAME_REGEX);
     }

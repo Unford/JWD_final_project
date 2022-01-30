@@ -8,8 +8,10 @@ public interface Logic<Q extends SqlQuery> {
     Q in(String... values);
 
     Q or(Column column, LogicOperator operator, String value);
+    Q or(Column column, LogicOperator operator);
     Q or(Column column);
     Q and(Column column, LogicOperator operator, String value);
+    Q and(Column column, LogicOperator operator);
     Q and(Column column);
 
     Q between(String from, String to);

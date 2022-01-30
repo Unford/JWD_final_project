@@ -43,16 +43,18 @@ public class SignUpCommand implements Command {
                 }
 
                 if (uniqueParameters) {
-                    service.createAccount(new User.UserBuilder()
-                                    .role(UserRole.CLIENT)
-                                    .email(parameters.get(EMAIL))
-                                    .firstName(parameters.get(FIRST_NAME))
-                                    .lastName(parameters.get(LAST_NAME))
-                                    .username(parameters.get(USERNAME))
-                                    .status(User.Status.WORKING).build(),
-                            parameters.get(PASSWORD));
+                    User user = new User.UserBuilder()
+                            .role(UserRole.CLIENT)
+                            .email(parameters.get(EMAIL))
+                            .firstName(parameters.get(FIRST_NAME))
+                            .lastName(parameters.get(LAST_NAME))
+                            .username(parameters.get(USERNAME))
+                            .status(User.Status.WORKING)
+                            .build();
 
-                    router.setPage(PagePath.MAIN);//todo
+                    service.createAccount(user, parameters.get(PASSWORD));
+
+                    router.setPage(PagePath.MAIN);
                     router.setType(Router.RouterType.REDIRECT);
                     return router;
                 }

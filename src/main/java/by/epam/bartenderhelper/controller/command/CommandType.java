@@ -4,6 +4,7 @@ import by.epam.bartenderhelper.controller.command.impl.ChangeLocaleCommand;
 import by.epam.bartenderhelper.controller.command.impl.DefaultCommand;
 import by.epam.bartenderhelper.controller.command.impl.LogInCommand;
 import by.epam.bartenderhelper.controller.command.impl.SignUpCommand;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +29,7 @@ public enum CommandType {
     public static Command defineCommand(String command) {
         CommandType commandType = CommandType.DEFAULT_COMMAND;
         try {
+            logger.log(Level.DEBUG, command.toUpperCase());
             commandType = CommandType.valueOf(command.toUpperCase());
         } catch (IllegalArgumentException e) {
             logger.error("Unknown command {}", command, e);

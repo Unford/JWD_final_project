@@ -6,7 +6,7 @@
 <fmt:setBundle basename="page_content" var="lang"/>
 
 
-<header class="p-3 mb-2 border-bottom bg-dark">
+<header class="p-3 mb-2 border-bottom bg-dark fixed-top">
     <div class="container-fluid">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="${pageContext.request.contextPath}/jsp/main.jsp"
@@ -125,7 +125,7 @@
                             <input type="text" class="form-control rounded-4" id="floatingInput"
                                    placeholder="name@example.com"
                                    required maxlength="40"
-                                   minlength="2"
+                                   minlength="4"
                                    pattern="([A-Za-z\d\.\-_&%$#@!*,]{4,30})|([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$)"
                                    name="login"
                             >

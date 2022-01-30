@@ -46,37 +46,51 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUniqueUsername(String username) throws ServiceException {
-        boolean result = true;
+        Optional<User> user;
         EntityTransaction transaction = new EntityTransaction();
         try (transaction){
             UserDaoImpl userDao = new UserDaoImpl();
             transaction.initialize(userDao);
-            Optional<User> user = userDao.findByUsername(username);
-            if (user.isPresent()){
-                result = false;
-            }
+            user = userDao.findByUsername(username);
+
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
         }
-        return result;
+        return user.isEmpty();
     }
 
     @Override
     public boolean isUniqueEmail(String email) throws ServiceException {
-        boolean result = true;
+        Optional<User> user;
         EntityTransaction transaction = new EntityTransaction();
         try (transaction){
             UserDaoImpl userDao = new UserDaoImpl();
             transaction.initialize(userDao);
-            Optional<User> user = userDao.findByEmail(email);
+            user = userDao.findByEmail(email);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return user.isEmpty();
+    }
+
+    @Override
+    public Optional<User> checkUser(String login, String password) throws ServiceException {
+        Optional<User> user;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction){
+            UserDaoImpl userDao = new UserDaoImpl();
+            transaction.initialize(userDao);
+            user = userDao.findByUsernameOrEmail(login);
             if (user.isPresent()){
-                result = false;
+                String dbPassword = userDao.findUserPasswordById(user.get().getId());
+                user = PasswordHash.checkPassword(password, dbPassword) ? user : Optional.empty();
             }
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
         }
-        return result;
+        return user;
     }
 }

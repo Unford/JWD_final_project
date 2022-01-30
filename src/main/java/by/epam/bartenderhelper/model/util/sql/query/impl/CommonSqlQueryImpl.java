@@ -71,6 +71,7 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
         return get();
     }
 
+
     @Override
     public Q count(Column column, boolean distinct) {
         sqlBuilder.append(" COUNT(")
@@ -98,16 +99,28 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
     }
 
     @Override
+    public Q or(Column column, LogicOperator operator) {
+        return or(column, operator, "?");
+    }
+
+    @Override
     public Q or(Column column) {
         sqlBuilder.append(" OR ").append(column);
         return get();
     }
+
+
 
     @Override
     public Q and(Column column, LogicOperator operator, String value) {
         sqlBuilder.append(" AND ");
         appendExpression(column, operator, value);
         return get();
+    }
+
+    @Override
+    public Q and(Column column, LogicOperator operator) {
+        return and(column, operator, "?");
     }
 
     @Override

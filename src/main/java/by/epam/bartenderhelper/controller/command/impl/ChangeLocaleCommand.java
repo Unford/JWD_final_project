@@ -1,6 +1,7 @@
 package by.epam.bartenderhelper.controller.command.impl;
 
 import by.epam.bartenderhelper.controller.command.Command;
+import by.epam.bartenderhelper.controller.command.PagePath;
 import by.epam.bartenderhelper.controller.command.Router;
 import by.epam.bartenderhelper.controller.command.SessionAttribute;
 import by.epam.bartenderhelper.exception.CommandException;
@@ -13,9 +14,7 @@ import static by.epam.bartenderhelper.controller.command.RequestParameter.NEW_LO
 public class ChangeLocaleCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
-        router.setPage(request.getHeader("referer"));//todo
-        router.setType(Router.RouterType.REDIRECT);
+        Router router = PagePath.getPreviousPage(request);
 
         HttpSession session =  request.getSession();
         String locale = request.getParameter(NEW_LOCALE);
