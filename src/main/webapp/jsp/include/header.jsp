@@ -6,25 +6,27 @@
 <fmt:setBundle basename="page_content" var="lang"/>
 
 
-<header class="p-3 mb-2 border-bottom bg-dark fixed-top">
+<header class="p-3 mb-2 border-bottom bg-dark ">
     <div class="container-fluid">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="${pageContext.request.contextPath}/jsp/main.jsp"
-               class="d-flex align-items-center mb-2 mb-lg-0 ms-lg-0 text-white text-decoration-none">
+               class="d-flex align-items-center  text-white text-decoration-none">
 
-                <svg style="width:32px;height:32px" viewBox="0 0 24 24">
+                <svg style="width:calc(1.325rem + .9vw);height: calc(1.325rem + .9vw);" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M7.5,7L5.5,5H18.5L16.5,7M11,13V19H6V21H18V19H13V13L21,5V3H3V5L11,13Z"/>
                 </svg>
                 <h3><fmt:message key="header.title" bundle="${lang}"/></h3>
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li class="nav-item"><a href="#" class="nav-link px-2 "><fmt:message key="header.cocktails"
-                                                                                     bundle="${lang}"/></a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 "><fmt:message key="header.ingredients"
-                                                                                     bundle="${lang}"/></a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/jsp/cocktails.jsp"
+                                        class="nav-link px-2 ">
+                    <fmt:message key="header.cocktails" bundle="${lang}"/></a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/jsp/ingredients.jsp"
+                                        class="nav-link px-2 ">
+                    <fmt:message key="header.ingredients" bundle="${lang}"/></a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle " href="#" id="dropdown08" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle " href="#" id="dropdownLangHeader" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         <c:choose>
                             <c:when test="${sessionScope.locale eq 'en'}">
@@ -36,7 +38,7 @@
                             <c:otherwise><fmt:message key="header.language" bundle="${lang}"/></c:otherwise>
                         </c:choose>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown08">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownLangHeader">
                         <li><a class="dropdown-item <c:if test="${sessionScope.locale eq 'en'}">active</c:if>"
                                href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en">
                             <span class="flag-icon flag-icon-us me-2"></span>
@@ -60,17 +62,33 @@
                     <div class="dropdown text-end">
                         <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
-                                 class="rounded-circle">
-                        </a><!--todo change img -->
+                            <c:choose>
+                                <c:when test="${sessionScope.user.photo.data}">
+                                    <img src="${sessionScope.user.photo.data}" alt="mdo" width="32" height="32"
+                                         class="rounded-circle">
+                                </c:when>
+                                <c:otherwise>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="orange"
+                                         class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                    </svg>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </a>
                         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                             <li><a class="dropdown-item" href="#">
                                 <fmt:message key="header.profile" bundle="${lang}"/></a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">
-                                <fmt:message key="header.sign_out" bundle="${lang}"/></a></li>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/controller?command=sign_out">
+                                    <fmt:message key="header.sign_out" bundle="${lang}"/></a>
+                            </li>
                         </ul>
                     </div>
                 </c:when>
@@ -95,7 +113,8 @@
                                 <hr class="dropdown-divider">
                             </li>
 
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/registration.jsp">
+                            <li><a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/jsp/guest/registration.jsp">
                                 <fmt:message key="header.log_up" bundle="${lang}"/></a></li>
                         </ul>
                     </div>
@@ -162,13 +181,13 @@
                                 <fmt:message key="logIn.error.password" bundle="${lang}"/>
                             </div>
                         </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary mt-2" type="submit">
+                        <button class="w-100 mt-2 mb-2 btn btn-lg rounded-4 btn-primary mt-2" type="submit">
                             <fmt:message key="logIn.submit" bundle="${lang}"/>
                         </button>
-                        <a href=""><fmt:message key="logIn.forgotPass" bundle="${lang}"/></a>
+                        <a href="#"><fmt:message key="logIn.forgotPass" bundle="${lang}"/></a>
                         <hr class="my-4">
                         <div class="d-grid  d-md-flex justify-content-md-center">
-                            <a href="${pageContext.request.contextPath}/jsp/registration.jsp">
+                            <a href="${pageContext.request.contextPath}/jsp/guest/registration.jsp">
                                 <button class=" btn btn-lg rounded-4 btn-success" type="button">
                                     <fmt:message key="logIn.sign_up" bundle="${lang}"/>
                                 </button>

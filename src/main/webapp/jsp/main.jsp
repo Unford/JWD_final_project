@@ -11,11 +11,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.5/css/flag-icons.min.css" rel="stylesheet" type="text/css">
 
-
-
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/carousel/">
-
-
         <!-- Favicons -->
         <link rel="apple-touch-icon" href="/docs/5.1/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
         <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -25,8 +20,7 @@
         <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon.ico">
 
 
-
-        <link href="../css/main.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
 
 </head>
 <body>
@@ -84,10 +78,6 @@
         </button>
     </div>
 
-
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
 
     <div class="container marketing">
 
@@ -160,10 +150,7 @@
 
 
 
-    </div><!-- /.container -->
-
-
-    <!-- FOOTER -->
+    </div>
 
     <jsp:include page="include/footer.jsp"/>
 </main>

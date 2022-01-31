@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class SignOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        return null;
+        request.getSession().invalidate();
+        return new Router();
     }
 }

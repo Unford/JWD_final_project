@@ -26,8 +26,8 @@ public final class RequestParameter {
     public static final String NEW_LOCALE = "locale";
 
     //log in
-
     public static final String LOGIN = "login";
+
 
 
     public static Map<String, String> extractParameters(HttpServletRequest request){

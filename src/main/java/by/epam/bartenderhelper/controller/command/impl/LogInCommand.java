@@ -20,7 +20,8 @@ public class LogInCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = PagePath.getPreviousPage(request);
-        Map<String, String> parameters = extractParameters(request);//todo
+        Map<String, String> parameters = extractParameters(request);
+        logger.debug("log in request parameters {}", parameters);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
         if (validator.isFormLogInValid(parameters)) {
             HttpSession session = request.getSession();
@@ -29,6 +30,7 @@ public class LogInCommand implements Command {
                 Optional<User> user = userService.checkUser(parameters.get(LOGIN), parameters.get(PASSWORD));
                 if (user.isPresent()){
                     session.setAttribute(SessionAttribute.USER, user.get());
+                    return router;
                 }
             } catch (ServiceException e) {
                 logger.error(e);
@@ -36,6 +38,9 @@ public class LogInCommand implements Command {
             }
         }
 
+        router.setPage(PagePath.LOG_IN);
+        router.setType(Router.RouterType.FORWARD);
+        request.setAttribute(LOGIN, parameters.get(LOGIN));
         return router;
     }
 }
