@@ -27,6 +27,7 @@ public final class RequestParameter {
 
     //log in
     public static final String LOGIN = "login";
+    public static final String MESSAGE = "m";
 
 
 
@@ -38,4 +39,5 @@ public final class RequestParameter {
         });
         return parameters;
     }
+
 }

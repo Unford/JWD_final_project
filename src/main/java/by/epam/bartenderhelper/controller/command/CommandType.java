@@ -1,6 +1,9 @@
 package by.epam.bartenderhelper.controller.command;
 
 import by.epam.bartenderhelper.controller.command.impl.*;
+import by.epam.bartenderhelper.controller.command.impl.guest.LogInCommand;
+import by.epam.bartenderhelper.controller.command.impl.guest.SignUpCommand;
+import by.epam.bartenderhelper.controller.command.impl.move.GoToLoginPageCommand;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +12,7 @@ public enum CommandType {
     LOG_IN(new LogInCommand()),
     SIGN_UP(new SignUpCommand()),
     SIGN_OUT(new SignOutCommand()),
+    GO_TO_LOGIN(new GoToLoginPageCommand()),
     DEFAULT_COMMAND(new DefaultCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand());
 

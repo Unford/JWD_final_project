@@ -1,4 +1,4 @@
-package by.epam.bartenderhelper.controller.command.impl;
+package by.epam.bartenderhelper.controller.command.impl.guest;
 
 import by.epam.bartenderhelper.controller.command.*;
 import by.epam.bartenderhelper.exception.CommandException;
@@ -19,16 +19,17 @@ import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 public class LogInCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = PagePath.getPreviousPage(request);
+        Router router = new Router(PagePath.MAIN, Router.RouterType.REDIRECT);
         Map<String, String> parameters = extractParameters(request);
-        logger.debug("log in request parameters {}", parameters);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
+
+        logger.debug("log in request parameters {}", parameters);
         if (validator.isFormLogInValid(parameters)) {
             HttpSession session = request.getSession();
             UserService userService = UserServiceImpl.getInstance();
             try {
                 Optional<User> user = userService.checkUser(parameters.get(LOGIN), parameters.get(PASSWORD));
-                if (user.isPresent()){
+                if (user.isPresent()) {
                     session.setAttribute(SessionAttribute.USER, user.get());
                     return router;
                 }
@@ -37,10 +38,8 @@ public class LogInCommand implements Command {
                 throw new CommandException(e);
             }
         }
-
-        router.setPage(PagePath.LOG_IN);
-        router.setType(Router.RouterType.FORWARD);
-        request.setAttribute(LOGIN, parameters.get(LOGIN));
+        router.setPage(request.getContextPath() + PagePath.LOG_IN_REDIRECT.formatted(parameters.get(LOGIN), 1));//todo
+        router.setType(Router.RouterType.REDIRECT);
         return router;
     }
 }

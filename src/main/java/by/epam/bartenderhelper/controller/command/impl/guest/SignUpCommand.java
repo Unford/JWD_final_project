@@ -1,4 +1,4 @@
-package by.epam.bartenderhelper.controller.command.impl;
+package by.epam.bartenderhelper.controller.command.impl.guest;
 
 import by.epam.bartenderhelper.controller.command.Command;
 import by.epam.bartenderhelper.controller.command.PagePath;

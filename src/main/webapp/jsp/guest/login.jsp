@@ -18,7 +18,6 @@
     <title><fmt:message key="logIn.page_title" bundle="${lang}"/></title>
 </head>
 <body class="d-flex flex-column min-vh-100">
-
 <main class="form-signin text-center">
     <form method="post" action="${pageContext.request.contextPath}/controller" class="needs-validation" novalidate>
         <input type="hidden" name="command" value="log_in">
@@ -32,14 +31,14 @@
             <fmt:message key="logIn.form_title" bundle="${lang}"/>
         </h1>
 
-        <div class="form-floating">
+        <div class="form-floating mb-2">
             <input type="text" class="form-control" id="floatingInput"
                    placeholder="name@example.com"
                    required maxlength="40"
                    minlength="4"
                    pattern="([A-Za-z\d\.\-_&%$#@!*,]{4,30})|([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$)"
                    name="login"
-                   value=<c:out value="${requestScope.login}"/>
+                   value=<c:out value="${param.login}"/>
 
             >
             <label for="floatingInput">
@@ -93,7 +92,11 @@
         </div>
 
     </form>
-
+    <c:if test="${not empty param.m}">
+        <div class="alert alert-danger" role="alert">
+            <fmt:message key="logIn.error.auth" bundle="${lang}"/>
+        </div>
+    </c:if>
 </main>
 
 
