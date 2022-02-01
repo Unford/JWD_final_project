@@ -1,13 +1,15 @@
 package by.epam.bartenderhelper.controller.command;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class RequestParameter {
-    private RequestParameter(){}
+    public static final Logger logger = LogManager.getLogger();
 
     public static final String COMMAND = "command";
 
@@ -30,6 +32,7 @@ public final class RequestParameter {
     public static final String MESSAGE = "m";
 
 
+    private RequestParameter(){}
 
     public static Map<String, String> extractParameters(HttpServletRequest request){
         Map<String, String> parameters = new HashMap<>();
@@ -37,6 +40,7 @@ public final class RequestParameter {
         parameterNames.asIterator().forEachRemaining(s -> {
             parameters.put(s, request.getParameter(s));
         });
+        logger.debug("{} request parameters {}",request.getParameter(COMMAND) ,parameters);
         return parameters;
     }
 

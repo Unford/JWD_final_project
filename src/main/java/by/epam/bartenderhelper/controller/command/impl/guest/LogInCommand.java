@@ -10,6 +10,7 @@ import by.epam.bartenderhelper.model.validator.UserFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.UserFormValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
 
 import java.util.Map;
 import java.util.Optional;
@@ -19,17 +20,17 @@ import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 public class LogInCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router(PagePath.MAIN, Router.RouterType.REDIRECT);
+        Router router = PagePath.getPreviousPage(request);
         Map<String, String> parameters = extractParameters(request);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
 
-        logger.debug("log in request parameters {}", parameters);
         if (validator.isFormLogInValid(parameters)) {
             HttpSession session = request.getSession();
             UserService userService = UserServiceImpl.getInstance();
             try {
                 Optional<User> user = userService.checkUser(parameters.get(LOGIN), parameters.get(PASSWORD));
                 if (user.isPresent()) {
+                    logger.log(Level.INFO, "User: {} signed up", parameters.get(LOGIN));
                     session.setAttribute(SessionAttribute.USER, user.get());
                     return router;
                 }
@@ -38,6 +39,7 @@ public class LogInCommand implements Command {
                 throw new CommandException(e);
             }
         }
+        router.setType(Router.RouterType.REDIRECT);
         router.setPage(request.getContextPath() + PagePath.LOG_IN_REDIRECT.formatted(parameters.get(LOGIN), 1));//todo
         return router;
     }

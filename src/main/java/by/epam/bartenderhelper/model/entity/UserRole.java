@@ -11,7 +11,7 @@ public enum UserRole {
         return super.toString().toLowerCase();
     }
 
-    public static UserRole defineRole(Object from){
-       return UserRole.valueOf(from.toString().toUpperCase());
+    public static UserRole defineRole(String from){
+       return UserRole.valueOf(from.toUpperCase());
     }
 }

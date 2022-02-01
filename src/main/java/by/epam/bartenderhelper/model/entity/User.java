@@ -37,8 +37,8 @@ public final class User extends AbstractDaoEntity {
         public String toString(){
             return super.toString().toLowerCase();
         }
-        public static Status defineStatus(Object from){
-            return Status.valueOf(from.toString().toUpperCase());
+        public static Status defineStatus(String from){
+            return Status.valueOf(from.toUpperCase());
         }
     }
 

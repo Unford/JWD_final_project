@@ -3,6 +3,13 @@ package by.epam.bartenderhelper.controller.command;
 import static by.epam.bartenderhelper.controller.command.PagePath.INDEX;
 
 public class Router {
+    public enum RouterType {
+        FORWARD, REDIRECT
+    }
+
+    private String page = INDEX;
+    private RouterType type = RouterType.FORWARD;
+
     public Router(){
     }
 
@@ -10,13 +17,6 @@ public class Router {
         this.page = page;
         this.type = type;
     }
-
-    public enum RouterType {
-        FORWARD, REDIRECT
-    }
-    private String page = INDEX;
-
-    private RouterType type = RouterType.FORWARD;
 
     public String getPage() {
         return page;

@@ -3,10 +3,6 @@ package by.epam.bartenderhelper.controller.command;
 import jakarta.servlet.http.HttpServletRequest;
 
 public final class PagePath {
-
-    private PagePath() {
-    }
-
     public static final String INDEX = "index.jsp";
     public static final String MAIN = "jsp/main.jsp";
     public static final String SIGN_UP = "jsp/guest/registration.jsp";
@@ -19,10 +15,12 @@ public final class PagePath {
 
     private static final String HEADER_REFERER = "referer";
 
+    private PagePath() {
+    }
+
     public static Router getPreviousPage(HttpServletRequest request) {
         Router router = new Router();
-        router.setPage(request.getHeader(HEADER_REFERER));
-        router.setType(Router.RouterType.REDIRECT);
+        router.setPage(request.getSession().getAttribute(SessionAttribute.CURRENT_PAGE).toString());
         return router;
     }
 

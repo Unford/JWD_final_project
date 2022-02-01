@@ -2,7 +2,6 @@ package by.epam.bartenderhelper.controller.command.impl.guest;
 
 import by.epam.bartenderhelper.controller.command.Command;
 import by.epam.bartenderhelper.controller.command.PagePath;
-import by.epam.bartenderhelper.controller.command.RequestParameter;
 import by.epam.bartenderhelper.controller.command.Router;
 import by.epam.bartenderhelper.exception.CommandException;
 import by.epam.bartenderhelper.exception.ServiceException;
@@ -24,7 +23,6 @@ public class SignUpCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Map<String, String> parameters = extractParameters(request);//todo
-        logger.debug("sign up request parameters {}", parameters);
 
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
         if (validator.isFormSignUpValid(parameters)) {
@@ -56,9 +54,10 @@ public class SignUpCommand implements Command {
                             .build();
 
                     service.createAccount(user, parameters.get(PASSWORD));//dto
+                    logger.log(Level.INFO, "User was created");
+
                     router.setPage(PagePath.MAIN);
                     router.setType(Router.RouterType.REDIRECT);
-                    logger.log(Level.INFO, "User was created");
 
                     return router;
                 }
