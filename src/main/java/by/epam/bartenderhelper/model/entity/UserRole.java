@@ -2,8 +2,8 @@ package by.epam.bartenderhelper.model.entity;
 
 public enum UserRole {
     ADMIN,
-    CLIENT,
     BARTENDER,
+    CLIENT,
     GUEST;
 
     @Override

@@ -9,13 +9,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @WebFilter(urlPatterns = {"/jsp/*"}, filterName = "filter3",
-        dispatcherTypes = {DispatcherType.REQUEST,
+        dispatcherTypes = {
+                DispatcherType.REQUEST,
                 DispatcherType.FORWARD,
-                DispatcherType.INCLUDE
         })
 public class CurrentPageFilter implements Filter {
     public static final Logger logger = LogManager.getLogger();

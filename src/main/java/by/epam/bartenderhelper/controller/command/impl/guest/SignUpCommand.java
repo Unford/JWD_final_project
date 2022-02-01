@@ -11,6 +11,7 @@ import by.epam.bartenderhelper.model.service.UserService;
 import by.epam.bartenderhelper.model.service.impl.UserServiceImpl;
 import by.epam.bartenderhelper.model.validator.UserFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.UserFormValidatorImpl;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 
@@ -22,7 +23,7 @@ public class SignUpCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
-        Map<String, String> parameters = extractParameters(request);//todo
+        Map<String, String> parameters = extractParameters(request);
 
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
         if (validator.isFormSignUpValid(parameters)) {
@@ -53,7 +54,7 @@ public class SignUpCommand implements Command {
                             .status(User.Status.WORKING)
                             .build();
 
-                    service.createAccount(user, parameters.get(PASSWORD));//dto
+                    service.createAccount(user, parameters.get(PASSWORD));//dto todo
                     logger.log(Level.INFO, "User was created");
 
                     router.setPage(PagePath.MAIN);
