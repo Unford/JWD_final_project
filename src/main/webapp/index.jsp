@@ -5,6 +5,6 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<jstl:redirect url="jsp/main.jsp"/>
+<jstl:redirect url="/controller?command=go_to_main"/>
 </body>
 </html>

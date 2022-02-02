@@ -10,10 +10,10 @@
     <div class="container">
         <ul class="nav justify-content-center border-bottom pb-1 mb-1">
             <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/jsp/cocktails.jsp" class="nav-link px-2 text-muted">
+                <a href="${pageContext.request.contextPath}/controller?command=go_to_cocktails" class="nav-link px-2 text-muted">
                     <fmt:message key="header.cocktails" bundle="${lang}"/></a></li>
             <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/jsp/ingredients.jsp"
+                <a href="${pageContext.request.contextPath}/controller?command=go_to_ingredients"
                    class="nav-link px-2 text-muted">
                     <fmt:message key="header.ingredients" bundle="${lang}"/></a></li>
             <li class="nav-item dropdown">

@@ -14,13 +14,15 @@ import static by.epam.bartenderhelper.controller.command.RequestParameter.NEW_LO
 public class ChangeLocaleCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+        HttpSession session =  request.getSession();
         Router router = PagePath.getPreviousPage(request);
 
-        HttpSession session =  request.getSession();
         String locale = request.getParameter(NEW_LOCALE);
+
         if (LocaleValidatorImpl.getInstance().isLocaleValid(locale)) {
             session.setAttribute(SessionAttribute.LOCALE, locale);
         }
+
         return router;
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@WebFilter(urlPatterns = {"/controller"}, filterName = "filter2")
+@WebFilter(urlPatterns = {"/controller"}, filterName = "filter5")
 public class XssFilter implements Filter {
     private static final String XSS_ATTACK_REGEX = "[<>/]";
     private static final String EMPTY_STRING = "";

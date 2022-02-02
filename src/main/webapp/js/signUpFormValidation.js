@@ -14,7 +14,10 @@
         .forEach(function (form) {
 
             form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
+                if (!form.checkValidity() || form.querySelectorAll("input")
+                    .forEach(function (input) {
+                    return input.classList.contains("is-invalid");
+                })) {
                     event.preventDefault()
                     event.stopPropagation()
                 }

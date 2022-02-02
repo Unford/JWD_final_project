@@ -58,7 +58,6 @@ public class SignUpCommand implements Command {
                     logger.log(Level.INFO, "User was created");
 
                     router.setPage(PagePath.MAIN);
-                    router.setType(Router.RouterType.REDIRECT);
 
                     return router;
                 }

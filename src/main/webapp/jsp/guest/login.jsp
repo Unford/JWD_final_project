@@ -21,7 +21,7 @@
 <main class="form-signin text-center">
     <form method="post" action="${pageContext.request.contextPath}/controller" class="needs-validation" novalidate>
         <input type="hidden" name="command" value="log_in">
-        <a href="${pageContext.request.contextPath}/jsp/main.jsp" class="mb-2  text-decoration-none fs-2">
+        <a href="${pageContext.request.contextPath}/controller?command=go_to_main" class="mb-2  text-decoration-none fs-2">
             <fmt:message key="header.title" bundle="${lang}"/>
             <svg style="width:calc(1.325rem + .9vw);height: calc(1.325rem + .9vw);" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M7.5,7L5.5,5H18.5L16.5,7M11,13V19H6V21H18V19H13V13L21,5V3H3V5L11,13Z" />
@@ -83,7 +83,7 @@
         </a>
         <hr class="my-3">
         <div class="d-grid  d-md-flex justify-content-md-center">
-            <a href="${pageContext.request.contextPath}/jsp/guest/registration.jsp">
+            <a href="${pageContext.request.contextPath}/controller?command=go_to_sign_up">
 
             <button class="w-100 btn btn-lg rounded-4 btn-success" type="button">
                 <fmt:message key="logIn.sign_up" bundle="${lang}"/>

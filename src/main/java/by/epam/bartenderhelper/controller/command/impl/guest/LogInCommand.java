@@ -40,7 +40,7 @@ public class LogInCommand implements Command {
             }
         }
         router.setType(Router.RouterType.REDIRECT);
-        router.setPage(request.getContextPath() + PagePath.LOG_IN_REDIRECT.formatted(parameters.get(LOGIN), 1));//todo
+        router.setPage(request.getContextPath() + PagePath.GO_TO_LOG_IN.formatted(parameters.get(LOGIN), 1));//todo
         return router;
     }
 }
