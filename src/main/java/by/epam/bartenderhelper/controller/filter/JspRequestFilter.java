@@ -20,7 +20,7 @@ public class JspRequestFilter implements Filter {
 
         String currentPage = (String) session.getAttribute(SessionAttribute.CURRENT_PAGE);
         httpServletResponse.sendRedirect(currentPage);
-        filterChain.doFilter(servletRequest, servletResponse);
+
 
     }
 }

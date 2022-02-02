@@ -19,9 +19,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @WebServlet(urlPatterns = {"/controller"})
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024,
-fileSizeThreshold = 1024 * 1024,
-  maxRequestSize = 25 * 1024 * 1024)
-public class Controller extends HttpServlet {//
+        fileSizeThreshold = 1024 * 1024,
+        maxRequestSize = 25 * 1024 * 1024)
+public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,7 +42,7 @@ public class Controller extends HttpServlet {//
         } catch (CommandException e) {
             response.sendError(500, e.getMessage());
         }
-        switch (router.getType()){
+        switch (router.getType()) {
             case FORWARD -> {
                 RequestDispatcher dispatcher = request.getRequestDispatcher(router.getPage());
                 dispatcher.forward(request, response);

@@ -14,8 +14,11 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
+
         HttpSession session = se.getSession();
         session.setAttribute(SessionAttribute.LOCALE, DEFAULT_LOCALE);
         session.setAttribute(SessionAttribute.USER, new User.UserBuilder().role(UserRole.GUEST).build());
     }
+
+
 }

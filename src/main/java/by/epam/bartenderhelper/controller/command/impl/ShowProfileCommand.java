@@ -39,7 +39,7 @@ public class ShowProfileCommand implements Command {
         if (userProfile != null){
             request.setAttribute(RequestParameter.USER_PROFILE, userProfile);
             router.setPage(PagePath.PROFILE);
-
+            router.setType(Router.RouterType.FORWARD);
         }
         return router;
     }
