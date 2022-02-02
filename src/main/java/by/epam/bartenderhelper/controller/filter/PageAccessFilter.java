@@ -17,8 +17,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/jsp/*"}, filterName = "filter4",//todo url pattern
         dispatcherTypes = {
-        DispatcherType.REQUEST,//todo forward??
-        DispatcherType.FORWARD,
+        DispatcherType.REQUEST//todo forward??
 })
 public class PageAccessFilter implements Filter {
     public static final Logger logger = LogManager.getLogger();

@@ -13,6 +13,8 @@ public enum CommandType {
     SIGN_UP(new SignUpCommand()),
     SIGN_OUT(new SignOutCommand()),
     GO_TO_LOGIN(new GoToLoginPageCommand()),
+    SHOW_PROFILE(new ShowProfileCommand()),
+    EDIT_PROFILE_COMMAND(new EditProfileCommand()),
     DEFAULT_COMMAND(new DefaultCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand());
 

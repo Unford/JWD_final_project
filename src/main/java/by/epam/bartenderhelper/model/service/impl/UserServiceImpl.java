@@ -93,4 +93,20 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public Optional<User> findUserProfile(String info) throws ServiceException {
+        Optional<User> user;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction){
+            UserDaoImpl userDao = new UserDaoImpl();
+            transaction.initialize(userDao);
+            user = userDao.findByIdOrUsername(info);
+
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return user;
+    }
 }

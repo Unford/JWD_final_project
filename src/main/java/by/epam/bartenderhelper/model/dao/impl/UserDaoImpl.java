@@ -68,6 +68,21 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
             .groupBy(USER_ID)
             .toString();
 
+    private static final String FIND_USER_BY_USERNAME_OR_ID_QUERY = SqlBuilderFactory.select()
+            .selectColumns(Table.USERS)
+            .selectColumn(PHOTO_DATA)
+            .selectColumn(PHOTO_NAME)
+            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
+            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
+            .from(Table.USERS)
+            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
+            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
+            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+            .where(USER_USERNAME, LogicOperator.EQUALS)
+            .or(USER_ID, LogicOperator.EQUALS)
+            .groupBy(USER_ID)
+            .toString();
+
     private static final String CREATE_USER_QUERY = SqlBuilderFactory.insert(Table.USERS)
             .setColumns(Table.USERS)
             .toString();
@@ -253,6 +268,24 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     }
 
     @Override
+    public Optional<User> findByIdOrUsername(String login) throws DaoException {
+        Optional<User> user = Optional.empty();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_USERNAME_OR_ID_QUERY)) {
+            statement.setString(1, login);
+            statement.setString(2, login);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = Optional.ofNullable(mapEntity(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Find user by username or id query error", e);
+            throw new DaoException("Find user by username or id query error", e);
+        }
+        return user;
+    }
+
+    @Override
     public String findUserPasswordById(long id) throws DaoException {
         String passwordHash = null;
         try (PreparedStatement statement = connection.prepareStatement(FIND_USER_PASSWORD_BY_ID)) {
@@ -291,6 +324,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
                     .username(resultSet.getString(USER_USERNAME.getName()))
                     .firstName(resultSet.getString(USER_FIRST_NAME.getName()))
                     .lastName(resultSet.getString(USER_LAST_NAME.getName()))
+                    .description(resultSet.getString(USER_DESCRIPTION.getName()))
                     .email(resultSet.getString(USER_EMAIL.getName()))
                     .role(UserRole.defineRole(resultSet.getObject(USER_ROLE.getName()).toString()))
                     .status(User.Status.defineStatus(resultSet.getObject(USER_STATUS.getName()).toString()))

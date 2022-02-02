@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<taglib version="3.0"
+
+        xmlns="http://java.sun.com/xml/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+
+    <tlib-version>1.0</tlib-version>
+
+    <jsp-version>3.0</jsp-version>
+    <short-name>customTags</short-name>
+    <uri>http://vladimirFeschenko</uri>
+
+    <tag>
+        <name>review</name>
+        <tag-class>by.epam.bartenderhelper.view.ReviewTag</tag-class>
+        <attribute>
+            <name>reviewId</name>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+</taglib>

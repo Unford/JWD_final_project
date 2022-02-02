@@ -14,6 +14,7 @@ public class UserFormValidatorImpl implements UserFormValidator {
     private static final String PASSWORD_REGEX = SAFE_SYMBOL_REGEX + "{8,30}";
     private static final String NAME_REGEX = "[А-Я\\p{Upper}][а-я\\p{Lower}]{2,30}";
     private static final String EMAIL_REGEX = "[\\p{Lower}\\d._%+-]+@[\\p{Lower}\\d.-]+\\.[\\p{Lower}]{2,4}$";
+    private static final String PROFILE_REGEX = "\\d+|" + USERNAME_REGEX;
 
     private static UserFormValidatorImpl instance;
 
@@ -86,6 +87,11 @@ public class UserFormValidatorImpl implements UserFormValidator {
     @Override
     public boolean isEmailValid(String email) {
         return email != null && email.length() <= 40 && email.matches(EMAIL_REGEX);
+    }
+
+    @Override
+    public boolean isUserProfileValid(String id) {
+        return id != null && id.matches(PROFILE_REGEX);
     }
 }
 

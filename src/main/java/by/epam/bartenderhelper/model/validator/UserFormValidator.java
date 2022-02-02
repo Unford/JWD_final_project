@@ -9,4 +9,5 @@ public interface UserFormValidator {
     boolean isPasswordValid(String password);
     boolean isNameValid(String name);
     boolean isEmailValid(String email);
+    boolean isUserProfileValid(String id);
 }

@@ -7,10 +7,11 @@ public enum Column {
 
     //users
     USER_ID("user_id", Type.ID),
-    USER_USERNAME("login"),
+    USER_USERNAME("username"),
     USER_PASSWORD("password", Type.NULLABLE),
     USER_FIRST_NAME("first_name"),
     USER_LAST_NAME("last_name"),
+    USER_DESCRIPTION("description", Type.NULLABLE),
     USER_EMAIL("email"),
     USER_ROLE("role"),
     USER_STATUS("status"),

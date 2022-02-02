@@ -10,6 +10,8 @@ public interface UserDao {
     Optional<User> findByUsername(String username) throws DaoException;
     Optional<User> findByEmail(String email) throws DaoException;
     Optional<User> findByUsernameOrEmail(String login) throws DaoException;
+    Optional<User> findByIdOrUsername(String login) throws DaoException;
+
     String findUserPasswordById(long id)throws DaoException;
 
 }

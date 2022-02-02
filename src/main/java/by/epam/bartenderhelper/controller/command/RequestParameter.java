@@ -31,6 +31,10 @@ public final class RequestParameter {
     public static final String LOGIN = "login";
     public static final String MESSAGE = "m";
 
+    //profile
+    public static final String USER_PROFILE = "user";
+
+
 
     private RequestParameter(){}
 

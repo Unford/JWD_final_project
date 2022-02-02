@@ -6,6 +6,7 @@ public final class User extends AbstractDaoEntity {
     private final String username;
     private final String firstName;
     private final String lastName;
+    private final String description;
     private final String email;
     private final UserRole userRole;
     private final Status status;
@@ -18,6 +19,7 @@ public final class User extends AbstractDaoEntity {
         this.username = builder.username;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
+        this.description = builder.description;
         this.email = builder.email;
         this.userRole = builder.userRole;
         this.status = builder.status;
@@ -58,6 +60,10 @@ public final class User extends AbstractDaoEntity {
         return email;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public UserRole getRole() {
         return userRole;
     }
@@ -80,7 +86,7 @@ public final class User extends AbstractDaoEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;//todo null
+        if (this == o) return true;
         if (!(o instanceof User)) return false;
         if (!super.equals(o)) return false;
 
@@ -89,6 +95,7 @@ public final class User extends AbstractDaoEntity {
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (description != null ? !description.equals(user.description) : user.description != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (userRole != user.userRole) return false;
         if (status != user.status) return false;
@@ -103,6 +110,7 @@ public final class User extends AbstractDaoEntity {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
@@ -116,11 +124,12 @@ public final class User extends AbstractDaoEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("userId=").append(id);
-        sb.append(", login='").append(username).append('\'');
+        sb.append(", username='").append(username).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", description='").append(description).append('\'');
         sb.append(", email='").append(email).append('\'');
-        sb.append(", role=").append(userRole);
+        sb.append(", userRole=").append(userRole);
         sb.append(", status=").append(status);
         sb.append(", photo=").append(photo);
         sb.append(", reviews=").append(reviews);
@@ -134,6 +143,7 @@ public final class User extends AbstractDaoEntity {
         private String username;
         private String firstName;
         private String lastName;
+        private String description;
         private String email;
         private UserRole userRole;
         private Status status;
@@ -158,6 +168,11 @@ public final class User extends AbstractDaoEntity {
 
         public UserBuilder lastName(String lastName){
             this.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder description(String description){
+            this.description = description;
             return this;
         }
 

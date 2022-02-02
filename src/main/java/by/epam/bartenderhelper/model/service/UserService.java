@@ -11,5 +11,7 @@ public interface UserService {
     boolean isUniqueUsername(String username) throws ServiceException;
     boolean isUniqueEmail(String email) throws ServiceException;
     Optional<User> checkUser(String login, String password) throws ServiceException;
+    Optional<User> findUserProfile(String login) throws ServiceException;
+
 
 }

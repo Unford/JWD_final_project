@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%@taglib prefix="cst" uri="custom" %>
+
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="page_content" var="lang"/>
 
@@ -78,7 +80,16 @@
         </button>
     </div>
 
+    <form method="post" action="${pageContext.request.contextPath}/controller" enctype="multipart/form-data">
+        <input type="hidden" name="command" value="edit_profile_command">
+        <input type="text" value="SDASDASD" name="text">
+        <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+        <input type="number" value="123" name="num">
+        <button type="submit">submit</button>
+    </form>
 
+    <img src="${img}" width="100px">
+    <cst:review reviewId="3"/>
     <div class="container marketing">
 
         <!-- Three columns of text below the carousel -->
