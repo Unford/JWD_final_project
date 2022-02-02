@@ -1,4 +1,4 @@
-package by.epam.bartenderhelper.model.util.sql.query;
+package by.epam.bartenderhelper.model.dao.sql.query;
 
 public enum JoinType {
     INNER,

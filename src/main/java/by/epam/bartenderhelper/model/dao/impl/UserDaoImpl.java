@@ -6,10 +6,10 @@ import by.epam.bartenderhelper.model.entity.Photo;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.exception.DaoException;
 import by.epam.bartenderhelper.model.entity.UserRole;
-import by.epam.bartenderhelper.model.util.sql.SqlBuilderFactory;
-import by.epam.bartenderhelper.model.util.sql.Table;
-import by.epam.bartenderhelper.model.util.sql.query.JoinType;
-import by.epam.bartenderhelper.model.util.sql.query.LogicOperator;
+import by.epam.bartenderhelper.model.dao.sql.SqlBuilderFactory;
+import by.epam.bartenderhelper.model.dao.sql.Table;
+import by.epam.bartenderhelper.model.dao.sql.query.JoinType;
+import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static by.epam.bartenderhelper.model.util.sql.Column.*;
+import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo

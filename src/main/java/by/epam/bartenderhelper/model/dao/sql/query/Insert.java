@@ -1,7 +1,7 @@
-package by.epam.bartenderhelper.model.util.sql.query;
+package by.epam.bartenderhelper.model.dao.sql.query;
 
-import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.Table;
+import by.epam.bartenderhelper.model.dao.sql.Column;
+import by.epam.bartenderhelper.model.dao.sql.Table;
 
 public interface Insert extends SqlQuery{
     Insert setColumns(Column... columns);

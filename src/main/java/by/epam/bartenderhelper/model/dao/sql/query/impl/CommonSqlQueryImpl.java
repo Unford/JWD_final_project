@@ -1,11 +1,11 @@
-package by.epam.bartenderhelper.model.util.sql.query.impl;
+package by.epam.bartenderhelper.model.dao.sql.query.impl;
 
-import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.Table;
-import by.epam.bartenderhelper.model.util.sql.query.LogicOperator;
-import by.epam.bartenderhelper.model.util.sql.query.SqlQuery;
-import by.epam.bartenderhelper.model.util.sql.query.common.AggregationFunction;
-import by.epam.bartenderhelper.model.util.sql.query.common.From;
+import by.epam.bartenderhelper.model.dao.sql.Column;
+import by.epam.bartenderhelper.model.dao.sql.Table;
+import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
+import by.epam.bartenderhelper.model.dao.sql.query.SqlQuery;
+import by.epam.bartenderhelper.model.dao.sql.query.common.AggregationFunction;
+import by.epam.bartenderhelper.model.dao.sql.query.common.From;
 
 abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, AggregationFunction<Q> {
     protected StringBuilder sqlBuilder = new StringBuilder();

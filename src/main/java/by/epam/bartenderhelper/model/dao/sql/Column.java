@@ -1,4 +1,4 @@
-package by.epam.bartenderhelper.model.util.sql;
+package by.epam.bartenderhelper.model.dao.sql;
 
 
 import java.util.Arrays;

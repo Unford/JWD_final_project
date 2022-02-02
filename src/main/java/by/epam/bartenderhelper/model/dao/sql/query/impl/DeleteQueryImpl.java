@@ -1,6 +1,6 @@
-package by.epam.bartenderhelper.model.util.sql.query.impl;
+package by.epam.bartenderhelper.model.dao.sql.query.impl;
 
-import by.epam.bartenderhelper.model.util.sql.query.Delete;
+import by.epam.bartenderhelper.model.dao.sql.query.Delete;
 
 public class DeleteQueryImpl extends CommonSqlQueryImpl<Delete> implements Delete {
 

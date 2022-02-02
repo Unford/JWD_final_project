@@ -9,9 +9,7 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
     <title><fmt:message key="profile.title" bundle="${lang}"/></title>
 
@@ -68,13 +66,13 @@
                                         <c:when test="${requestScope.user.role == 'BARTENDER'}">
                                             <fmt:message key="profile.role.bartender" bundle="${lang}"/>
                                         </c:when>
-                                        <c:when test="${requestScope.user.role == 'USER'}">
+                                        <c:when test="${requestScope.user.role == 'CLIENT'}">
                                             <fmt:message key="profile.role.client" bundle="${lang}"/>
                                         </c:when>
                                     </c:choose>
                                 </h4>
                                 <c:choose>
-                                    <c:when test="${requestScope.user.photo.data}">
+                                    <c:when test="${not empty requestScope.user.photo.data}">
                                         <img src="${requestScope.user.photo.data}" alt="${requestScope.user.photo.name}"
                                              class="rounded-circle float-md-"
                                              style="width: 100%; max-width: 415px; min-width: 200px;">

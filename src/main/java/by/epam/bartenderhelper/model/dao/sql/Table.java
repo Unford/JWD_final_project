@@ -1,10 +1,10 @@
-package by.epam.bartenderhelper.model.util.sql;
+package by.epam.bartenderhelper.model.dao.sql;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 
-import static by.epam.bartenderhelper.model.util.sql.Column.*;
+import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 public enum Table {
     USERS (USER_ID, USER_USERNAME, USER_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_DESCRIPTION,

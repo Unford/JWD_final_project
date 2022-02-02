@@ -33,6 +33,9 @@ public final class RequestParameter {
 
     //profile
     public static final String USER_PROFILE = "user";
+    public static final String RATING = "rating";
+    public static final String COMMENT = "comment";
+
 
 
 

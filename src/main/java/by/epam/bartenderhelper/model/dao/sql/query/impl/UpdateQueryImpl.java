@@ -1,8 +1,8 @@
-package by.epam.bartenderhelper.model.util.sql.query.impl;
+package by.epam.bartenderhelper.model.dao.sql.query.impl;
 
-import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.Table;
-import by.epam.bartenderhelper.model.util.sql.query.Update;
+import by.epam.bartenderhelper.model.dao.sql.Column;
+import by.epam.bartenderhelper.model.dao.sql.Table;
+import by.epam.bartenderhelper.model.dao.sql.query.Update;
 
 import java.util.Arrays;
 

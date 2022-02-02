@@ -1,9 +1,9 @@
-package by.epam.bartenderhelper.model.util.sql.query;
+package by.epam.bartenderhelper.model.dao.sql.query;
 
 
-import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.Table;
-import by.epam.bartenderhelper.model.util.sql.query.common.From;
+import by.epam.bartenderhelper.model.dao.sql.Column;
+import by.epam.bartenderhelper.model.dao.sql.Table;
+import by.epam.bartenderhelper.model.dao.sql.query.common.From;
 
 public interface Select extends SqlQuery, From<Select> {
     Select selectColumns(Table table);

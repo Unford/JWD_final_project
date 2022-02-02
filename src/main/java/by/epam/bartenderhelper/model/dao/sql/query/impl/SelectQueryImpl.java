@@ -1,11 +1,11 @@
-package by.epam.bartenderhelper.model.util.sql.query.impl;
+package by.epam.bartenderhelper.model.dao.sql.query.impl;
 
-import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.Table;
-import by.epam.bartenderhelper.model.util.sql.query.JoinType;
-import by.epam.bartenderhelper.model.util.sql.query.LogicOperator;
-import by.epam.bartenderhelper.model.util.sql.query.OrderType;
-import by.epam.bartenderhelper.model.util.sql.query.Select;
+import by.epam.bartenderhelper.model.dao.sql.Column;
+import by.epam.bartenderhelper.model.dao.sql.Table;
+import by.epam.bartenderhelper.model.dao.sql.query.JoinType;
+import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
+import by.epam.bartenderhelper.model.dao.sql.query.OrderType;
+import by.epam.bartenderhelper.model.dao.sql.query.Select;
 
 public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Select {
 

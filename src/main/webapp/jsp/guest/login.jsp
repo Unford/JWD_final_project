@@ -17,6 +17,7 @@
 
     <title><fmt:message key="logIn.page_title" bundle="${lang}"/></title>
 </head>
+
 <body class="d-flex flex-column min-vh-100">
 <main class="form-signin text-center">
     <form method="post" action="${pageContext.request.contextPath}/controller" class="needs-validation" novalidate>

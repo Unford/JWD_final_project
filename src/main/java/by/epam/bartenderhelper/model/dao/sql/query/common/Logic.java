@@ -1,8 +1,8 @@
-package by.epam.bartenderhelper.model.util.sql.query.common;
+package by.epam.bartenderhelper.model.dao.sql.query.common;
 
-import by.epam.bartenderhelper.model.util.sql.Column;
-import by.epam.bartenderhelper.model.util.sql.query.LogicOperator;
-import by.epam.bartenderhelper.model.util.sql.query.SqlQuery;
+import by.epam.bartenderhelper.model.dao.sql.Column;
+import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
+import by.epam.bartenderhelper.model.dao.sql.query.SqlQuery;
 
 public interface Logic<Q extends SqlQuery> {
     Q in(String... values);
