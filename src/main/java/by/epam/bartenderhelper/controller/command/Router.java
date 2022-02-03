@@ -4,11 +4,12 @@ import static by.epam.bartenderhelper.controller.command.PagePath.INDEX;
 
 public class Router {
     public enum RouterType {
-        FORWARD, REDIRECT
+        FORWARD, REDIRECT, ERROR
     }
 
     private String page = INDEX;
     private RouterType type = RouterType.FORWARD;
+    private int errorCode = 404;
 
     public Router(){
     }
@@ -32,5 +33,13 @@ public class Router {
 
     public void setType(RouterType type) {
         this.type = type;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 }

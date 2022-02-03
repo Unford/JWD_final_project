@@ -48,6 +48,9 @@ public class Controller extends HttpServlet {
                 dispatcher.forward(request, response);
             }
             case REDIRECT -> response.sendRedirect(router.getPage());
+
+            case ERROR -> response.sendError(router.getErrorCode());
+
             default -> response.sendError(404);
         }
     }

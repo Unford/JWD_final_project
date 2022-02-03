@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="cst" uri="custom" %>
 
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="page_content" var="lang"/>
@@ -25,8 +26,8 @@
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="../include/header.jsp"/>
 
-<main>
-    <div class="container-fluid">
+<main class="w-100 h-100">
+    <div class="container">
         <div class="d-flex align-items-center">
             <div class="nav flex-column nav-pills me-lg-3" id="v-pills-tab" role="tablist"
                  aria-orientation="vertical">
@@ -39,15 +40,14 @@
                         data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages"
                         aria-selected="false">
                     <fmt:message key="header.cocktails" bundle="${lang}"/>
-
-                    <span class="badge bg-secondary">5</span>
+                    <span class="badge bg-secondary">${requestScope.user.cocktails.size()}</span>
 
                 </button>
                 <button class="nav-link" id="v-pills-reviews-tab" data-bs-toggle="pill"
                         data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews"
                         aria-selected="false">
                     <fmt:message key="profile.reviews" bundle="${lang}"/>
-                    <span class="badge bg-secondary">4</span>
+                    <span class="badge bg-secondary">${requestScope.user.reviews.size()}</span>
 
                 </button>
 
@@ -79,8 +79,8 @@
                                     </c:when>
                                     <c:otherwise>
                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                             style="width: 100%; max-width: 415px; min-width: 200px;" fill="orange"
-                                             class="bi bi-person-circle" viewBox="0 0 16 16">
+                                             style="width: 100%; max-width: 415px; " fill="blue"
+                                             class="bi bi-person-circle mb-1" viewBox="0 0 16 16">
                                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                                             <path fill-rule="evenodd"
                                                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -114,18 +114,12 @@
 
                                         <div class="row">
                                             <div class="col">
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
+                                                <cst:rating value="4.5"/>
                                             </div>
 
                                             <div class="col">
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
-                                                <i class="fa fa-star rating-color"></i>
+                                                <cst:rating value="3.7"/>
+
 
                                             </div>
 
@@ -202,8 +196,25 @@
                         <div class="container-fluid">
                             <div class="row g-0 ">
                                 <div class="col-2 col-md-1 align-self-center ">
-                                    <img src="res/ma.png" class="img-thumbnail" alt="..."
-                                         style="height: 80px; width: 80px; ">
+
+
+                                    <c:choose>
+                                        <c:when test="${not empty requestScope.user.photo.data}">
+                                            <img src="${requestScope.user.photo.data}" class="img-thumbnail" alt="${requestScope.user.photo.name}"
+                                                 style="height: 80px; width: 80px; ">    <!--todo!-->
+                                        </c:when>
+                                        <c:otherwise>
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 style="height: 80px; width: 80px; " fill="black"
+                                                 class="bi bi-person-circle mb-1 img-thumbnail" viewBox="0 0 16 16">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                            </svg>
+                                        </c:otherwise>
+                                    </c:choose>
+
+
                                 </div>
                                 <div class="col-10 ">
                                     <div class="card-body">

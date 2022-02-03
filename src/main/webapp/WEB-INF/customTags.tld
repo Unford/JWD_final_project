@@ -20,4 +20,13 @@
         </attribute>
     </tag>
 
+    <tag>
+        <name>rating</name>
+        <tag-class>by.epam.bartenderhelper.view.RatingTag</tag-class>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+        </attribute>
+    </tag>
+
 </taglib>

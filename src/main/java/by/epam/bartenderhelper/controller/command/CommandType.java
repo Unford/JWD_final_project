@@ -31,7 +31,7 @@ public enum CommandType {
     SIGN_UP(new SignUpCommand(), GUEST),
 
     SIGN_OUT(new SignOutCommand(), CLIENT, ADMIN, BARTENDER),//todo all???
-    SHOW_PROFILE(new ShowProfileCommand(), CLIENT, ADMIN, BARTENDER),
+    SHOW_PROFILE(new ShowProfileCommand()),
     EDIT_PROFILE_COMMAND(new EditProfileCommand(), CLIENT, ADMIN, BARTENDER);
 
 
