@@ -3,9 +3,12 @@ package by.epam.bartenderhelper.controller.command.impl.common;
 import by.epam.bartenderhelper.controller.command.*;
 import by.epam.bartenderhelper.exception.CommandException;
 import by.epam.bartenderhelper.exception.ServiceException;
+import by.epam.bartenderhelper.model.entity.Review;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.model.entity.UserRole;
+import by.epam.bartenderhelper.model.service.ReviewService;
 import by.epam.bartenderhelper.model.service.UserService;
+import by.epam.bartenderhelper.model.service.impl.ReviewServiceImpl;
 import by.epam.bartenderhelper.model.service.impl.UserServiceImpl;
 import by.epam.bartenderhelper.model.validator.UserFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.UserFormValidatorImpl;
@@ -20,33 +23,37 @@ public class ShowProfileCommand implements Command {
         router.setType(Router.RouterType.ERROR);
 
         String user = request.getParameter(RequestParameter.USER);
-        User userProfile = null;
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
+        User currentUser = (User) request.getSession().getAttribute(SessionAttribute.USER);
+        User userProfile = null;
 
-        if (user != null) {
-            if (validator.isUserProfileValid(user)) {
-                UserService service = UserServiceImpl.getInstance();
-                try {
-                    Optional<User> optionalUser = service.findUserProfile(user);
+        try {
+            if (user != null) {
+                if (validator.isUserProfileValid(user)) {
+                    UserService userService = UserServiceImpl.getInstance();
+                    Optional<User> optionalUser = userService.findUserProfile(user);
                     if (optionalUser.isPresent()) {
                         userProfile = optionalUser.get();
                     }
-                } catch (ServiceException e) {
-                    logger.error(e);
-                    throw new CommandException(e);
                 }
+            } else {
+                userProfile = currentUser.getRole() != UserRole.GUEST ? currentUser : null;
             }
-        } else {
-            User currentUser = (User) request.getSession().getAttribute(SessionAttribute.USER);
-            userProfile = currentUser.getRole() != UserRole.GUEST ? currentUser : null;
-        }
 
-        if (userProfile != null) {
-            request.setAttribute(RequestParameter.USER, userProfile);
-            router.setPage(PagePath.PROFILE);
-            router.setType(Router.RouterType.FORWARD);
+            if (userProfile != null) {
+                if (userProfile.getId() != currentUser.getId()){
+                    ReviewService reviewService = ReviewServiceImpl.getInstance();
+                    Optional<Review> currentUserReview = reviewService.findUserReview(userProfile.getId(), currentUser.getId());
+                    currentUserReview.ifPresent(review -> request.setAttribute(RequestParameter.MY_REVIEW, review));
+                }
+                request.setAttribute(RequestParameter.USER, userProfile);
+                router.setPage(PagePath.PROFILE);
+                router.setType(Router.RouterType.FORWARD);
+            }
+        } catch (ServiceException e) {
+            logger.error(e);
+            throw new CommandException(e);
         }
-
         return router;
     }
 }

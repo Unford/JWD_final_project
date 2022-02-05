@@ -24,6 +24,8 @@ public final class PagePath {
 
     public static final String GO_TO_MAIN = "/controller?command=go_to_main";
 
+    public static final String REVIEW_AJAX = "jsp/include/review.jsp";
+
 
 
 

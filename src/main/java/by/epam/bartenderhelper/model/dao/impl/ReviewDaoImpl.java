@@ -138,7 +138,7 @@ public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
     protected Review mapEntity(ResultSet resultSet) throws DaoException {
         try {
             return new Review.ReviewBuilder()
-                    .reviewId(resultSet.getLong(PHOTO_ID.getName()))
+                    .reviewId(resultSet.getLong(REVIEW_ID.getName()))
                     .message(resultSet.getString(REVIEW_MESSAGE.getName()))
                     .score(resultSet.getDouble(REVIEW_SCORE.getName()))
                     .timestamp(resultSet.getTimestamp(REVIEW_DATE.getName()).toInstant())

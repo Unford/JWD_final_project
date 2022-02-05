@@ -33,7 +33,7 @@ public class RatingTag extends TagSupport {
             if (DoubleRounder.round(value, 0) > value){
                 out.print("<i class=\"fa fa-star-half-o\" aria-hidden=\"true\"></i>");
             }
-            out.print("(%.2f)".formatted(value));
+            out.print("(%.1f)".formatted(value));
 
 
 

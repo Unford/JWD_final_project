@@ -2,10 +2,7 @@ package by.epam.bartenderhelper.controller.command;
 
 import by.epam.bartenderhelper.controller.command.impl.admin.ChangeAccountStatusCommand;
 import by.epam.bartenderhelper.controller.command.impl.auth.*;
-import by.epam.bartenderhelper.controller.command.impl.common.ChangeLocaleCommand;
-import by.epam.bartenderhelper.controller.command.impl.common.DefaultCommand;
-import by.epam.bartenderhelper.controller.command.impl.common.SearchCommand;
-import by.epam.bartenderhelper.controller.command.impl.common.ShowProfileCommand;
+import by.epam.bartenderhelper.controller.command.impl.common.*;
 import by.epam.bartenderhelper.controller.command.impl.guest.LogInCommand;
 import by.epam.bartenderhelper.controller.command.impl.guest.SignUpCommand;
 import by.epam.bartenderhelper.controller.command.impl.move.*;
@@ -29,6 +26,7 @@ public enum CommandType {
     GO_TO_SEARCH(new GoToSearchPageCommand()),
     GO_TO_EDIT_PROFILE(new GoToEditProfilePageCommand(), CLIENT, BARTENDER, ADMIN),
 
+    SHOW_USER_REVIEWS(new GetUserReviewsCommand()),
     SHOW_PROFILE(new ShowProfileCommand()),
     SEARCH(new SearchCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),

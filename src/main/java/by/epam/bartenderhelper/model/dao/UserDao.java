@@ -15,6 +15,7 @@ public interface UserDao {
     String findUserPasswordById(long id)throws DaoException;
     boolean updateStatus(long id, User.Status status) throws DaoException;
     boolean updateIsDeleted(long id, boolean value) throws DaoException;
+    boolean createReview(long id, long reviewId) throws DaoException;
 
 
 }

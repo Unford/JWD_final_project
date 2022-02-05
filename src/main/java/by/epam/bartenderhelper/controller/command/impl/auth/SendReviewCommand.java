@@ -33,7 +33,7 @@ public class SendReviewCommand implements Command {
 
                 ReviewService service = ReviewServiceImpl.getInstance();
                 User currentUser = (User) session.getAttribute(SessionAttribute.USER);
-                if (service.checkUserReview(userId, currentUser.getId())) {
+                if (userId != currentUser.getId() && service.checkUserReview(userId, currentUser.getId())) {
                     Review review = new Review.ReviewBuilder()
                             .message(message)
                             .score(score)

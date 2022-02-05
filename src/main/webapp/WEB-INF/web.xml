@@ -13,6 +13,10 @@
         <error-code>500</error-code>
         <location>/jsp/error/500_error.jsp</location>
     </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/jsp/error/500_error.jsp</location>
+    </error-page>
 
 
     <jsp-config>

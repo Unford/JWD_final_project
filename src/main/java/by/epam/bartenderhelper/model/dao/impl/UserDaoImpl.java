@@ -76,16 +76,18 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             .groupBy(USER_ID)
             .toString();
 
-    private static final String FIND_USER_BY_EMAIL = getUserSelectQuery()
+    private static final String FIND_USER_BY_EMAIL_QUERY = getUserSelectQuery()
             .where(USER_EMAIL, LogicOperator.EQUALS)
             .groupBy(USER_ID)
             .toString();
 
-    private static final String FIND_USER_PASSWORD_BY_ID = SqlBuilderFactory.select()
+    private static final String FIND_USER_PASSWORD_BY_ID_QUERY = SqlBuilderFactory.select()
             .selectColumns(USER_PASSWORD)
             .from(Table.USERS)
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
+
+    private static final String CREATE_USERS_REVIEW_QUERY = SqlBuilderFactory.commonInsert(Table.USERS_REVIEWS).toString();
 
     private static Select getUserSelectQuery() {
         return SqlBuilderFactory.select()
@@ -211,6 +213,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
+    public boolean createReview(long id, long reviewId) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_USERS_REVIEW_QUERY)) {
+            statement.setLong(1, id);
+            statement.setLong(2, reviewId);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Create users review query error", e);
+            throw new DaoException("Create users reviews query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
     public Optional<User> findByUsername(String username) throws DaoException {
         Optional<User> user = Optional.empty();
         try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_USERNAME)) {
@@ -230,7 +246,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findByEmail(String email) throws DaoException {//todo duplicate
         Optional<User> user = Optional.empty();
-        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
+        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL_QUERY)) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -283,7 +299,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public String findUserPasswordById(long id) throws DaoException {
         String passwordHash = null;
-        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_PASSWORD_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(FIND_USER_PASSWORD_BY_ID_QUERY)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -337,7 +353,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
-    private List<Long> toListId(String column, String delimiter) {//todo rename
+    private List<Long> toListId(String column, String delimiter) {
         List<Long> idList = column != null ? Arrays.stream(column.split(delimiter))
                 .map(Long::parseLong)
                 .toList() : new ArrayList<>();

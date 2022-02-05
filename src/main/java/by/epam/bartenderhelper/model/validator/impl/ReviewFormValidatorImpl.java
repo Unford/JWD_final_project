@@ -9,7 +9,7 @@ import static by.epam.bartenderhelper.model.validator.impl.CommonRegex.ENTITY_ID
 
 public class ReviewFormValidatorImpl implements ReviewFormValidator {
     private static final int MESSAGE_MAX_LENGTH = 255;
-    private static final String RATING_VALUE_REGEX = "[0-5]\\.((?<!0.)0)|((?<!5.)5)";
+    private static final String RATING_VALUE_REGEX = "^([1-5]|([0-5]\\.((?<!0\\.)0|(?<!5\\.)5)))$";
 
     private static ReviewFormValidatorImpl instance;
 

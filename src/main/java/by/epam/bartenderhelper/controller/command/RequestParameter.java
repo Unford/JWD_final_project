@@ -43,6 +43,10 @@ public final class RequestParameter {
     public static final String RATING = "rating";
     public static final String COMMENT = "comment";
     public static final String REVIEW_MESSAGE = "review_message";
+    public static final String MY_REVIEW = "my_review";
+    public static final String REVIEWS = "reviews";
+
+
 
 
 

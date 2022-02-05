@@ -11,11 +11,10 @@ form.addEventListener('submit', function (e) {
     let actual_firstname = document.getElementById("first_name").value
     let actual_lastname = document.getElementById("last_name").value
     let actual_desc = document.getElementById("description").innerHTML
+    let fileInput = document.getElementById("file").value;
 
-
-    if (oldParameters.firstName === actual_firstname
-        || oldParameters.lastName === actual_lastname
-    || oldParameters.description === actual_desc) {
+    if (oldParameters.firstName === actual_firstname && oldParameters.lastName === actual_lastname
+    && oldParameters.description === actual_desc && fileInput === "") {
         e.preventDefault()
         event.stopPropagation()
     }
@@ -25,9 +24,7 @@ function handleFileSelect(evt) {
     var file = evt.target.files;
     var f = file[0];
 
-    if (!f.type.match('image.*')) {
 
-    }
     var reader = new FileReader();
     reader.onload = (function (theFile) {
         return function (e) {
@@ -39,3 +36,5 @@ function handleFileSelect(evt) {
 }
 
 document.getElementById('file').addEventListener('change', handleFileSelect, false);
+
+

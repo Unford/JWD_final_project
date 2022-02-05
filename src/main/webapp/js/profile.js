@@ -1,37 +1,48 @@
+    let contextPath = document.getElementById("contextPath").innerText;
+    let users_reviews = document.getElementById("users_reviews");
+    let review_pagination = document.getElementById("review_pagination")
+    let current_page_html = review_pagination.querySelector(".active");
+    let current_page = parseInt(current_page_html.querySelector("a").innerHTML);
 
-    var area = document.getElementById("text_area");
-    var message = document.getElementById("review_message");
-    var maxLength = area.getAttribute("maxlength");
+    review_pagination.querySelectorAll("li a").forEach(function (page){
+        page.addEventListener("click", (e) =>{
+            var pagenum = page.innerHTML;
+            if (page.classList.contains('next')){
+                pagenum =  1 + current_page;
+            }
+            if (page.classList.contains('prev')){
+                pagenum = current_page != 1 ? current_page - 1 : 1;
 
+            }
+            if (pagenum != current_page){
+                fetch(contextPath + "/controller?command=show_user_reviews&page=" + pagenum)
 
-    var checkLength = function () {
-    if (area.value.length < maxLength) {
-    message.innerHTML = (maxLength - area.value.length);
-} else {
+                    .then(response => response.text())
+                    .then(str => new window.DOMParser().parseFromString(str, "text/html"))
+                    .then(data => {
+                        current_page_html.classList.remove("active");
 
-    message.innerHTML = ""
+                        console.log("Current page" + current_page)
+                        console.log("new page" + pagenum)
+                        console.log("target link" + e.target)
 
-}
-}
-    setInterval(checkLength, 300);
+                        e.target.parentElement.classList.add("active")
+                        if (page.classList.contains('next')){
+                            pagenum =  1 + current_page;
+                        }
+                        if (page.classList.contains('prev')){
+                            pagenum = current_page != 1 ? current_page - 1 : 1;
 
-    (function () {
-    'use strict'
+                        }
+                        current_page_html = e.target.parentElement
+                        current_page = pagenum;
+                        users_reviews.innerHTML = data.body.innerHTML
 
+                    })
+                    .catch(function (error){
+                        console.log(error)
+                    })
+            }
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-    if (!form.checkValidity()) {
-    event.preventDefault()
-    event.stopPropagation()
-}
-
-    form.classList.add('was-validated')
-}, false)
-})
-})()
+        })
+    })

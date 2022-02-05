@@ -11,14 +11,7 @@
     <short-name>customTags</short-name>
     <uri>http://vladimirFeschenko</uri>
 
-    <tag>
-        <name>review</name>
-        <tag-class>by.epam.bartenderhelper.view.ReviewTag</tag-class>
-        <attribute>
-            <name>reviewId</name>
-            <required>true</required>
-        </attribute>
-    </tag>
+
 
     <tag>
         <name>rating</name>
@@ -26,7 +19,19 @@
         <attribute>
             <name>value</name>
             <required>true</required>
+            <rtexprvalue>yes</rtexprvalue>
         </attribute>
+    </tag>
+
+    <tag>
+        <name>dateformat</name>
+        <tag-class>by.epam.bartenderhelper.view.DateFormatTag</tag-class>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>yes</rtexprvalue>
+        </attribute>
+
     </tag>
 
 </taglib>

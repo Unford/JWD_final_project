@@ -126,7 +126,7 @@
 
 
         <div class="d-grid row justify-content-center mx-auto">
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 mb-2">
                 <button class="btn btn-primary" type="submit">
                     <fmt:message key="edit_profile.submit" bundle="${lang}"/>
                 </button>
@@ -217,7 +217,7 @@
 
 
         <div class="d-grid row justify-content-center mx-auto">
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 mb-2">
                 <button class="btn btn-primary" type="submit">
                     <fmt:message key="edit_profile.submit" bundle="${lang}"/>
                 </button>
