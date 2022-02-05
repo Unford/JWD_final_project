@@ -2,6 +2,7 @@ package by.epam.bartenderhelper.model.dao.impl;
 
 import by.epam.bartenderhelper.model.dao.AbstractDao;
 import by.epam.bartenderhelper.model.dao.UserDao;
+import by.epam.bartenderhelper.model.dao.sql.query.Select;
 import by.epam.bartenderhelper.model.entity.Photo;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.exception.DaoException;
@@ -25,66 +26,28 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String REVIEWS_CONCAT = "reviews";
 
 
-    private static final String FIND_ALL_USERS_QUERY = SqlBuilderFactory.select()
-            .selectColumns(Table.USERS)
-            .selectColumn(PHOTO_DATA)
-            .selectColumn(PHOTO_NAME)
-            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(USERS_REVIEWS_REVIEW_ID, REVIEWS_CONCAT)
-            .from(Table.USERS)
-            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
-            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+    private static final String FIND_ALL_USERS_QUERY = getUserSelectQuery()
             .groupBy(USER_ID)
             .toString();
 
-    private static final String FIND_BY_USER_ID_QUERY = SqlBuilderFactory.select()
-            .selectColumns(Table.USERS)
-            .selectColumn(PHOTO_DATA)
-            .selectColumn(PHOTO_NAME)
-            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
-            .from(Table.USERS)
-            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
-            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+    private static final String FIND_BY_USER_ID_QUERY = getUserSelectQuery()
             .where(USER_ID, LogicOperator.EQUALS)
             .groupBy(USER_ID)
             .toString();
 
-    private static final String FIND_USER_BY_USERNAME_OR_EMAIL_QUERY = SqlBuilderFactory.select()
-            .selectColumns(Table.USERS)
-            .selectColumn(PHOTO_DATA)
-            .selectColumn(PHOTO_NAME)
-            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
-            .from(Table.USERS)
-            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
-            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+    private static final String FIND_USER_BY_USERNAME_OR_EMAIL_QUERY = getUserSelectQuery()
             .where(USER_USERNAME, LogicOperator.EQUALS)
             .or(USER_EMAIL, LogicOperator.EQUALS)
             .groupBy(USER_ID)
             .toString();
 
-    private static final String FIND_USER_BY_USERNAME_OR_ID_QUERY = SqlBuilderFactory.select()
-            .selectColumns(Table.USERS)
-            .selectColumn(PHOTO_DATA)
-            .selectColumn(PHOTO_NAME)
-            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
-            .from(Table.USERS)
-            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
-            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+    private static final String FIND_USER_BY_USERNAME_OR_ID_QUERY = getUserSelectQuery()
             .where(USER_USERNAME, LogicOperator.EQUALS)
             .or(USER_ID, LogicOperator.EQUALS)
             .groupBy(USER_ID)
             .toString();
 
-    private static final String CREATE_USER_QUERY = SqlBuilderFactory.insert(Table.USERS)
-            .setColumns(Table.USERS)
-            .toString();
+    private static final String CREATE_USER_QUERY = SqlBuilderFactory.commonInsert(Table.USERS).toString();
 
     private static final String UPDATE_USER_QUERY = SqlBuilderFactory.update(Table.USERS)
             .setAll(USER_FIRST_NAME, USER_LAST_NAME, USER_DESCRIPTION, USER_PHOTO_ID)
@@ -106,35 +69,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
 
-    private static final String DELETE_USER_BY_ID_QUERY = SqlBuilderFactory.delete()
-            .from(Table.USERS)
-            .where(USER_ID, LogicOperator.EQUALS)
-            .toString();
+    private static final String DELETE_USER_BY_ID_QUERY = SqlBuilderFactory.commonDeleteById(Table.USERS).toString();
 
-    private static final String FIND_USER_BY_USERNAME = SqlBuilderFactory.select()
-            .selectColumns(Table.USERS)
-            .selectColumn(PHOTO_DATA)
-            .selectColumn(PHOTO_NAME)
-            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
-            .from(Table.USERS)
-            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
-            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+    private static final String FIND_USER_BY_USERNAME = getUserSelectQuery()
             .where(USER_USERNAME, LogicOperator.EQUALS)
             .groupBy(USER_ID)
             .toString();
 
-    private static final String FIND_USER_BY_EMAIL = SqlBuilderFactory.select()
-            .selectColumns(Table.USERS)
-            .selectColumn(PHOTO_DATA)
-            .selectColumn(PHOTO_NAME)
-            .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
-            .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
-            .from(Table.USERS)
-            .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
-            .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-            .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+    private static final String FIND_USER_BY_EMAIL = getUserSelectQuery()
             .where(USER_EMAIL, LogicOperator.EQUALS)
             .groupBy(USER_ID)
             .toString();
@@ -144,6 +86,19 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             .from(Table.USERS)
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
+
+    private static Select getUserSelectQuery() {
+        return SqlBuilderFactory.select()
+                .selectColumns(Table.USERS)
+                .selectColumn(PHOTO_DATA)
+                .selectColumn(PHOTO_NAME)
+                .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
+                .groupConcat(USERS_REVIEWS_USER_ID, REVIEWS_CONCAT)
+                .from(Table.USERS)
+                .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
+                .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
+                .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID);
+    }
 
     @Override
     public List<User> findAll() throws DaoException {
@@ -214,7 +169,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean updatePassword(long id, String password) throws DaoException{
+    public boolean updatePassword(long id, String password) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_PASSWORD_QUERY)) {
             statement.setString(1, password);
@@ -343,7 +298,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean deleteById(long id) throws DaoException{
+    public boolean deleteById(long id) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_ID_QUERY)) {
             statement.setLong(1, id);
@@ -390,14 +345,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
 
-    protected void setPreparedStatement(PreparedStatement statement, User entity) throws SQLException {
-        statement.setString(1, entity.getUsername());
-        statement.setString(2, entity.getFirstName());
-        statement.setString(3, entity.getLastName());
-        statement.setString(4, entity.getEmail());
-        statement.setString(5, entity.getRole().toString());
-        statement.setString(6, entity.getStatus().toString());
-        statement.setInt(7, entity.isDeleted() ? 1 : 0);
+    protected void setPreparedStatement(PreparedStatement statement, User entity) throws DaoException {
+        try {
+            statement.setString(1, entity.getUsername());
+            statement.setString(2, entity.getFirstName());
+            statement.setString(3, entity.getLastName());
+            statement.setString(4, entity.getEmail());
+            statement.setString(5, entity.getRole().toString());
+            statement.setString(6, entity.getStatus().toString());
+            statement.setInt(7, entity.isDeleted() ? 1 : 0);
+        } catch (SQLException e) {
+            logger.error("error while setting user statement parameters", e);
+            throw new DaoException("error while setting user statement parameters", e);
+        }
+
     }
 
 }

@@ -53,6 +53,13 @@ public enum Table {
                 .collect(Collectors.joining());
     }
 
+    public Column getIdColumn(){
+        return Arrays.stream(columns)
+                .filter(column -> column.getType() == Type.ID)
+                .findFirst()
+                .orElse(null);
+    }
+
     public Column[] getColumns(){
         return columns;
     }

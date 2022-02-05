@@ -30,7 +30,7 @@ public abstract class AbstractDao <T extends AbstractDaoEntity> {
     }
 
     protected abstract T mapEntity(ResultSet resultSet) throws DaoException;
-    protected abstract void setPreparedStatement(PreparedStatement statement, T entity) throws SQLException;//todo throw
+    protected abstract void setPreparedStatement(PreparedStatement statement, T entity) throws DaoException;
 
     void setConnection (Connection connection){
         this.connection = connection;

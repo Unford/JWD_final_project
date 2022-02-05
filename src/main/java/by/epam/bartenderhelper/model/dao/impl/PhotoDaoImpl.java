@@ -5,7 +5,6 @@ import by.epam.bartenderhelper.model.dao.AbstractDao;
 import by.epam.bartenderhelper.model.dao.PhotoDao;
 import by.epam.bartenderhelper.model.dao.sql.SqlBuilderFactory;
 import by.epam.bartenderhelper.model.dao.sql.Table;
-import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
 import by.epam.bartenderhelper.model.entity.Photo;
 
 import java.sql.PreparedStatement;
@@ -20,31 +19,16 @@ import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 public class PhotoDaoImpl extends AbstractDao<Photo> implements PhotoDao {
 
-    private static final String FIND_ALL_PHOTOS_QUERY = SqlBuilderFactory.select()
-            .selectColumns(Table.PHOTOS)
-            .from(Table.PHOTOS)
-            .toString();
+    private static final String FIND_ALL_PHOTOS_QUERY = SqlBuilderFactory.commonSelect(Table.PHOTOS).toString();
 
-    private static final String FIND_BY_PHOTO_ID_QUERY = SqlBuilderFactory.select()
-            .selectColumns(Table.PHOTOS)
-            .from(Table.PHOTOS)
-            .where(PHOTO_ID, LogicOperator.EQUALS)
-            .toString();
+    private static final String FIND_BY_PHOTO_ID_QUERY = SqlBuilderFactory
+            .commonSelectBy(Table.PHOTOS, PHOTO_ID).toString();
 
+    private static final String CREATE_PHOTO_QUERY = SqlBuilderFactory.commonInsert(Table.PHOTOS).toString();
 
-    private static final String CREATE_PHOTO_QUERY = SqlBuilderFactory.insert(Table.PHOTOS)
-            .setColumns(Table.PHOTOS)
-            .toString();
+    private static final String UPDATE_PHOTO_QUERY = SqlBuilderFactory.commonUpdateById(Table.PHOTOS).toString();
 
-    private static final String UPDATE_PHOTO_QUERY = SqlBuilderFactory.update(Table.PHOTOS)
-            .setAll(Table.PHOTOS)
-            .where(PHOTO_ID, LogicOperator.EQUALS)
-            .toString();
-
-    private static final String DELETE_PHOTO_BY_ID_QUERY = SqlBuilderFactory.delete()
-            .from(Table.PHOTOS)
-            .where(PHOTO_ID, LogicOperator.EQUALS)
-            .toString();
+    private static final String DELETE_PHOTO_BY_ID_QUERY = SqlBuilderFactory.commonDeleteById(Table.PHOTOS).toString();
 
 
     @Override
@@ -140,8 +124,13 @@ public class PhotoDaoImpl extends AbstractDao<Photo> implements PhotoDao {
     }
 
     @Override
-    protected void setPreparedStatement(PreparedStatement statement, Photo entity) throws SQLException {
-        statement.setString(1, entity.getName());
-        statement.setString(2, entity.getData());
+    protected void setPreparedStatement(PreparedStatement statement, Photo entity) throws DaoException {
+        try {
+            statement.setString(1, entity.getName());
+            statement.setString(2, entity.getData());
+        } catch (SQLException e) {
+            logger.error("error while setting photo statement parameters", e);
+            throw new DaoException("error while setting photo statement parameters", e);
+        }
     }
 }
