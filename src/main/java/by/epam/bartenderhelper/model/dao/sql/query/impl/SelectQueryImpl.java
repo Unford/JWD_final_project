@@ -137,7 +137,7 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
 
     @Override
     public Select join(Table table) {
-        return join(JoinType.FULL, table);
+        return join(JoinType.INNER, table);
     }
 
     @Override

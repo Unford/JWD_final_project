@@ -11,6 +11,7 @@ public final class PagePath {
     public static final String COCKTAILS = "jsp/cocktails.jsp";
     public static final String INGREDIENTS = "jsp/ingredients.jsp";
     public static final String SEARCH = "jsp/search.jsp";
+    public static final String EDIT_PROFILE = "jsp/client/editProfile.jsp";
 
     public static final String SIGN_UP = "jsp/guest/registration.jsp";
     public static final String LOG_IN = "jsp/guest/login.jsp";

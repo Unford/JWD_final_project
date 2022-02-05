@@ -1,4 +1,4 @@
-package by.epam.bartenderhelper.controller.command.impl;
+package by.epam.bartenderhelper.controller.command.impl.common;
 
 import by.epam.bartenderhelper.controller.command.*;
 import by.epam.bartenderhelper.exception.CommandException;
@@ -19,7 +19,7 @@ public class ShowProfileCommand implements Command {
         Router router = new Router();
         router.setType(Router.RouterType.ERROR);
 
-        String user = request.getParameter(RequestParameter.USER_PROFILE);
+        String user = request.getParameter(RequestParameter.USER);
         User userProfile = null;
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
 
@@ -42,7 +42,7 @@ public class ShowProfileCommand implements Command {
         }
 
         if (userProfile != null) {
-            request.setAttribute(RequestParameter.USER_PROFILE, userProfile);
+            request.setAttribute(RequestParameter.USER, userProfile);
             router.setPage(PagePath.PROFILE);
             router.setType(Router.RouterType.FORWARD);
         }

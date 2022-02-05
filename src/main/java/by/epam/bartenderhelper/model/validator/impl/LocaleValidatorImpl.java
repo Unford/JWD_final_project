@@ -7,7 +7,7 @@ import java.util.List;
 public class LocaleValidatorImpl implements LocaleValidator {
     private static LocaleValidatorImpl instance;
 
-    private List<String> locales = List.of("en", "ru");
+    private static final List<String> locales = List.of("en", "ru");
 
     private LocaleValidatorImpl() {
     }

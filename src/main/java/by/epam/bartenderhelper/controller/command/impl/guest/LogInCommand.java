@@ -21,18 +21,25 @@ public class LogInCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = PagePath.getPreviousPage(request);
+
         Map<String, String> parameters = extractParameters(request);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
+        int messageNumber = MessageCode.INVALID_DATA;
 
         if (validator.isFormLogInValid(parameters)) {
             HttpSession session = request.getSession();
             UserService userService = UserServiceImpl.getInstance();
             try {
-                Optional<User> user = userService.checkUser(parameters.get(LOGIN), parameters.get(PASSWORD));
+                Optional<User> user = userService.login(parameters.get(LOGIN), parameters.get(PASSWORD));
                 if (user.isPresent()) {
-                    logger.log(Level.INFO, "User: {} signed up", parameters.get(LOGIN));
-                    session.setAttribute(SessionAttribute.USER, user.get());
-                    return router;
+                    if (user.get().getStatus() == User.Status.WORKING && !user.get().isDeleted()) {
+                        logger.log(Level.INFO, "User: {} log in", parameters.get(LOGIN));
+                        session.setAttribute(SessionAttribute.USER, user.get());
+                        return router;
+                    } else {
+                        messageNumber = MessageCode.USER_DELETED_OR_BANNED;
+                    }
+
                 }
             } catch (ServiceException e) {
                 logger.error(e);
@@ -40,7 +47,7 @@ public class LogInCommand implements Command {
             }
         }
         router.setType(Router.RouterType.REDIRECT);
-        router.setPage(request.getContextPath() + PagePath.GO_TO_LOG_IN.formatted(parameters.get(LOGIN), 1));//todo
+        router.setPage(request.getContextPath() + PagePath.GO_TO_LOG_IN.formatted(parameters.get(LOGIN), messageNumber));
         return router;
     }
 }

@@ -65,7 +65,7 @@
                 <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
                     <c:choose>
-                        <c:when test="${sessionScope.user.photo.data}">
+                        <c:when test="${not empty sessionScope.user.photo.data}">
                             <img src="${sessionScope.user.photo.data}" alt="mdo" width="32" height="32" class="rounded-circle">
                         </c:when>
                         <c:otherwise>
@@ -108,7 +108,7 @@
                 </a>
 
                 <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalSignIn">
+                    <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modalSignIn">
                         <fmt:message key="header.log_in" bundle="${lang}"/>
                     </a></li>
                     <li>

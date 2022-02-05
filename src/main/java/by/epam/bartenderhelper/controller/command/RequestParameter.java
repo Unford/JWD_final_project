@@ -12,6 +12,7 @@ public final class RequestParameter {
     public static final Logger logger = LogManager.getLogger();
 
     public static final String COMMAND = "command";
+    public static final String INVALID_VALUE_PARAMETER = "";
 
     //signUp
     public static final String FIRST_NAME = "first_name";
@@ -32,9 +33,17 @@ public final class RequestParameter {
     public static final String MESSAGE = "m";
 
     //profile
-    public static final String USER_PROFILE = "user";
+    public static final String USER = "user";
+
+    public static final String STATUS = "status";
+    public static final String AVATAR = "avatar";
+    public static final String USER_DESCRIPTION = "about_me";
+
+    //rating
     public static final String RATING = "rating";
     public static final String COMMENT = "comment";
+    public static final String REVIEW_MESSAGE = "review_message";
+
 
 
 

@@ -20,12 +20,11 @@ import java.util.Optional;
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 
-public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String COCKTAILS_CONCAT = "cocktails";
     private static final String REVIEWS_CONCAT = "reviews";
-    private static final String DEFAULT_CONCAT_DELIMITER = ",";
 
-    //todo
+
     private static final String FIND_ALL_USERS_QUERY = SqlBuilderFactory.select()
             .selectColumns(Table.USERS)
             .selectColumn(PHOTO_DATA)
@@ -88,12 +87,22 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
             .toString();
 
     private static final String UPDATE_USER_QUERY = SqlBuilderFactory.update(Table.USERS)
-            .setAll(Table.USERS)
+            .setAll(USER_FIRST_NAME, USER_LAST_NAME, USER_DESCRIPTION, USER_PHOTO_ID)
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
 
     private static final String UPDATE_USER_PASSWORD_QUERY = SqlBuilderFactory.update(Table.USERS)
             .set(USER_PASSWORD)
+            .where(USER_ID, LogicOperator.EQUALS)
+            .toString();
+
+    private static final String UPDATE_USER_STATUS_QUERY = SqlBuilderFactory.update(Table.USERS)
+            .set(USER_STATUS)
+            .where(USER_ID, LogicOperator.EQUALS)
+            .toString();
+
+    private static final String UPDATE_USER_IS_DELETED_QUERY = SqlBuilderFactory.update(Table.USERS)
+            .set(USER_IS_DELETED)
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
 
@@ -170,7 +179,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     }
 
     @Override
-    public boolean create(User entity) throws DaoException {//todo
+    public boolean create(User entity) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             setPreparedStatement(statement, entity);
@@ -191,8 +200,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     public boolean update(User entity) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_QUERY)) {
-            setPreparedStatement(statement, entity);
-            statement.setLong(8, entity.getId());
+            statement.setString(1, entity.getFirstName());
+            statement.setString(2, entity.getLastName());
+            statement.setString(3, entity.getDescription());
+            statement.setObject(4, entity.getPhoto().getId() == 0 ? null : entity.getPhoto().getId());
+            statement.setLong(5, entity.getId());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Update user query error", e);
@@ -211,6 +223,34 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
         } catch (SQLException e) {
             logger.error("Update user password query error", e);
             throw new DaoException("Update user password query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
+    public boolean updateStatus(long id, User.Status status) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_STATUS_QUERY)) {
+            statement.setString(1, status.toString());
+            statement.setLong(2, id);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Update user status query error", e);
+            throw new DaoException("Update user status query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
+    public boolean updateIsDeleted(long id, boolean value) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_IS_DELETED_QUERY)) {
+            statement.setInt(1, value ? 1 : 0);
+            statement.setLong(2, id);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Update user is deleted query error", e);
+            throw new DaoException("Update user is deleted query error", e);
         }
         return result > 0;
     }
@@ -318,7 +358,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     @Override
     protected User mapEntity(ResultSet resultSet) throws DaoException {
         try {
-            Blob photoBlob = resultSet.getBlob(PHOTO_DATA.getName());
             return new User.UserBuilder()
                     .userId(resultSet.getLong(USER_ID.getName()))
                     .username(resultSet.getString(USER_USERNAME.getName()))
@@ -328,10 +367,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
                     .email(resultSet.getString(USER_EMAIL.getName()))
                     .role(UserRole.defineRole(resultSet.getObject(USER_ROLE.getName()).toString()))
                     .status(User.Status.defineStatus(resultSet.getObject(USER_STATUS.getName()).toString()))
+                    .isDeleted(resultSet.getBoolean(USER_IS_DELETED.getName()))
                     .photo(new Photo.PhotoBuilder()
                             .photoId(resultSet.getLong(USER_PHOTO_ID.getName()))
                             .name(resultSet.getString(PHOTO_NAME.getName()))
-                            .data(photoBlob != null ? photoBlob.getBytes(1, (int) photoBlob.length()) : null)
+                            .data(resultSet.getString(PHOTO_DATA.getName()))
                             .build())
                     .reviews(toListId(resultSet.getString(REVIEWS_CONCAT), DEFAULT_CONCAT_DELIMITER))
                     .cocktails(toListId(resultSet.getString(COCKTAILS_CONCAT), DEFAULT_CONCAT_DELIMITER))
@@ -350,13 +390,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {//todo
     }
 
 
-    private void setPreparedStatement(PreparedStatement statement, User entity) throws SQLException {
+    protected void setPreparedStatement(PreparedStatement statement, User entity) throws SQLException {
         statement.setString(1, entity.getUsername());
         statement.setString(2, entity.getFirstName());
         statement.setString(3, entity.getLastName());
         statement.setString(4, entity.getEmail());
         statement.setString(5, entity.getRole().toString());
         statement.setString(6, entity.getStatus().toString());
+        statement.setInt(7, entity.isDeleted() ? 1 : 0);
     }
 
 }

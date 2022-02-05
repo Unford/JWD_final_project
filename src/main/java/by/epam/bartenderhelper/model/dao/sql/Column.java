@@ -15,6 +15,7 @@ public enum Column {
     USER_EMAIL("email"),
     USER_ROLE("role"),
     USER_STATUS("status"),
+    USER_IS_DELETED("is_deleted"),
     USER_PHOTO_ID("photo_id", Type.NULLABLE),
 
     //photos

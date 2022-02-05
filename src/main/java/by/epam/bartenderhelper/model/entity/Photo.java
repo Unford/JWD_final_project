@@ -1,10 +1,9 @@
 package by.epam.bartenderhelper.model.entity;
 
-import java.util.Arrays;
 
 public final class Photo extends AbstractDaoEntity {
     private final String name;
-    private final byte[] data;
+    private final String data;
 
     private Photo(PhotoBuilder builder){
         super(builder.photoId);
@@ -16,7 +15,7 @@ public final class Photo extends AbstractDaoEntity {
         return name;
     }
 
-    public byte[] getData() {//todo
+    public String getData() {//todo
         return data;
     }
 
@@ -29,14 +28,14 @@ public final class Photo extends AbstractDaoEntity {
         Photo photo = (Photo) o;
 
         if (name != null ? !name.equals(photo.name) : photo.name != null) return false;
-        return Arrays.equals(data, photo.data);
+        return data != null ? data.equals(photo.data) : photo.data == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(data);
+        result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
 
@@ -45,7 +44,7 @@ public final class Photo extends AbstractDaoEntity {
         final StringBuilder sb = new StringBuilder("Photo{");
         sb.append("photoId=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", data=").append(Arrays.toString(data));
+        sb.append(", data=").append(data);
         sb.append('}');
         return sb.toString();
     }
@@ -53,7 +52,7 @@ public final class Photo extends AbstractDaoEntity {
     public static class PhotoBuilder {
         private long photoId;
         private String name;
-        private byte[] data;
+        private String data;
 
         public PhotoBuilder photoId(long photoId) {
             this.photoId = photoId;
@@ -65,7 +64,7 @@ public final class Photo extends AbstractDaoEntity {
             return this;
         }
 
-        public PhotoBuilder data(byte[] data) {
+        public PhotoBuilder data(String data) {
             this.data = data;
             return this;
         }

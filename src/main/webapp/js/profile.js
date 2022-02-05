@@ -6,7 +6,7 @@
 
     var checkLength = function () {
     if (area.value.length < maxLength) {
-    message.innerHTML = (maxLength - area.value.length) + " characters remaining";
+    message.innerHTML = (maxLength - area.value.length);
 } else {
 
     message.innerHTML = ""

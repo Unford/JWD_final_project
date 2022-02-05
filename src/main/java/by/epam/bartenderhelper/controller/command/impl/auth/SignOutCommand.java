@@ -1,8 +1,7 @@
-package by.epam.bartenderhelper.controller.command.impl;
+package by.epam.bartenderhelper.controller.command.impl.auth;
 
 import by.epam.bartenderhelper.controller.command.Command;
 import by.epam.bartenderhelper.controller.command.Router;
-import by.epam.bartenderhelper.controller.command.SessionAttribute;
 import by.epam.bartenderhelper.exception.CommandException;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.model.entity.UserRole;

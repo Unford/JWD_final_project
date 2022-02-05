@@ -52,6 +52,7 @@ public class SignUpCommand implements Command {
                             .lastName(parameters.get(LAST_NAME))
                             .username(parameters.get(USERNAME))
                             .status(User.Status.WORKING)
+                            .isDeleted(false)
                             .build();
 
                     service.createAccount(user, parameters.get(PASSWORD));//dto todo

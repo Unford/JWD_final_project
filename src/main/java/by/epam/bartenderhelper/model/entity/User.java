@@ -3,16 +3,17 @@ package by.epam.bartenderhelper.model.entity;
 import java.util.List;
 
 public final class User extends AbstractDaoEntity {
-    private final String username;
-    private final String firstName;
-    private final String lastName;
-    private final String description;
-    private final String email;
-    private final UserRole userRole;
-    private final Status status;
-    private final Photo photo;
-    private final List<Long> reviews;
-    private final List<Long> cocktails;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String description;
+    private String email;
+    private UserRole userRole;
+    private Status status;
+    private boolean isDeleted;
+    private Photo photo;
+    private List<Long> reviews;
+    private List<Long> cocktails;
 
     private User(UserBuilder builder) {
         super(builder.userId);
@@ -23,6 +24,7 @@ public final class User extends AbstractDaoEntity {
         this.email = builder.email;
         this.userRole = builder.userRole;
         this.status = builder.status;
+        this.isDeleted = builder.isDeleted;
         this.photo = builder.photo;
         this.reviews = builder.reviews;
         this.cocktails = builder.cocktails;
@@ -32,8 +34,7 @@ public final class User extends AbstractDaoEntity {
 
     public enum Status {
         BANNED,
-        WORKING,
-        DELETED;
+        WORKING;
 
         @Override
         public String toString(){
@@ -64,16 +65,20 @@ public final class User extends AbstractDaoEntity {
         return description;
     }
 
-    public UserRole getRole() {
-        return userRole;
-    }
-
     public Status getStatus() {
         return status;
     }
 
     public Photo getPhoto() {
         return photo;
+    }
+
+    public UserRole getRole() {
+        return userRole;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
     }
 
     public List<Long> getCocktails() {
@@ -84,6 +89,54 @@ public final class User extends AbstractDaoEntity {
         return List.copyOf(reviews);
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public void setReviews(List<Long> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void setCocktails(List<Long> cocktails) {
+        this.cocktails = cocktails;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,6 +145,7 @@ public final class User extends AbstractDaoEntity {
 
         User user = (User) o;
 
+        if (isDeleted != user.isDeleted) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
@@ -114,6 +168,7 @@ public final class User extends AbstractDaoEntity {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (isDeleted ? 1 : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (reviews != null ? reviews.hashCode() : 0);
         result = 31 * result + (cocktails != null ? cocktails.hashCode() : 0);
@@ -131,6 +186,7 @@ public final class User extends AbstractDaoEntity {
         sb.append(", email='").append(email).append('\'');
         sb.append(", userRole=").append(userRole);
         sb.append(", status=").append(status);
+        sb.append(", isDeleted=").append(isDeleted);
         sb.append(", photo=").append(photo);
         sb.append(", reviews=").append(reviews);
         sb.append(", cocktails=").append(cocktails);
@@ -147,6 +203,7 @@ public final class User extends AbstractDaoEntity {
         private String email;
         private UserRole userRole;
         private Status status;
+        private boolean isDeleted;
         private Photo photo;
         private List<Long> reviews;
         private List<Long> cocktails;
@@ -193,6 +250,11 @@ public final class User extends AbstractDaoEntity {
 
         public UserBuilder status(Status status){
             this.status = status;
+            return this;
+        }
+
+        public UserBuilder isDeleted(boolean isDeleted){
+            this.isDeleted = isDeleted;
             return this;
         }
 

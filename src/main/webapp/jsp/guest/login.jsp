@@ -93,19 +93,25 @@
         </div>
 
     </form>
-    <c:if test="${not empty param.m}">
-        <div class="alert alert-danger" role="alert">
-            <fmt:message key="logIn.error.auth" bundle="${lang}"/>
-        </div>
-    </c:if>
+    <c:choose>
+        <c:when test="${param.m == 1}">
+            <div class="alert alert-danger" role="alert">
+                <fmt:message key="logIn.error.auth" bundle="${lang}"/>
+            </div>
+        </c:when>
+        <c:when test="${param.m == 2}">
+            <div class="alert alert-danger" role="alert">
+                <fmt:message key="logIn.error.ban" bundle="${lang}"/>
+            </div>
+        </c:when>
+    </c:choose>
+
 </main>
 
 
 <jsp:include page="../include/footer.jsp"/>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+
 <script src="${pageContext.request.contextPath}/js/logInFormValidation.js"></script>
 
 </body>

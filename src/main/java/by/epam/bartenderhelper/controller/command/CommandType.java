@@ -1,6 +1,11 @@
 package by.epam.bartenderhelper.controller.command;
 
-import by.epam.bartenderhelper.controller.command.impl.*;
+import by.epam.bartenderhelper.controller.command.impl.admin.ChangeAccountStatusCommand;
+import by.epam.bartenderhelper.controller.command.impl.auth.*;
+import by.epam.bartenderhelper.controller.command.impl.common.ChangeLocaleCommand;
+import by.epam.bartenderhelper.controller.command.impl.common.DefaultCommand;
+import by.epam.bartenderhelper.controller.command.impl.common.SearchCommand;
+import by.epam.bartenderhelper.controller.command.impl.common.ShowProfileCommand;
 import by.epam.bartenderhelper.controller.command.impl.guest.LogInCommand;
 import by.epam.bartenderhelper.controller.command.impl.guest.SignUpCommand;
 import by.epam.bartenderhelper.controller.command.impl.move.*;
@@ -22,7 +27,9 @@ public enum CommandType {
     GO_TO_COCKTAILS(new GoToCocktailsPageCommand()),
     GO_TO_INGREDIENTS(new GoToIngredientsPageCommand()),
     GO_TO_SEARCH(new GoToSearchPageCommand()),
+    GO_TO_EDIT_PROFILE(new GoToEditProfilePageCommand(), CLIENT, BARTENDER, ADMIN),
 
+    SHOW_PROFILE(new ShowProfileCommand()),
     SEARCH(new SearchCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     DEFAULT_COMMAND(new DefaultCommand()),
@@ -30,9 +37,13 @@ public enum CommandType {
     LOG_IN(new LogInCommand(), GUEST),
     SIGN_UP(new SignUpCommand(), GUEST),
 
+    DELETE_ACCOUNT(new DeleteAccountCommand(), CLIENT, ADMIN, BARTENDER),
     SIGN_OUT(new SignOutCommand(), CLIENT, ADMIN, BARTENDER),//todo all???
-    SHOW_PROFILE(new ShowProfileCommand()),
-    EDIT_PROFILE_COMMAND(new EditProfileCommand(), CLIENT, ADMIN, BARTENDER);
+    EDIT_PROFILE(new EditProfileCommand(), CLIENT, ADMIN, BARTENDER),
+    CHANGE_PASSWORD(new ChangePasswordCommand(), CLIENT, ADMIN, BARTENDER),
+    SEND_REVIEW(new SendReviewCommand(), CLIENT, ADMIN, BARTENDER),
+
+    CHANGE_ACCOUNT_STATUS(new ChangeAccountStatusCommand(), ADMIN);
 
 
     private static final Logger logger = LogManager.getLogger();

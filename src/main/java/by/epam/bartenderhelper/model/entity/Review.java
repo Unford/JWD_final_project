@@ -4,12 +4,12 @@ import java.time.Instant;
 
 public final class Review extends AbstractDaoEntity {
     private final String message;
-    private final int score;
+    private final double score;
     private final Instant timestamp;
     private final long authorId;
 
-    private Review(CommentBuilder builder){
-        super(builder.commentId);
+    private Review(ReviewBuilder builder){
+        super(builder.reviewId);
         this.message = builder.message;
         this.score = builder.score;
         this.timestamp = builder.timestamp;
@@ -20,7 +20,7 @@ public final class Review extends AbstractDaoEntity {
         return message;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -40,7 +40,7 @@ public final class Review extends AbstractDaoEntity {
 
         Review review = (Review) o;
 
-        if (score != review.score) return false;
+        if (Double.compare(review.score, score) != 0) return false;
         if (authorId != review.authorId) return false;
         if (message != null ? !message.equals(review.message) : review.message != null) return false;
         return timestamp != null ? timestamp.equals(review.timestamp) : review.timestamp == null;
@@ -49,8 +49,10 @@ public final class Review extends AbstractDaoEntity {
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        long temp;
         result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + score;
+        temp = Double.doubleToLongBits(score);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
         result = 31 * result + (int) (authorId ^ (authorId >>> 32));
         return result;
@@ -68,34 +70,34 @@ public final class Review extends AbstractDaoEntity {
         return sb.toString();
     }
 
-    public static class CommentBuilder {
-        private long commentId;
+    public static class ReviewBuilder {
+        private long reviewId;
         private String message;
-        private int score;
+        private double score;
         private Instant timestamp;
         private long authorId;
 
-        public CommentBuilder commentId(long commentId){
-            this.commentId = commentId;
+        public ReviewBuilder reviewId(long reviewId){
+            this.reviewId = reviewId;
             return this;
         }
 
-        public CommentBuilder message(String message){
+        public ReviewBuilder message(String message){
             this.message = message;
             return this;
         }
 
-        public CommentBuilder score(int score){
+        public ReviewBuilder score(double score){
             this.score = score;
             return this;
         }
 
-        public CommentBuilder timestamp(Instant timestamp){
+        public ReviewBuilder timestamp(Instant timestamp){
             this.timestamp = timestamp;
             return this;
         }
 
-        public CommentBuilder authorId(long authorId){
+        public ReviewBuilder authorId(long authorId){
             this.authorId = authorId;
             return this;
         }

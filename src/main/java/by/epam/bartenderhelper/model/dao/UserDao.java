@@ -13,5 +13,8 @@ public interface UserDao {
     Optional<User> findByIdOrUsername(String login) throws DaoException;
 
     String findUserPasswordById(long id)throws DaoException;
+    boolean updateStatus(long id, User.Status status) throws DaoException;
+    boolean updateIsDeleted(long id, boolean value) throws DaoException;
+
 
 }

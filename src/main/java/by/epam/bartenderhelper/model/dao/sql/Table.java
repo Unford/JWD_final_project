@@ -8,7 +8,7 @@ import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 public enum Table {
     USERS (USER_ID, USER_USERNAME, USER_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_DESCRIPTION,
-            USER_EMAIL, USER_ROLE, USER_STATUS, USER_PHOTO_ID),
+            USER_EMAIL, USER_ROLE, USER_STATUS, USER_IS_DELETED, USER_PHOTO_ID),
 
     PHOTOS (PHOTO_ID, PHOTO_NAME, PHOTO_DATA),
 
