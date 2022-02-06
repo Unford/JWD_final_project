@@ -15,7 +15,9 @@
 
             }
             if (pagenum != current_page){
-                fetch(contextPath + "/controller?command=show_user_reviews&page=" + pagenum)
+                fetch(contextPath + "/controller?command=show_user_reviews&page=" + pagenum, {
+                    d
+                })
 
                     .then(response => response.text())
                     .then(str => new window.DOMParser().parseFromString(str, "text/html"))

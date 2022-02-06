@@ -11,6 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * The type Get user reviews command.
+ */
 public class GetUserReviewsCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

@@ -2,6 +2,9 @@ package by.epam.bartenderhelper.model.entity;
 
 import java.util.List;
 
+/**
+ * The type Cocktail.
+ */
 public final class Cocktail extends AbstractDaoEntity {
     private final String name;
     private final String description;
@@ -24,34 +27,74 @@ public final class Cocktail extends AbstractDaoEntity {
         this.ingredients = builder.ingredients;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Gets recipe.
+     *
+     * @return the recipe
+     */
     public String getRecipe() {
         return recipe;
     }
 
+    /**
+     * Is verified boolean.
+     *
+     * @return the boolean
+     */
     public boolean isVerified() {
         return verified;
     }
 
+    /**
+     * Gets photo.
+     *
+     * @return the photo
+     */
     public Photo getPhoto() {
         return photo;
     }
 
+    /**
+     * Gets author id.
+     *
+     * @return the author id
+     */
     public long getAuthorId() {
         return authorId;
     }
 
+    /**
+     * Gets reviews.
+     *
+     * @return the reviews
+     */
     public List<Long> getReviews() {
         return List.copyOf(reviews);
     }
 
+    /**
+     * Gets ingredients.
+     *
+     * @return the ingredients
+     */
     public List<Long> getIngredients() {
         return List.copyOf(ingredients);
     }
@@ -105,6 +148,9 @@ public final class Cocktail extends AbstractDaoEntity {
         return sb.toString();
     }
 
+    /**
+     * The type Cocktail builder.
+     */
     public static class CocktailBuilder {
         private long cocktailId;
         private String name;
@@ -116,51 +162,110 @@ public final class Cocktail extends AbstractDaoEntity {
         private List<Long> reviews;
         private List<Long> ingredients;
 
+        /**
+         * Cocktail id cocktail builder.
+         *
+         * @param cocktailId the cocktail id
+         * @return the cocktail builder
+         */
         public CocktailBuilder cocktailId(long cocktailId){
             this.cocktailId = cocktailId;
             return this;
         }
 
+        /**
+         * Name cocktail builder.
+         *
+         * @param name the name
+         * @return the cocktail builder
+         */
         public CocktailBuilder name(String name){
             this.name = name;
             return this;
         }
 
+        /**
+         * Description cocktail builder.
+         *
+         * @param description the description
+         * @return the cocktail builder
+         */
         public CocktailBuilder description(String description){
             this.description = description;
             return this;
         }
 
+        /**
+         * Recipe cocktail builder.
+         *
+         * @param recipe the recipe
+         * @return the cocktail builder
+         */
         public CocktailBuilder recipe(String recipe){
             this.recipe = recipe;
             return this;
         }
 
+        /**
+         * Verified cocktail builder.
+         *
+         * @param verified the verified
+         * @return the cocktail builder
+         */
         public CocktailBuilder verified(boolean verified){
             this.verified = verified;
             return this;
         }
 
+        /**
+         * Photo cocktail builder.
+         *
+         * @param photo the photo
+         * @return the cocktail builder
+         */
         public CocktailBuilder photo(Photo photo){
             this.photo = photo;
             return this;
         }
 
+        /**
+         * Author id cocktail builder.
+         *
+         * @param authorId the author id
+         * @return the cocktail builder
+         */
         public CocktailBuilder authorId(long authorId){
             this.authorId = authorId;
             return this;
         }
 
+        /**
+         * Comments cocktail builder.
+         *
+         * @param reviews the reviews
+         * @return the cocktail builder
+         */
         public CocktailBuilder comments(List<Long> reviews){
             this.reviews = reviews;
             return this;
         }
 
+        /**
+         * Ingredients cocktail builder.
+         *
+         * @param ingredients the ingredients
+         * @return the cocktail builder
+         */
         public CocktailBuilder ingredients(List<Long> ingredients){
             this.ingredients = ingredients;
             return this;
         }
 
+        /**
+         * Build cocktail.
+         *
+         * @return the cocktail
+         */
         public Cocktail build() {
             return new Cocktail(this);
         }

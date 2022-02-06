@@ -19,6 +19,9 @@ import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 import static by.epam.bartenderhelper.controller.command.SessionAttribute.USER;
 
 
+/**
+ * The type Edit profile command.
+ */
 public class EditProfileCommand implements Command {
 
 

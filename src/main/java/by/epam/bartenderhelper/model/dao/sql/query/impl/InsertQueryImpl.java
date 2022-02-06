@@ -6,10 +6,18 @@ import by.epam.bartenderhelper.model.dao.sql.query.Insert;
 
 import java.util.Arrays;
 
+/**
+ * The type Insert query.
+ */
 public class InsertQueryImpl extends CommonSqlQueryImpl<Insert> implements Insert {
     private boolean isFirstValue = true;
     private int columnCount;
 
+    /**
+     * Instantiates a new Insert query.
+     *
+     * @param table the table
+     */
     public InsertQueryImpl(Table table){
         sqlBuilder.append("INSERT INTO ").append(table).append('(');
     }

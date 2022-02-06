@@ -12,11 +12,21 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * The type File encoder.
+ */
 public final class FileEncoder {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String BASE_64_FILE = "data:%s;base64, %s";
 
+    /**
+     * Encode file optional.
+     *
+     * @param request  the request
+     * @param filename the filename
+     * @return the optional
+     */
     public static Optional<String> encodeFile(HttpServletRequest request, String filename) {
         Optional<String> encodeFile = Optional.empty();
 

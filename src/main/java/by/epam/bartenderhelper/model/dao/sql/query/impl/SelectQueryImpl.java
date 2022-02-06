@@ -7,8 +7,16 @@ import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
 import by.epam.bartenderhelper.model.dao.sql.query.OrderType;
 import by.epam.bartenderhelper.model.dao.sql.query.Select;
 
+/**
+ * The type Select query.
+ */
 public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Select {
 
+    /**
+     * Instantiates a new Select query.
+     *
+     * @param distinct the distinct
+     */
     public SelectQueryImpl(boolean distinct){
         sqlBuilder.append("SELECT");
         if (distinct){
@@ -16,6 +24,9 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
         }
     }
 
+    /**
+     * Instantiates a new Select query.
+     */
     public SelectQueryImpl(){
         this(false);
     }

@@ -8,6 +8,9 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 
+/**
+ * The type Servlet context listener.
+ */
 @WebListener
 public class ServletContextListenerImpl implements ServletContextListener {
 

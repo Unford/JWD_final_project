@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * The type Jsp request filter.
+ */
 @WebFilter(urlPatterns = { "/jsp/*" }, filterName="filter1", dispatcherTypes = DispatcherType.REQUEST)
 public class JspRequestFilter implements Filter {
     @Override

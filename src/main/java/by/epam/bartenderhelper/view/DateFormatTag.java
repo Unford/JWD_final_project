@@ -14,13 +14,26 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
+/**
+ * The type Date format tag.
+ */
 public class DateFormatTag extends TagSupport {
     private Instant value;
 
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
     public Instant getValue() {
         return value;
     }
 
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     */
     public void setValue(Instant value) {
         this.value = value;
     }

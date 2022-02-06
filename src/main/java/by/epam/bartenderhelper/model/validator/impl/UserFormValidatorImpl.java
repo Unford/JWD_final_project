@@ -10,6 +10,9 @@ import java.util.Map;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 import static by.epam.bartenderhelper.model.validator.impl.CommonRegex.ENTITY_ID_REGEX;
 
+/**
+ * The type User form validator.
+ */
 public class UserFormValidatorImpl implements UserFormValidator {
     private static final int EMAIL_MAX_LENGTH = 40;
     private static final int DESCRIPTION_MAX_LENGTH = 255;
@@ -27,6 +30,11 @@ public class UserFormValidatorImpl implements UserFormValidator {
     private UserFormValidatorImpl(){
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static UserFormValidatorImpl getInstance() {
         if (instance == null){
             instance = new UserFormValidatorImpl();

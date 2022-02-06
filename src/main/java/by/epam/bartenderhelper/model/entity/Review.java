@@ -2,6 +2,9 @@ package by.epam.bartenderhelper.model.entity;
 
 import java.time.Instant;
 
+/**
+ * The type Review.
+ */
 public final class Review extends AbstractDaoEntity {
     private final String message;
     private final double score;
@@ -16,18 +19,38 @@ public final class Review extends AbstractDaoEntity {
         this.authorId = builder.authorId;
     }
 
+    /**
+     * Gets message.
+     *
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Gets score.
+     *
+     * @return the score
+     */
     public double getScore() {
         return score;
     }
 
+    /**
+     * Gets timestamp.
+     *
+     * @return the timestamp
+     */
     public Instant getTimestamp() {
         return timestamp;
     }
 
+    /**
+     * Gets author id.
+     *
+     * @return the author id
+     */
     public long getAuthorId() {
         return authorId;
     }
@@ -70,6 +93,9 @@ public final class Review extends AbstractDaoEntity {
         return sb.toString();
     }
 
+    /**
+     * The type Review builder.
+     */
     public static class ReviewBuilder {
         private long reviewId;
         private String message;
@@ -77,31 +103,66 @@ public final class Review extends AbstractDaoEntity {
         private Instant timestamp;
         private long authorId;
 
+        /**
+         * Review id review builder.
+         *
+         * @param reviewId the review id
+         * @return the review builder
+         */
         public ReviewBuilder reviewId(long reviewId){
             this.reviewId = reviewId;
             return this;
         }
 
+        /**
+         * Message review builder.
+         *
+         * @param message the message
+         * @return the review builder
+         */
         public ReviewBuilder message(String message){
             this.message = message;
             return this;
         }
 
+        /**
+         * Score review builder.
+         *
+         * @param score the score
+         * @return the review builder
+         */
         public ReviewBuilder score(double score){
             this.score = score;
             return this;
         }
 
+        /**
+         * Timestamp review builder.
+         *
+         * @param timestamp the timestamp
+         * @return the review builder
+         */
         public ReviewBuilder timestamp(Instant timestamp){
             this.timestamp = timestamp;
             return this;
         }
 
+        /**
+         * Author id review builder.
+         *
+         * @param authorId the author id
+         * @return the review builder
+         */
         public ReviewBuilder authorId(long authorId){
             this.authorId = authorId;
             return this;
         }
 
+        /**
+         * Build review.
+         *
+         * @return the review
+         */
         public Review build() {
             return new Review(this);
         }

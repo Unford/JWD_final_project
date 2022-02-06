@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 
+/**
+ * The type Http session listener.
+ */
 @WebListener
 public class HttpSessionListenerImpl implements HttpSessionListener {
     private static final String DEFAULT_LOCALE = "en";

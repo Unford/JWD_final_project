@@ -7,7 +7,15 @@ import by.epam.bartenderhelper.model.dao.sql.query.SqlQuery;
 import by.epam.bartenderhelper.model.dao.sql.query.common.AggregationFunction;
 import by.epam.bartenderhelper.model.dao.sql.query.common.From;
 
+/**
+ * The type Common sql query.
+ *
+ * @param <Q> the type parameter
+ */
 abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, AggregationFunction<Q> {
+    /**
+     * The Sql builder.
+     */
     protected StringBuilder sqlBuilder = new StringBuilder();
 
     @Override
@@ -163,11 +171,23 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
         sqlBuilder.append(function).append('(').append(value).append("),");
     }
 
+    /**
+     * Append expression.
+     *
+     * @param column   the column
+     * @param operator the operator
+     * @param value    the value
+     */
     protected void appendExpression(Column column, LogicOperator operator, String value){
         sqlBuilder.append(column.getShortName())
                 .append(operator)
                 .append(value);
     }
 
+    /**
+     * Get q.
+     *
+     * @return the q
+     */
     protected abstract Q get();
 }

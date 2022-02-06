@@ -17,6 +17,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * The type Controller.
+ */
 @WebServlet(urlPatterns = {"/controller"})
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024,
         fileSizeThreshold = 1024 * 1024,

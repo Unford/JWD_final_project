@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * The type Xss filter.
+ */
 @WebFilter(urlPatterns = {"/controller"}, filterName = "filter5")
 public class XssFilter implements Filter {
     private static final String XSS_ATTACK_REGEX = "[<>/]";

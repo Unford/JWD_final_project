@@ -18,6 +18,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static by.epam.bartenderhelper.model.util.ResourceManager.APP_CONFIG;
 
+/**
+ * The type Connection pool.
+ */
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
     private static final String POOL_SIZE_PROPERTY_NAME = "pool.size";
@@ -67,6 +70,11 @@ public class ConnectionPool {
         logger.info("Connection pool created expected size = {}, actual = {}", availableConnections.size(), poolSize);
     }
 
+    /**
+     * Get instance connection pool.
+     *
+     * @return the connection pool
+     */
     public static ConnectionPool getInstance(){
         if (!initCheck.get()){
             try {
@@ -82,6 +90,11 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Take connection connection.
+     *
+     * @return the connection
+     */
     public Connection takeConnection(){
 
         ProxyConnection connection = null;
@@ -98,6 +111,12 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection boolean.
+     *
+     * @param connection the connection
+     * @return the boolean
+     */
     public boolean releaseConnection(Connection connection){
         boolean result = false;
         if (connection instanceof ProxyConnection proxyConnection){
@@ -117,6 +136,9 @@ public class ConnectionPool {
         return result;
     }
 
+    /**
+     * Destroy pool.
+     */
     public void destroyPool() {
         logger.log(Level.DEBUG, "Destroying pool is started");
 

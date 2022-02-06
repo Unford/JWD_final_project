@@ -14,8 +14,14 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
+/**
+ * The type Current page filter.
+ */
 @WebFilter(urlPatterns = {"/controller"}, filterName = "filter4")
 public class CurrentPageFilter implements Filter {
+    /**
+     * The constant logger.
+     */
     public static final Logger logger = LogManager.getLogger();
     private static final char QUESTION_MARK = '?';
     private static final String GET_METHOD = "GET";

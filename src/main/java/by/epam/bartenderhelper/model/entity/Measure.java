@@ -1,13 +1,27 @@
 package by.epam.bartenderhelper.model.entity;
 
+/**
+ * The type Measure.
+ */
 public final class Measure extends AbstractDaoEntity {
     private final String name;
 
+    /**
+     * Instantiates a new Measure.
+     *
+     * @param id   the id
+     * @param name the name
+     */
     public Measure(long id, String name){
         super(id);
         this.name = name;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }

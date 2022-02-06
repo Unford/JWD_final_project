@@ -15,6 +15,9 @@ import java.util.Optional;
 
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
+/**
+ * The type Review dao.
+ */
 public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
 
     private static final String FIND_ALL_REVIEWS_QUERY = SqlBuilderFactory.commonSelect(Table.REVIEWS).toString();

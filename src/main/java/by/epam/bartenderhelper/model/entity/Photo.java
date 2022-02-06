@@ -1,6 +1,9 @@
 package by.epam.bartenderhelper.model.entity;
 
 
+/**
+ * The type Photo.
+ */
 public final class Photo extends AbstractDaoEntity {
     private final String name;
     private final String data;
@@ -11,10 +14,20 @@ public final class Photo extends AbstractDaoEntity {
         this.data = builder.data;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets data.
+     *
+     * @return the data
+     */
     public String getData() {//todo
         return data;
     }
@@ -49,26 +62,52 @@ public final class Photo extends AbstractDaoEntity {
         return sb.toString();
     }
 
+    /**
+     * The type Photo builder.
+     */
     public static class PhotoBuilder {
         private long photoId;
         private String name;
         private String data;
 
+        /**
+         * Photo id photo builder.
+         *
+         * @param photoId the photo id
+         * @return the photo builder
+         */
         public PhotoBuilder photoId(long photoId) {
             this.photoId = photoId;
             return this;
         }
 
+        /**
+         * Name photo builder.
+         *
+         * @param name the name
+         * @return the photo builder
+         */
         public PhotoBuilder name(String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * Data photo builder.
+         *
+         * @param data the data
+         * @return the photo builder
+         */
         public PhotoBuilder data(String data) {
             this.data = data;
             return this;
         }
 
+        /**
+         * Build photo.
+         *
+         * @return the photo
+         */
         public Photo build() {
            return new Photo(this);
         }

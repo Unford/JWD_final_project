@@ -21,6 +21,9 @@ import java.util.Optional;
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 
+/**
+ * The type User dao.
+ */
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String COCKTAILS_CONCAT = "cocktails";
     private static final String REVIEWS_CONCAT = "reviews";

@@ -8,10 +8,18 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The type Entity transaction.
+ */
 public class EntityTransaction implements AutoCloseable {//todo rename
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 
+    /**
+     * Initialize transaction.
+     *
+     * @param daos the daos
+     */
     public void initializeTransaction(AbstractDao ... daos) {
         try {
             this.initialize(daos);
@@ -21,6 +29,11 @@ public class EntityTransaction implements AutoCloseable {//todo rename
         }
     }
 
+    /**
+     * Initialize.
+     *
+     * @param daos the daos
+     */
     public void initialize(AbstractDao ... daos){
         if (connection == null) {
             connection = ConnectionPool.getInstance().takeConnection();
@@ -41,6 +54,9 @@ public class EntityTransaction implements AutoCloseable {//todo rename
         }
     }
 
+    /**
+     * Commit.
+     */
     public void commit() {
         try {
             connection.commit();
@@ -49,6 +65,9 @@ public class EntityTransaction implements AutoCloseable {//todo rename
         }
     }
 
+    /**
+     * Rollback.
+     */
     public void rollback() {
         try {
             connection.rollback();

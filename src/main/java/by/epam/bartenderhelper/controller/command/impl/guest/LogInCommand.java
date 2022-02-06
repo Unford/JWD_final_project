@@ -17,6 +17,9 @@ import java.util.Optional;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 
+/**
+ * The type Log in command.
+ */
 public class LogInCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

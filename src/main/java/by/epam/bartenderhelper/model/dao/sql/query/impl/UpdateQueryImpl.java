@@ -6,9 +6,17 @@ import by.epam.bartenderhelper.model.dao.sql.query.Update;
 
 import java.util.Arrays;
 
+/**
+ * The type Update query.
+ */
 public class UpdateQueryImpl extends CommonSqlQueryImpl<Update> implements Update {
     private boolean isFirstColumn = true;
 
+    /**
+     * Instantiates a new Update query.
+     *
+     * @param table the table
+     */
     public UpdateQueryImpl(Table table){
         sqlBuilder.append("UPDATE ")
                 .append(table).append(" AS ")

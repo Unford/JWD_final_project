@@ -17,6 +17,9 @@ import java.util.Optional;
 
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
+/**
+ * The type Photo dao.
+ */
 public class PhotoDaoImpl extends AbstractDao<Photo> implements PhotoDao {
 
     private static final String FIND_ALL_PHOTOS_QUERY = SqlBuilderFactory.commonSelect(Table.PHOTOS).toString();

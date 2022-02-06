@@ -10,6 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+/**
+ * The type Proxy connection creator.
+ */
 final class ProxyConnectionCreator {
     private static final Logger logger = LogManager.getLogger();
     private static final String DRIVER_PROPERTY_NAME = "db.driver";
@@ -36,6 +39,12 @@ final class ProxyConnectionCreator {
     }
     private ProxyConnectionCreator(){}
 
+    /**
+     * Create proxy connection.
+     *
+     * @return the proxy connection
+     * @throws SQLException the sql exception
+     */
     static ProxyConnection create() throws SQLException {
         return new ProxyConnection(DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD));
     }

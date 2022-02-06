@@ -14,8 +14,14 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 
+/**
+ * The type Command access filter.
+ */
 @WebFilter(urlPatterns = {"/controller"}, filterName = "filter3")
 public class CommandAccessFilter implements Filter {
+    /**
+     * The constant logger.
+     */
     public static final Logger logger = LogManager.getLogger();
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,

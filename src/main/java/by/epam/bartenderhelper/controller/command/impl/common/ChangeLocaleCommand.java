@@ -11,6 +11,9 @@ import jakarta.servlet.http.HttpSession;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.NEW_LOCALE;
 
+/**
+ * The type Change locale command.
+ */
 public class ChangeLocaleCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

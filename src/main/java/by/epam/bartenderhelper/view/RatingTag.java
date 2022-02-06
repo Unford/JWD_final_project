@@ -8,14 +8,27 @@ import org.decimal4j.util.DoubleRounder;
 
 import java.io.IOException;
 
+/**
+ * The type Rating tag.
+ */
 public class RatingTag extends TagSupport {
     private double value;
 
 
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
     public double getValue() {
         return value;
     }
 
+    /**
+     * Sets value.
+     *
+     * @param value the value
+     */
     public void setValue(double value) {
         this.value = DoubleRounder.round(value, 2);
     }

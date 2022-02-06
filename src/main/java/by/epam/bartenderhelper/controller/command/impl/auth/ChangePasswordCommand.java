@@ -10,6 +10,9 @@ import by.epam.bartenderhelper.model.validator.UserFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.UserFormValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * The type Change password command.
+ */
 public class ChangePasswordCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

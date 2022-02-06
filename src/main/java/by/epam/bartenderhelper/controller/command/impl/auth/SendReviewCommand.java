@@ -17,6 +17,9 @@ import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 
+/**
+ * The type Send review command.
+ */
 public class SendReviewCommand implements Command {
 
     @Override

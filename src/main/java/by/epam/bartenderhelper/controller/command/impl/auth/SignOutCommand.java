@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpSession;
 
 import static by.epam.bartenderhelper.controller.command.SessionAttribute.USER;
 
+/**
+ * The type Sign out command.
+ */
 public class SignOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

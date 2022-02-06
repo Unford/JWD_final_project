@@ -8,6 +8,9 @@ import by.epam.bartenderhelper.model.service.UserService;
 import by.epam.bartenderhelper.model.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * The type Delete account command.
+ */
 public class DeleteAccountCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

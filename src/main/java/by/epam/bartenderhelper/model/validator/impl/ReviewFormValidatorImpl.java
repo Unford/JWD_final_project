@@ -7,6 +7,9 @@ import java.util.Map;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 import static by.epam.bartenderhelper.model.validator.impl.CommonRegex.ENTITY_ID_REGEX;
 
+/**
+ * The type Review form validator.
+ */
 public class ReviewFormValidatorImpl implements ReviewFormValidator {
     private static final int MESSAGE_MAX_LENGTH = 255;
     private static final String RATING_VALUE_REGEX = "^([1-5]|([0-5]\\.((?<!0\\.)0|(?<!5\\.)5)))$";
@@ -16,6 +19,11 @@ public class ReviewFormValidatorImpl implements ReviewFormValidator {
     private ReviewFormValidatorImpl(){
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ReviewFormValidatorImpl getInstance() {
         if (instance == null){
             instance = new ReviewFormValidatorImpl();

@@ -2,6 +2,9 @@ package by.epam.bartenderhelper.model.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Ingredient.
+ */
 public final class Ingredient extends AbstractDaoEntity {
     private final String name;
     private final String description;
@@ -24,34 +27,74 @@ public final class Ingredient extends AbstractDaoEntity {
         this.amount = builder.amount;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Is verified boolean.
+     *
+     * @return the boolean
+     */
     public boolean isVerified() {
         return verified;
     }
 
+    /**
+     * Gets price.
+     *
+     * @return the price
+     */
     public BigDecimal getPrice() {
         return price;
     }
 
+    /**
+     * Gets calorie.
+     *
+     * @return the calorie
+     */
     public BigDecimal getCalorie() {
         return calorie;
     }
 
+    /**
+     * Gets photo.
+     *
+     * @return the photo
+     */
     public Photo getPhoto() {
         return photo;
     }
 
+    /**
+     * Gets measure.
+     *
+     * @return the measure
+     */
     public Measure getMeasure() {
         return measure;
     }
 
+    /**
+     * Gets amount.
+     *
+     * @return the amount
+     */
     public double getAmount() {
         return amount;
     }
@@ -106,6 +149,9 @@ public final class Ingredient extends AbstractDaoEntity {
         return sb.toString();
     }
 
+    /**
+     * The type Ingredient builder.
+     */
     public static class IngredientBuilder {
         private long ingredientId;
         private String name;
@@ -117,51 +163,110 @@ public final class Ingredient extends AbstractDaoEntity {
         private Measure measure;
         private double amount;
 
+        /**
+         * Ingredient id ingredient builder.
+         *
+         * @param ingredientId the ingredient id
+         * @return the ingredient builder
+         */
         public IngredientBuilder ingredientId(long ingredientId){
             this.ingredientId = ingredientId;
             return this;
         }
 
+        /**
+         * Name ingredient builder.
+         *
+         * @param name the name
+         * @return the ingredient builder
+         */
         public IngredientBuilder name(String name){
             this.name = name;
             return this;
         }
 
+        /**
+         * Description ingredient builder.
+         *
+         * @param description the description
+         * @return the ingredient builder
+         */
         public IngredientBuilder description(String description){
             this.description = description;
             return this;
         }
 
+        /**
+         * Verified ingredient builder.
+         *
+         * @param verified the verified
+         * @return the ingredient builder
+         */
         public IngredientBuilder verified(boolean verified){
             this.verified = verified;
             return this;
         }
 
+        /**
+         * Price ingredient builder.
+         *
+         * @param price the price
+         * @return the ingredient builder
+         */
         public IngredientBuilder price(BigDecimal price){
             this.price = price;
             return this;
         }
 
+        /**
+         * Calorie ingredient builder.
+         *
+         * @param calorie the calorie
+         * @return the ingredient builder
+         */
         public IngredientBuilder calorie(BigDecimal calorie){
             this.calorie = calorie;
             return this;
         }
 
+        /**
+         * Photo ingredient builder.
+         *
+         * @param photo the photo
+         * @return the ingredient builder
+         */
         public IngredientBuilder photo(Photo photo){
             this.photo = photo;
             return this;
         }
 
+        /**
+         * Measure ingredient builder.
+         *
+         * @param measure the measure
+         * @return the ingredient builder
+         */
         public IngredientBuilder measure(Measure measure){
             this.measure = measure;
             return this;
         }
 
+        /**
+         * Amount ingredient builder.
+         *
+         * @param amount the amount
+         * @return the ingredient builder
+         */
         public IngredientBuilder amount(double amount){
             this.amount = amount;
             return this;
         }
 
+        /**
+         * Build ingredient.
+         *
+         * @return the ingredient
+         */
         public Ingredient build() {
             return new Ingredient(this);
         }

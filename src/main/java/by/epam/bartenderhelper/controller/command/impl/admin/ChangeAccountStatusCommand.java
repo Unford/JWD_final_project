@@ -18,6 +18,9 @@ import java.util.Map;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.USER;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.STATUS;
 
+/**
+ * The type Change account status command.
+ */
 public class ChangeAccountStatusCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
