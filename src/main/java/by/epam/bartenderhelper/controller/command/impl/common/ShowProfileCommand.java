@@ -6,6 +6,7 @@ import by.epam.bartenderhelper.exception.ServiceException;
 import by.epam.bartenderhelper.model.entity.Review;
 import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.model.entity.UserRole;
+import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 import by.epam.bartenderhelper.model.service.ReviewService;
 import by.epam.bartenderhelper.model.service.UserService;
 import by.epam.bartenderhelper.model.service.impl.ReviewServiceImpl;
@@ -14,6 +15,7 @@ import by.epam.bartenderhelper.model.validator.UserFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.UserFormValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,12 +46,16 @@ public class ShowProfileCommand implements Command {
             }
 
             if (userProfile != null) {
+                ReviewService reviewService = ReviewServiceImpl.getInstance();
                 if (userProfile.getId() != currentUser.getId()){
-                    ReviewService reviewService = ReviewServiceImpl.getInstance();
-                    Optional<Review> currentUserReview = reviewService.findUserReview(userProfile.getId(), currentUser.getId());
+                    Optional<Review> currentUserReview = reviewService.findUserReviewByAuthor(userProfile.getId(), currentUser.getId());
                     currentUserReview.ifPresent(review -> request.setAttribute(RequestParameter.MY_REVIEW, review));
                 }
+                List<ReviewDto> reviews = reviewService.findUserReviewsPart(userProfile.getId(), 1);
+
                 request.setAttribute(RequestParameter.USER, userProfile);
+                request.setAttribute(RequestParameter.REVIEWS, reviews);
+
                 router.setPage(PagePath.PROFILE);
                 router.setType(Router.RouterType.FORWARD);
             }

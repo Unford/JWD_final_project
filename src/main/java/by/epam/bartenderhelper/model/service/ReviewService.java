@@ -2,7 +2,9 @@ package by.epam.bartenderhelper.model.service;
 
 import by.epam.bartenderhelper.exception.ServiceException;
 import by.epam.bartenderhelper.model.entity.Review;
+import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,6 +39,8 @@ public interface ReviewService {
      * @return the optional
      * @throws ServiceException the service exception
      */
-    Optional<Review> findUserReview(long userId, long authorId)throws ServiceException;
+    Optional<Review> findUserReviewByAuthor(long userId, long authorId) throws ServiceException;
+
+    List<ReviewDto> findUserReviewsPart(long userId, int page) throws ServiceException;
 
 }

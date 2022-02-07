@@ -53,7 +53,7 @@ public enum CommandType {
     /**
      * The Show user reviews.
      */
-    SHOW_USER_REVIEWS(new GetUserReviewsCommand()),
+    SHOW_USER_REVIEWS(new ShowUserReviewsCommand()),
     /**
      * The Show profile.
      */

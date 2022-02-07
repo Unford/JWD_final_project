@@ -132,8 +132,15 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
         return this;
     }
 
+    @Override
     public Select limit(long limit) {
         return limit(limit, Long.MIN_VALUE);
+    }
+
+    @Override
+    public Select limit() {
+        sqlBuilder.append(" LIMIT ?, ?");
+        return this;
     }
 
     @Override

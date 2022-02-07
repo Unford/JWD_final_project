@@ -28,8 +28,8 @@
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="../include/header.jsp"/>
 <span id="contextPath" style="display: none">${pageContext.request.contextPath}</span>
-
-<main >
+<span id="userId" style="display: none">${requestScope.user.id}</span>
+<main>
     <div class="container">
         <div class="d-flex">
             <div class="nav flex-column nav-pills me-lg-3 " id="v-pills-tab" role="tablist"
@@ -255,9 +255,11 @@
                                                 </span>
                                                 </div>
                                                 <div class="row">
-                                                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At illum
+                                                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At
+                                                        illum
                                                         minima magni
-                                                        quam placeat ipsa earum beatae nobis animi et. Aut fugiat fuga minus
+                                                        quam placeat ipsa earum beatae nobis animi et. Aut fugiat fuga
+                                                        minus
                                                         atque ab
                                                         eveniet asperiores reiciendis earum...</small>
                                                 </div>
@@ -298,7 +300,6 @@
                     </div>
 
 
-
                 </div>
                 <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel"
                      aria-labelledby="v-pills-reviews-tab">
@@ -309,85 +310,47 @@
                             </div>
                         </div>
                         <div id="users_reviews" class="row">
-                            <div class="card mb-3">
-                                <div class="container-fluid">
-                                    <div class="row g-0 ">
-                                        <div class="col-2 col-md-1 align-self-center ">
+                           <jsp:include page="../include/review.jsp"/>
+                        </div>
+                        <c:set var="reviews_page_count" scope="page">
+                            <fmt:formatNumber value="${requestScope.user.reviews.size() / applicationScope.pagination_one_page_size}" maxFractionDigits="0"/>
+                        </c:set>
+                        <c:if test="${reviews_page_count > 1}">
+                            <div class=" mt-2 row">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center" id="review_pagination">
+                                        <li class="page-item prev">
+                                            <a class="page-link prev" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item active first" id="reviewPage1">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+                                        <c:forEach begin="2"
+                                                   end="${reviews_page_count - 1 < applicationScope.pagination_nav_length
+                                                    ? reviews_page_count - 1 : applicationScope.pagination_nav_length}"
+                                                   var="page">
+                                            <li class="page-item" id="reviewPage${page}">
+                                                <a class="page-link" href="#" >${page}</a>
+                                            </li>
+                                        </c:forEach>
+                                        <li class="page-item last" id="reviewPage${reviews_page_count}">
+                                            <a class="page-link" href="#" >${reviews_page_count}</a>
+                                        </li>
+                                        <li class="page-item next">
+                                            <a class="page-link next" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
 
 
-                                            <c:choose>
-                                                <c:when test="${not empty requestScope.user.photo.data}">
-                                                    <img src="${requestScope.user.photo.data}" class="img-thumbnail"
-                                                         alt="${requestScope.user.photo.name}"
-                                                         style="height: 80px; width: 80px; "> <!--todo!-->
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         style="height: 80px; width: 80px; " fill="black"
-                                                         class="bi bi-person-circle mb-1 img-thumbnail" viewBox="0 0 16 16">
-                                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                                        <path fill-rule="evenodd"
-                                                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                                    </svg>
-                                                </c:otherwise>
-                                            </c:choose>
-
-
-                                        </div>
-                                        <div class="col-10 ">
-                                            <div class="card-body">
-                                                <h5 class="card-title">
-
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-
-
-                                                </h5>
-                                                <p class="card-text">This is a wider card with supporting text below as a
-                                                    natural lead-in to additional content. This content is a little bit
-                                                    longer.</p>
-                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                    </ul>
+                                </nav>
                             </div>
 
-                        </div>
-                        <div class=" mt-2 row">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center" id="review_pagination">
-                                    <li class="page-item prev">
-                                        <a class="page-link prev" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active first"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-
-                                    <li class="page-item">
-                                        <a class="page-link next" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-
+                        </c:if>
                     </div>
-
-
-
-
-
 
                     <c:if test="${sessionScope.user.id != requestScope.user.id}">
                         <div class="container">
@@ -405,9 +368,14 @@
 
 
                                     <div class="card mb-3 ">
+                                        <div class="card-header">
+                                                    <h3>
+                                                        <fmt:message key="rating.myReview" bundle="${lang}"/>
+                                                    </h3>
+
                                         <div class="container-fluid">
                                             <div class="row g-0 ">
-                                                <div class="col-2 col-md-1 align-self-center ">
+                                                <div class="col-3 col-md-2 align-self-center ">
 
 
                                                     <c:choose>
@@ -415,7 +383,7 @@
                                                             <img src="${sessionScope.user.photo.data}"
                                                                  class="img-thumbnail"
                                                                  alt="${sessionScope.user.photo.name}"
-                                                                 style="height: 80px; width: 80px; "> <!--todo!-->
+                                                                 >
                                                         </c:when>
                                                         <c:otherwise>
                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -434,18 +402,32 @@
                                                     <div class="card-body bg-light">
 
 
-                                                        <h5 class="card-title">
-                                                            ${sessionScope.user.username}
-                                                            <cst:rating value="${requestScope.my_review.score}"/>
 
+                                                        <h5 class="card-title">
+                                                                ${sessionScope.user.username}
+                                                            <cst:rating value="${requestScope.my_review.score}"/>
+                                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                                        <button type="submit" class="btn btn-link text-success ">
+                                                                            <i class="bi bi-pencil-fill"></i>
+                                                                        </button>
+
+                                                                        <button type="submit" class="btn btn-link text-danger ">
+                                                                            <i class="bi bi-trash-fill"></i>
+                                                                        </button>
+                                                                    </div>
                                                         </h5>
+
+
+
+
                                                         <p class="card-text">
                                                                 ${requestScope.my_review.message}
                                                         </p>
                                                         <p class="card-text">
                                                             <small class="text-muted">
                                                             </small>
-                                                            <cst:dateformat value="${requestScope.my_review.timestamp}"/>
+                                                            <cst:dateformat
+                                                                    value="${requestScope.my_review.timestamp}"/>
                                                             </small>
                                                         </p>
                                                     </div>
@@ -542,8 +524,6 @@
     <jsp:include page="../include/footer.jsp"/>
 
 </main>
-
-
 
 
 <script src="${pageContext.request.contextPath}/js/profile.js"></script>

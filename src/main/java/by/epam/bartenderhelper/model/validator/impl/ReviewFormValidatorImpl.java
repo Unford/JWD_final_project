@@ -5,7 +5,7 @@ import by.epam.bartenderhelper.model.validator.ReviewFormValidator;
 import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
-import static by.epam.bartenderhelper.model.validator.impl.CommonRegex.ENTITY_ID_REGEX;
+import static by.epam.bartenderhelper.model.validator.impl.CommonValidator.INTEGER_REGEX;
 
 /**
  * The type Review form validator.
@@ -51,7 +51,7 @@ public class ReviewFormValidatorImpl implements ReviewFormValidator {
 
     @Override
     public boolean isTargetIdValid(String id) {
-        return id != null && id.matches(ENTITY_ID_REGEX);
+        return id != null && id.matches(INTEGER_REGEX);
     }
 
     @Override

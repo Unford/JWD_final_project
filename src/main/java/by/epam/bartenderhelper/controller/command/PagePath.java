@@ -63,7 +63,7 @@ public final class PagePath {
     /**
      * The constant REVIEW_AJAX.
      */
-    public static final String REVIEW_AJAX = "jsp/include/review.jsp";
+    public static final String REVIEW_AJAX = "jsp/include/review_response.jsp";
 
 
 

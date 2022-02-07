@@ -2,7 +2,9 @@ package by.epam.bartenderhelper.model.dao;
 
 import by.epam.bartenderhelper.exception.DaoException;
 import by.epam.bartenderhelper.model.entity.Review;
+import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,5 +19,7 @@ public interface ReviewDao {
      * @return the optional
      * @throws DaoException the dao exception
      */
-    Optional<Review> findUsersReviewsByAuthor(long userId, long authorId) throws DaoException;
+    Optional<Review> findUserReviewsByAuthor(long userId, long authorId) throws DaoException;
+
+    List<ReviewDto> findAllInformationPart(long userId, int limit) throws DaoException;
 }

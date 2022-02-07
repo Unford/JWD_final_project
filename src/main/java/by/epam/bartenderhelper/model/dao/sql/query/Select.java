@@ -153,6 +153,8 @@ public interface Select extends SqlQuery, From<Select> {
      */
     Select limit(long limit);
 
+    Select limit();
+
     /**
      * Join select.
      *

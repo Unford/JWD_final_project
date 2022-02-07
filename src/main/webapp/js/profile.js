@@ -1,50 +1,67 @@
-    let contextPath = document.getElementById("contextPath").innerText;
-    let users_reviews = document.getElementById("users_reviews");
-    let review_pagination = document.getElementById("review_pagination")
-    let current_page_html = review_pagination.querySelector(".active");
-    let current_page = parseInt(current_page_html.querySelector("a").innerHTML);
+let contextPath = document.getElementById("contextPath").innerText;
+let users_reviews = document.getElementById("users_reviews");
+let review_pagination = document.getElementById("review_pagination")
 
-    review_pagination.querySelectorAll("li a").forEach(function (page){
-        page.addEventListener("click", (e) =>{
-            var pagenum = page.innerHTML;
-            if (page.classList.contains('next')){
-                pagenum =  1 + current_page;
-            }
-            if (page.classList.contains('prev')){
-                pagenum = current_page != 1 ? current_page - 1 : 1;
+let current_page_html = review_pagination.querySelector(".active");
+let current_page = parseInt(current_page_html.querySelector("a").innerHTML);
 
-            }
-            if (pagenum != current_page){
-                fetch(contextPath + "/controller?command=show_user_reviews&page=" + pagenum, {
-                    d
+let last_page = parseInt(review_pagination.querySelector(".last a").innerHTML)
+let userId = document.getElementById("userId").innerText;
+
+review_pagination.querySelectorAll("li a").forEach(function (page) {
+    page.addEventListener("click", (e) => {
+        var pagenum = page.innerHTML;
+        if (page.classList.contains('next')) {
+            pagenum = current_page != last_page ? current_page + 1 : last_page;
+        }
+        if (page.classList.contains('prev')) {
+            pagenum = current_page != 1 ? current_page - 1 : 1;
+
+        }
+
+        if (pagenum != current_page) {
+            fetch(contextPath + "/controller?command=show_user_reviews&user=" + userId + "&page=" + pagenum, {
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.text()
                 })
+                .then(str => new window.DOMParser().parseFromString(str, "text/html"))
+                .then(data => {
+                    current_page_html.classList.remove("active");
 
-                    .then(response => response.text())
-                    .then(str => new window.DOMParser().parseFromString(str, "text/html"))
-                    .then(data => {
-                        current_page_html.classList.remove("active");
+                    console.log("Current page" + current_page)
+                    console.log("new page" + pagenum)
 
-                        console.log("Current page" + current_page)
-                        console.log("new page" + pagenum)
-                        console.log("target link" + e.target)
+                    var nextPage = e.target.parentElement;
 
-                        e.target.parentElement.classList.add("active")
-                        if (page.classList.contains('next')){
-                            pagenum =  1 + current_page;
-                        }
-                        if (page.classList.contains('prev')){
-                            pagenum = current_page != 1 ? current_page - 1 : 1;
+                    if (nextPage.classList.contains('next')) {
+                        var nextPageId = "reviewPage" +
+                            (parseInt(current_page_html.id.replaceAll("reviewPage", "")) + 1)
+                        console.log("nextpage next " + nextPageId)
+                        nextPage = review_pagination.querySelector("#" + nextPageId)
+                    }
+                    if (nextPage.classList.contains('prev')) {
+                        var nextPageId = "reviewPage" +
+                            (parseInt(current_page_html.id.replaceAll("reviewPage", "")) - 1)
+                        console.log("nextpage prev " + nextPageId)
+                        nextPage = review_pagination.querySelector("#" + nextPageId)
+                    }
+                    console.log("next page" + nextPage)
 
-                        }
-                        current_page_html = e.target.parentElement
-                        current_page = pagenum;
-                        users_reviews.innerHTML = data.body.innerHTML
+                    nextPage.classList.add("active")
+                    current_page_html = nextPage
+                    current_page = pagenum;
+                    users_reviews.innerHTML = data.body.innerHTML
 
-                    })
-                    .catch(function (error){
-                        console.log(error)
-                    })
-            }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        }
 
-        })
     })
+})

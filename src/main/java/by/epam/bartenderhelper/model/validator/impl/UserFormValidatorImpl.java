@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
-import static by.epam.bartenderhelper.model.validator.impl.CommonRegex.ENTITY_ID_REGEX;
+import static by.epam.bartenderhelper.model.validator.impl.CommonValidator.INTEGER_REGEX;
 
 /**
  * The type User form validator.
@@ -22,7 +22,7 @@ public class UserFormValidatorImpl implements UserFormValidator {
     private static final String PASSWORD_REGEX = SAFE_SYMBOL_REGEX + "{8,30}";
     private static final String NAME_REGEX = "[А-Я\\p{Upper}][а-я\\p{Lower}]{2,30}";
     private static final String EMAIL_REGEX = "[\\p{Lower}\\d._%+-]+@[\\p{Lower}\\d.-]+\\.[\\p{Lower}]{2,4}$";
-    private static final String PROFILE_REGEX = ENTITY_ID_REGEX + "|" + USERNAME_REGEX;
+    private static final String PROFILE_REGEX = INTEGER_REGEX + "|" + USERNAME_REGEX;
 
     private static UserFormValidatorImpl instance;
 
@@ -128,7 +128,7 @@ public class UserFormValidatorImpl implements UserFormValidator {
 
     @Override
     public boolean isIdValid(String id) {
-        return id != null && id.matches(ENTITY_ID_REGEX);
+        return id != null && id.matches(INTEGER_REGEX);
     }
 
     @Override

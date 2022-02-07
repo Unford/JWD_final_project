@@ -54,5 +54,7 @@ public final class FileEncoder {
         }
         return encodeFile;
     }
-    private FileEncoder(){}
+
+    private FileEncoder() {
+    }
 }

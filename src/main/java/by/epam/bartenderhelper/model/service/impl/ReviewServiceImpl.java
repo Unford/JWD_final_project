@@ -6,10 +6,12 @@ import by.epam.bartenderhelper.model.dao.EntityTransaction;
 import by.epam.bartenderhelper.model.dao.impl.ReviewDaoImpl;
 import by.epam.bartenderhelper.model.dao.impl.UserDaoImpl;
 import by.epam.bartenderhelper.model.entity.Review;
+import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 import by.epam.bartenderhelper.model.service.ReviewService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
         try (transaction) {
             ReviewDaoImpl reviewDao = new ReviewDaoImpl();
             transaction.initialize(reviewDao);
-            review = reviewDao.findUsersReviewsByAuthor(userId, authorId);
+            review = reviewDao.findUserReviewsByAuthor(userId, authorId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -73,17 +75,32 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Optional<Review> findUserReview(long userId, long authorId) throws ServiceException {
+    public Optional<Review> findUserReviewByAuthor(long userId, long authorId) throws ServiceException {
         Optional<Review> review;
         EntityTransaction transaction = new EntityTransaction();
         try (transaction) {
             ReviewDaoImpl reviewDao = new ReviewDaoImpl();
             transaction.initialize(reviewDao);
-            review = reviewDao.findUsersReviewsByAuthor(userId, authorId);
+            review = reviewDao.findUserReviewsByAuthor(userId, authorId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
         }
         return review;
+    }
+
+    @Override
+    public List<ReviewDto> findUserReviewsPart(long userId, int page) throws ServiceException {
+        List<ReviewDto> reviews;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            ReviewDaoImpl reviewDao = new ReviewDaoImpl();
+            transaction.initialize(reviewDao);
+            reviews = reviewDao.findAllInformationPart(userId, page);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return reviews;
     }
 }

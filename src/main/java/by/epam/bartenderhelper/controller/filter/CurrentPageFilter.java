@@ -25,6 +25,8 @@ public class CurrentPageFilter implements Filter {
     public static final Logger logger = LogManager.getLogger();
     private static final char QUESTION_MARK = '?';
     private static final String GET_METHOD = "GET";
+    private static final String AJAX_HEADER = "X-Requested-With";
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -33,20 +35,23 @@ public class CurrentPageFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
 
-        String queryString = httpServletRequest.getQueryString();
-        String servletPath = httpServletRequest.getServletPath();
-        String contextPath = httpServletRequest.getContextPath();
+        String ajaxHeader = httpServletRequest.getHeader(AJAX_HEADER);
 
-        String command = servletRequest.getParameter(RequestParameter.COMMAND);
-        String localeCommand = CommandType.CHANGE_LOCALE.toString().toLowerCase();
+        if (ajaxHeader == null) {
+            String queryString = httpServletRequest.getQueryString();
+            String servletPath = httpServletRequest.getServletPath();
+            String contextPath = httpServletRequest.getContextPath();
 
-        if (httpServletRequest.getMethod().equals(GET_METHOD) && !command.equals(localeCommand)) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(contextPath).append(servletPath).append(QUESTION_MARK).append(queryString);
-            logger.debug("Current page is - {}", builder);
-            session.setAttribute(SessionAttribute.CURRENT_PAGE, builder.toString());
+            String command = servletRequest.getParameter(RequestParameter.COMMAND);
+            String localeCommand = CommandType.CHANGE_LOCALE.toString().toLowerCase();
+
+            if (httpServletRequest.getMethod().equals(GET_METHOD) && !command.equals(localeCommand)) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(contextPath).append(servletPath).append(QUESTION_MARK).append(queryString);
+                logger.debug("Current page is - {}", builder);
+                session.setAttribute(SessionAttribute.CURRENT_PAGE, builder.toString());
+            }
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
 
     }
