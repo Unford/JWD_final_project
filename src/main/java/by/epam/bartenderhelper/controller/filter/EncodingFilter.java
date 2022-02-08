@@ -25,10 +25,10 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         //todo
-        HttpServletResponse httpres = (HttpServletResponse) servletResponse;
-        httpres.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        httpres.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        httpres.setDateHeader("Expires", 0); // Proxies.
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpServletResponse.setHeader("Pragma", "no-cache");
+        httpServletResponse.setDateHeader("Expires", 0);
 
         String requestEncoding = servletRequest.getCharacterEncoding();
         if (encoding != null && !encoding.equalsIgnoreCase(requestEncoding)) {

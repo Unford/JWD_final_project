@@ -19,15 +19,13 @@ public class UpdateQueryImpl extends CommonSqlQueryImpl<Update> implements Updat
      */
     public UpdateQueryImpl(Table table){
         sqlBuilder.append("UPDATE ")
-                .append(table).append(" AS ")
-                .append(table.getShortName())
-                .append(" SET");
+                .append(table);
     }
 
     @Override
     public Update set(Column column) {
-        sqlBuilder.append(isFirstColumn ? ' ' : ',')
-                .append(column.getShortName()).append("=?");
+        sqlBuilder.append(isFirstColumn ? " SET " : ',')
+                .append(column.getFullName()).append("=?");
         isFirstColumn = false;
         return this;
     }

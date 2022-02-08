@@ -40,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public boolean checkUserReview(long userId, long authorId) throws ServiceException {
+    public boolean isUniqueUserReview(long userId, long authorId) throws ServiceException {
         Optional<Review> review;
         EntityTransaction transaction = new EntityTransaction();
         try (transaction) {
@@ -102,5 +102,35 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ServiceException(e);
         }
         return reviews;
+    }
+
+    @Override
+    public boolean deleteUserReviewByAuthor(long userId, long authorId) throws ServiceException {
+        boolean result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            ReviewDaoImpl reviewDao = new ReviewDaoImpl();
+            transaction.initialize(reviewDao);
+            result = reviewDao.deleteByAuthorId(userId, authorId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateUserReview(Review review, long userId) throws ServiceException {
+        boolean result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            ReviewDaoImpl reviewDao = new ReviewDaoImpl();
+            transaction.initialize(reviewDao);
+            result = reviewDao.updateUserReview(review, userId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
     }
 }

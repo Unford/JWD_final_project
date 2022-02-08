@@ -2,7 +2,6 @@ package by.epam.bartenderhelper.model.dao.sql.query.impl;
 
 import by.epam.bartenderhelper.model.dao.sql.Column;
 import by.epam.bartenderhelper.model.dao.sql.Table;
-import by.epam.bartenderhelper.model.dao.sql.query.JoinType;
 import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
 import by.epam.bartenderhelper.model.dao.sql.query.OrderType;
 import by.epam.bartenderhelper.model.dao.sql.query.Select;
@@ -58,7 +57,7 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
 
     @Override
     public Select selectColumn(Column column) {
-        return selectColumn(column.getShortName());
+        return selectColumn(column.getFullName());
     }
 
     @Override
@@ -72,7 +71,7 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
 
     @Override
     public Select groupConcat(Column column, String as) {
-        return groupConcat(column.getShortName(), as);
+        return groupConcat(column.getFullName(), as);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
 
     @Override
     public Select groupBy(Column column) {
-        return groupBy(column.getShortName());
+        return groupBy(column.getFullName());
     }
 
 
@@ -97,7 +96,7 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
     @Override
     public Select having(Column column) {
         sqlBuilder.append(" HAVING ")
-                .append(column.getShortName());
+                .append(column.getFullName());
         return this;
     }
 
@@ -115,12 +114,12 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
 
     @Override
     public Select orderBy(Column column) {
-        return orderBy(column.getShortName(), OrderType.ASC);
+        return orderBy(column.getFullName(), OrderType.ASC);
     }
 
     @Override
     public Select orderBy(Column column, OrderType type) {
-        return orderBy(column.getShortName(), type);
+        return orderBy(column.getFullName(), type);
     }
 
     @Override
@@ -140,43 +139,6 @@ public class SelectQueryImpl extends CommonSqlQueryImpl<Select> implements Selec
     @Override
     public Select limit() {
         sqlBuilder.append(" LIMIT ?, ?");
-        return this;
-    }
-
-    @Override
-    public Select join(JoinType type, Table table) {
-        sqlBuilder.append(' ').append(type == JoinType.FULL ? "" : type)
-                .append(" JOIN ")
-                .append(table)
-                .append(" AS ")
-                .append(table.getShortName());
-        return this;
-    }
-
-    @Override
-    public Select join(Table table) {
-        return join(JoinType.INNER, table);
-    }
-
-    @Override
-    public Select on(Column leftColumn, Column rightColumn) {
-        return on(leftColumn.getShortName(), rightColumn.getShortName());
-    }
-
-    @Override
-    public Select on(String leftColumn, String rightColumn) {
-        sqlBuilder.append(" ON (").append(leftColumn).append('=').append(rightColumn).append(")");
-        return this;
-    }
-
-    @Override
-    public Select using(Column column) {
-        return using(column.getName());
-    }
-
-    @Override
-    public Select using(String column) {
-        sqlBuilder.append(" USING (").append(column).append(')');
         return this;
     }
 

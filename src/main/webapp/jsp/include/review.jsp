@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="cst" uri="custom" %>
 
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="page_content" var="lang"/>
+
+<c:if test="${empty requestScope.reviews}">
+    <span class="text-center">
+        <fmt:message key="profile.empty" bundle="${lang}"/>
+    </span>
+</c:if>
 
 <c:forEach items="${requestScope.reviews}" var="review">
     <div class="card mb-3">

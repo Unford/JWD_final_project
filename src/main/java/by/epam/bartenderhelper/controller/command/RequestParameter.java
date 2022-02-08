@@ -118,12 +118,7 @@ public final class RequestParameter {
      */
     public static final String REVIEWS = "reviews";
 
-    public static final String PAGE = "page";
-
-
-
-
-
+    public static final String PAGINATION_PAGE = "page";
 
     private RequestParameter(){}
 

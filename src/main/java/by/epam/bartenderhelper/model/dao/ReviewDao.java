@@ -22,4 +22,8 @@ public interface ReviewDao {
     Optional<Review> findUserReviewsByAuthor(long userId, long authorId) throws DaoException;
 
     List<ReviewDto> findAllInformationPart(long userId, int limit) throws DaoException;
+
+    boolean deleteByAuthorId(long userId, long authorId) throws DaoException;
+
+    boolean updateUserReview(Review review, long userId) throws DaoException;
 }

@@ -54,6 +54,10 @@ public final class SqlBuilderFactory {
         return new DeleteQueryImpl();
     }
 
+    public static Delete delete(Table table) {
+        return new DeleteQueryImpl(table);
+    }
+
     /**
      * Update update.
      *

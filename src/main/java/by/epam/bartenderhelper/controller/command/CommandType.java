@@ -99,7 +99,11 @@ public enum CommandType {
     /**
      * The Send review.
      */
-    SEND_REVIEW(new SendReviewCommand(), CLIENT, ADMIN, BARTENDER),
+    SEND_USER_REVIEW(new SendUserReviewCommand(), CLIENT, ADMIN, BARTENDER),
+
+    EDIT_USER_REVIEW(new EditUserReviewCommand(), CLIENT, ADMIN, BARTENDER),
+
+    DELETE_USER_REVIEW(new DeleteUserReviewCommand(), CLIENT, ADMIN, BARTENDER),
 
     /**
      * The Change account status.

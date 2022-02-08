@@ -1,6 +1,5 @@
 package by.epam.bartenderhelper.model.dao.impl;
 
-import by.epam.bartenderhelper.controller.command.ServletContextAttribute;
 import by.epam.bartenderhelper.exception.DaoException;
 import by.epam.bartenderhelper.model.dao.AbstractDao;
 import by.epam.bartenderhelper.model.dao.ReviewDao;
@@ -8,7 +7,6 @@ import by.epam.bartenderhelper.model.dao.sql.SqlBuilderFactory;
 import by.epam.bartenderhelper.model.dao.sql.Table;
 import by.epam.bartenderhelper.model.dao.sql.query.JoinType;
 import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
-import by.epam.bartenderhelper.model.dao.sql.query.OrderType;
 import by.epam.bartenderhelper.model.entity.Review;
 import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_ONE_PAGE_SIZE;
+import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_REVIEWS_ONE_PAGE_SIZE;
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 /**
@@ -34,7 +32,23 @@ public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
 
     private static final String UPDATE_REVIEW_QUERY = SqlBuilderFactory.commonUpdateById(Table.REVIEWS).toString();
 
-    private static final String DELETE_PHOTO_BY_ID_QUERY = SqlBuilderFactory.commonDeleteById(Table.REVIEWS).toString();
+    private static final String UPDATE_USER_REVIEW_QUERY = SqlBuilderFactory.update(Table.REVIEWS)
+            .join(Table.USERS_REVIEWS).using(REVIEW_ID)
+            .setAll(REVIEW_MESSAGE, REVIEW_SCORE, REVIEW_DATE)
+            .where(USERS_REVIEWS_USER_ID, LogicOperator.EQUALS)
+            .and(REVIEW_AUTHOR_ID, LogicOperator.EQUALS)
+            .toString();
+
+
+    private static final String DELETE_REVIEW_BY_ID_QUERY = SqlBuilderFactory.commonDeleteById(Table.REVIEWS).toString();
+
+    private static final String DELETE_REVIEW_BY_AUTHOR_ID_QUERY = SqlBuilderFactory.delete(Table.REVIEWS)
+            .from(Table.REVIEWS)
+            .join(Table.USERS_REVIEWS).using(REVIEW_ID)
+            .where(USERS_REVIEWS_USER_ID, LogicOperator.EQUALS)
+            .and(REVIEW_AUTHOR_ID, LogicOperator.EQUALS)
+            .toString();
+
 
     private static final String FIND_ALL_AUTHOR_USERS_REVIEWS_QUERY = SqlBuilderFactory.select()
             .selectColumns(Table.REVIEWS)
@@ -127,7 +141,7 @@ public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
     @Override
     public boolean deleteById(long id) throws DaoException {
         int result;
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_PHOTO_BY_ID_QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_REVIEW_BY_ID_QUERY)) {
             statement.setLong(1, id);
             result = statement.executeUpdate();
         } catch (SQLException e) {
@@ -161,8 +175,8 @@ public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
         List<ReviewDto> reviews = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(FIND_PART_OF_ALL_USER_REVIEWS_QUERY)) {
             statement.setLong(1, userId);
-            statement.setLong(2, (long) (page - 1) * DEFAULT_PAGINATION_ONE_PAGE_SIZE);
-            statement.setLong(3, DEFAULT_PAGINATION_ONE_PAGE_SIZE);
+            statement.setLong(2, (long) (page - 1) * DEFAULT_PAGINATION_REVIEWS_ONE_PAGE_SIZE);
+            statement.setLong(3, DEFAULT_PAGINATION_REVIEWS_ONE_PAGE_SIZE);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -175,6 +189,38 @@ public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
             throw new DaoException("Find part of all user reviews query error", e);
         }
         return reviews;
+    }
+
+    @Override
+    public boolean deleteByAuthorId(long userId, long authorId) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_REVIEW_BY_AUTHOR_ID_QUERY)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, authorId);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Delete user review by authorId query error", e);
+            throw new DaoException("Delete user review by authorId query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
+    public boolean updateUserReview(Review review, long userId) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_REVIEW_QUERY)) {
+            statement.setString(1, review.getMessage());
+            statement.setDouble(2, review.getScore());
+            statement.setTimestamp(3, Timestamp.from(review.getTimestamp()));
+            statement.setLong(4, userId);
+            statement.setLong(5, review.getAuthorId());
+
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Update user review query error", e);
+            throw new DaoException("Update user review query error", e);
+        }
+        return result > 0;
     }
 
 

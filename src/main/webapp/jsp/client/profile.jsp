@@ -50,7 +50,7 @@
                         data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews"
                         aria-selected="false">
                     <fmt:message key="profile.reviews" bundle="${lang}"/>
-                    <span class="badge bg-secondary">${requestScope.user.reviews.size()}</span>
+                    <span class="badge bg-secondary" id="reviews_size">${requestScope.user.reviews.size()}</span>
 
                 </button>
 
@@ -309,11 +309,14 @@
                                 <h4><fmt:message key="profile.reviews" bundle="${lang}"/></h4>
                             </div>
                         </div>
-                        <div id="users_reviews" class="row">
-                           <jsp:include page="../include/review.jsp"/>
+                        <div id="users_reviews" class="row d-flex align-items-center" style="min-height: 300px">
+                            <jsp:include page="../include/review.jsp"/>
                         </div>
+
                         <c:set var="reviews_page_count" scope="page">
-                            <fmt:formatNumber value="${requestScope.user.reviews.size() / applicationScope.pagination_one_page_size}" maxFractionDigits="0"/>
+                            <fmt:formatNumber
+                                    value="${requestScope.user.reviews.size() / applicationScope.pagination_one_page_size}"
+                                    maxFractionDigits="0"/>
                         </c:set>
                         <c:if test="${reviews_page_count > 1}">
                             <div class=" mt-2 row">
@@ -332,11 +335,11 @@
                                                     ? reviews_page_count - 1 : applicationScope.pagination_nav_length}"
                                                    var="page">
                                             <li class="page-item" id="reviewPage${page}">
-                                                <a class="page-link" href="#" >${page}</a>
+                                                <a class="page-link" href="#">${page}</a>
                                             </li>
                                         </c:forEach>
                                         <li class="page-item last" id="reviewPage${reviews_page_count}">
-                                            <a class="page-link" href="#" >${reviews_page_count}</a>
+                                            <a class="page-link" href="#">${reviews_page_count}</a>
                                         </li>
                                         <li class="page-item next">
                                             <a class="page-link next" href="#" aria-label="Next">
@@ -353,181 +356,218 @@
                     </div>
 
                     <c:if test="${sessionScope.user.id != requestScope.user.id}">
-                        <div class="container">
-                            <c:choose>
-                                <c:when test="${sessionScope.user.role == 'GUEST'}">
-                                    <div class="row text-center border">
-                                        <p><fmt:message key="rating.logIn.message" bundle="${lang}"/>
-                                            <a href="${pageContext.request.contextPath}/controller?command=go_to_login">
-                                                <fmt:message key="rating.logIn.ref" bundle="${lang}"/>
-                                            </a>
-                                        </p>
-                                    </div>
-                                </c:when>
-                                <c:when test="${not empty requestScope.my_review}">
+                    <div class="container">
+                        <c:choose>
+                        <c:when test="${sessionScope.user.role == 'GUEST'}">
+                            <div class="row text-center border">
+                                <p><fmt:message key="rating.logIn.message" bundle="${lang}"/>
+                                    <a href="${pageContext.request.contextPath}/controller?command=go_to_login">
+                                        <fmt:message key="rating.logIn.ref" bundle="${lang}"/>
+                                    </a>
+                                </p>
+                            </div>
+                        </c:when>
+                        <c:when test="${not empty requestScope.my_review}">
 
 
-                                    <div class="card mb-3 ">
-                                        <div class="card-header">
-                                                    <h3>
-                                                        <fmt:message key="rating.myReview" bundle="${lang}"/>
-                                                    </h3>
+                        <div class="card mb-3 ">
+                            <div class="card-header">
+                                <h3>
+                                    <fmt:message key="rating.myReview" bundle="${lang}"/>
+                                </h3>
 
-                                        <div class="container-fluid">
-                                            <div class="row g-0 ">
-                                                <div class="col-3 col-md-2 align-self-center ">
-
-
-                                                    <c:choose>
-                                                        <c:when test="${not empty sessionScope.user.photo.data}">
-                                                            <img src="${sessionScope.user.photo.data}"
-                                                                 class="img-thumbnail"
-                                                                 alt="${sessionScope.user.photo.name}"
-                                                                 >
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 style="height: 80px; width: 80px; " fill="blue"
-                                                                 class="bi bi-person-circle mb-1 img-thumbnail"
-                                                                 viewBox="0 0 16 16">
-                                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                                                <path fill-rule="evenodd"
-                                                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                                            </svg>
-                                                        </c:otherwise>
-                                                    </c:choose>
-
-                                                </div>
-                                                <div class="col-10 ">
-                                                    <div class="card-body bg-light">
+                                <div class="container-fluid">
+                                    <div class="row g-0 ">
+                                        <div class="col-3 col-md-2 align-self-center ">
 
 
+                                            <c:choose>
+                                                <c:when test="${not empty sessionScope.user.photo.data}">
+                                                    <img src="${sessionScope.user.photo.data}"
+                                                         class="img-thumbnail"
+                                                         alt="${sessionScope.user.photo.name}"
+                                                    >
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         style="height: 80px; width: 80px; " fill="blue"
+                                                         class="bi bi-person-circle mb-1 img-thumbnail"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                        <path fill-rule="evenodd"
+                                                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                                    </svg>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                                        <h5 class="card-title">
-                                                                ${sessionScope.user.username}
-                                                            <cst:rating value="${requestScope.my_review.score}"/>
-                                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                                        <button type="submit" class="btn btn-link text-success ">
-                                                                            <i class="bi bi-pencil-fill"></i>
-                                                                        </button>
+                                        </div>
+                                        <div class="col-10 ">
+                                            <div class="card-body bg-light">
 
-                                                                        <button type="submit" class="btn btn-link text-danger ">
-                                                                            <i class="bi bi-trash-fill"></i>
+                                                <h5 class="card-title">
+                                                        ${sessionScope.user.username}
+                                                    <cst:rating value="${requestScope.my_review.score}"/>
+                                                    <div class="d-inline text-start justify-content-start">
+                                                        <button type="button" class="btn btn-link text-success"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#reviewModal">
+                                                            <i class="bi bi-pencil-fill"></i>
+                                                        </button>
+                                                        <form class="d-inline" method="post"
+                                                              action="${pageContext.request.contextPath}/controller">
+                                                            <input type="hidden" name="command"
+                                                                   value="delete_user_review">
+                                                            <input type="hidden" name="user"
+                                                                   value="${requestScope.user.id}">
+                                                            <button type="submit" class="btn btn-link text-danger ">
+                                                                <i class="bi bi-trash-fill"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </h5>
+
+
+                                                <div class="modal fade" id="reviewModal" tabindex="-1"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    <fmt:message key="rating.edit" bundle="${lang}"/>
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+
+                                                            <form class=" g-3 needs-validation justify-content-center p-4" novalidate
+                                                                  action="${pageContext.request.contextPath}/controller" method="post">
+                                                                <input name="command" type="hidden" value="edit_user_review">
+                                                                <input name="user" type="hidden" value="${requestScope.user.id}">
+                                                                <div class="row ">
+                                                                    <div class="col text-end">
+                                                                        <jsp:include page="../include/ratingInput.jsp"/>
+                                                                        <div class="valid-feedback">
+                                                                            <fmt:message key="rating.valid.feedback" bundle="${lang}"/>
+                                                                        </div>
+                                                                        <div class="invalid-feedback">
+                                                                            <fmt:message key="rating.invalid.feedback" bundle="${lang}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col ">
+                                                                        <label for="text_area" class="form-label">
+                                                                            <fmt:message key="rating.textarea.title" bundle="${lang}"/>
+                                                                        </label>
+                                                                        <textarea class="form-control" id="text_area" rows="3"
+                                                                                  maxlength="255" minlength="10"
+                                                                                  required name="review_message">${requestScope.my_review.message}</textarea>
+                                                                        <span id="review_message"></span>
+                                                                        <fmt:message key="rating.textarea.char_remaining" bundle="${lang}"/>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                                <div class="d-grid row justify-content-center mx-auto">
+                                                                    <div class="col-12 mt-3">
+                                                                        <button class="btn btn-primary" type="submit">
+                                                                            <fmt:message key="rating.form.submit" bundle="${lang}"/>
                                                                         </button>
                                                                     </div>
-                                                        </h5>
+                                                                </div>
 
+                                                            </form>
 
-
-
-                                                        <p class="card-text">
-                                                                ${requestScope.my_review.message}
-                                                        </p>
-                                                        <p class="card-text">
-                                                            <small class="text-muted">
-                                                            </small>
-                                                            <cst:dateformat
-                                                                    value="${requestScope.my_review.timestamp}"/>
-                                                            </small>
-                                                        </p>
+                                                        </div>
                                                     </div>
+                                                </div>
+
+
+                                                <p class="card-text">
+                                                        ${requestScope.my_review.message}
+                                                </p>
+                                                <p class="card-text">
+                                                    <small class="text-muted">
+                                                        <cst:dateformat value="${requestScope.my_review.timestamp}"/>
+                                                    </small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test="${not requestScope.user.deleted}">
+                                    <form class=" g-3 needs-validation justify-content-center " novalidate
+                                          action="${pageContext.request.contextPath}/controller" method="post">
+                                        <input name="command" type="hidden" value="send_user_review">
+                                        <input name="user" type="hidden" value="${requestScope.user.id}">
+                                        <div class="row ">
+                                            <div class="col text-end">
+                                                <jsp:include page="../include/ratingInput.jsp"/>
+                                                <div class="valid-feedback">
+                                                    <fmt:message key="rating.valid.feedback" bundle="${lang}"/>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <fmt:message key="rating.invalid.feedback" bundle="${lang}"/>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </div>
-
-
-                                </c:when>
-                                <c:otherwise>
-                                    <c:if test="${not requestScope.user.deleted}">
-                                        <form class=" g-3 needs-validation justify-content-center " novalidate
-                                              action="${pageContext.request.contextPath}/controller" method="post">
-                                            <input name="command" type="hidden" value="send_review">
-                                            <input name="user" type="hidden" value="${requestScope.user.id}">
-                                            <div class="row ">
-                                                <div class="col text-end">
-                                                    <fieldset class="rating">
-
-                                                        <input type="radio" id="star5" name="rating" value="5"/>
-                                                        <label class="full" for="star5"></label>
-                                                        <input type="radio" id="star4half" name="rating" value="4.5"/>
-                                                        <label class="half" for="star4half"></label>
-                                                        <input type="radio" id="star4" name="rating" value="4"/>
-                                                        <label class="full" for="star4"></label>
-                                                        <input type="radio" id="star3half" name="rating" value="3.5"/>
-                                                        <label class="half" for="star3half"></label>
-                                                        <input type="radio" id="star3" name="rating" value="3"
-                                                               required/>
-                                                        <label class="full" for="star3"></label>
-                                                        <input type="radio" id="star2half" name="rating" value="2.5"/>
-                                                        <label class="half" for="star2half"></label>
-                                                        <input type="radio" id="star2" name="rating" value="2"/>
-                                                        <label class="full" for="star2"></label>
-                                                        <input type="radio" id="star1half" name="rating" value="1.5"/>
-                                                        <label class="half" for="star1half"></label>
-                                                        <input type="radio" id="star1" name="rating" value="1"/>
-                                                        <label class="full" for="star1"></label>
-                                                        <input type="radio" id="starhalf" name="rating" value="0.5"/>
-                                                        <label class="half" for="starhalf"></label>
-                                                    </fieldset>
-                                                    <div class="valid-feedback">
-                                                        <fmt:message key="rating.valid.feedback" bundle="${lang}"/>
-                                                    </div>
-                                                    <div class="invalid-feedback">
-                                                        <fmt:message key="rating.invalid.feedback" bundle="${lang}"/>
-                                                    </div>
-                                                </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col ">
+                                                <label for="text_area" class="form-label">
+                                                    <fmt:message key="rating.textarea.title" bundle="${lang}"/>
+                                                </label>
+                                                <textarea class="form-control" id="text_area" rows="3"
+                                                          maxlength="255" minlength="10"
+                                                          required name="review_message"></textarea>
+                                                <span id="review_message"></span>
+                                                <fmt:message key="rating.textarea.char_remaining" bundle="${lang}"/>
                                             </div>
 
-                                            <div class="row justify-content-center">
-                                                <div class="col ">
-                                                    <label for="text_area" class="form-label">
-                                                        <fmt:message key="rating.textarea.title" bundle="${lang}"/>
-                                                    </label>
-                                                    <textarea class="form-control" id="text_area" rows="3"
-                                                              maxlength="255" minlength="10"
-                                                              required name="review_message"></textarea>
-                                                    <span id="review_message"></span>
-                                                    <fmt:message key="rating.textarea.char_remaining" bundle="${lang}"/>
-                                                </div>
+                                        </div>
 
+
+                                        <div class="d-grid row justify-content-center mx-auto">
+                                            <div class="col-12 mt-3">
+                                                <button class="btn btn-primary" type="submit">
+                                                    <fmt:message key="rating.form.submit" bundle="${lang}"/>
+                                                </button>
                                             </div>
+                                        </div>
 
+                                    </form>
 
-                                            <div class="d-grid row justify-content-center mx-auto">
-                                                <div class="col-12 mt-3">
-                                                    <button class="btn btn-primary" type="submit">
-                                                        <fmt:message key="rating.form.submit" bundle="${lang}"/>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </form>
-
-                                    </c:if>
-                                </c:otherwise>
+                                </c:if>
+                            </c:otherwise>
                             </c:choose>
 
                         </div>
-                    </c:if>
+                        </c:if>
 
+
+                    </div>
 
                 </div>
-
             </div>
-        </div>
 
-    </div>
+        </div>
 
     </div>
     <jsp:include page="../include/footer.jsp"/>
 
 </main>
 
-
 <script src="${pageContext.request.contextPath}/js/profile.js"></script>
-<c:if test="${sessionScope.user.id != requestScope.user.id and sessionScope.user.role != 'GUEST' and empty requestScope.my_review and not requestScope.user.deleted}">
+<c:if test="${sessionScope.user.id != requestScope.user.id and sessionScope.user.role != 'GUEST' and not requestScope.user.deleted}">
     <script src="${pageContext.request.contextPath}/js/messageCharacterCounter.js"></script>
 </c:if>
 </body>

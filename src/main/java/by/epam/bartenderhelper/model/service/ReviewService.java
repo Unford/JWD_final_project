@@ -19,7 +19,7 @@ public interface ReviewService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean checkUserReview(long userId, long authorId) throws ServiceException;
+    boolean isUniqueUserReview(long userId, long authorId) throws ServiceException;
 
     /**
      * Create user review boolean.
@@ -43,4 +43,7 @@ public interface ReviewService {
 
     List<ReviewDto> findUserReviewsPart(long userId, int page) throws ServiceException;
 
+    boolean deleteUserReviewByAuthor(long userId, long authorId) throws ServiceException;
+
+    boolean updateUserReview(Review review, long userId) throws ServiceException;
 }

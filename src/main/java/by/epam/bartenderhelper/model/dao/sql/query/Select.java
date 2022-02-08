@@ -155,55 +155,6 @@ public interface Select extends SqlQuery, From<Select> {
 
     Select limit();
 
-    /**
-     * Join select.
-     *
-     * @param type  the type
-     * @param table the table
-     * @return the select
-     */
-    Select join(JoinType type, Table table);
 
-    /**
-     * Join select.
-     *
-     * @param table the table
-     * @return the select
-     */
-    Select join(Table table);
-
-    /**
-     * On select.
-     *
-     * @param leftColumn  the left column
-     * @param rightColumn the right column
-     * @return the select
-     */
-    Select on(Column leftColumn, Column rightColumn);
-
-    /**
-     * On select.
-     *
-     * @param leftColumn  the left column
-     * @param rightColumn the right column
-     * @return the select
-     */
-    Select on(String leftColumn, String rightColumn);
-
-    /**
-     * Using select.
-     *
-     * @param link the link
-     * @return the select
-     */
-    Select using(Column link);
-
-    /**
-     * Using select.
-     *
-     * @param link the link
-     * @return the select
-     */
-    Select using(String link);
 
 }
