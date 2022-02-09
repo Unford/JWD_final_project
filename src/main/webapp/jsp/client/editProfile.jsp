@@ -14,12 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <title><fmt:message key="edit_profile.title" bundle="${lang}"/></title>
-    <style>
-        .thumb {
-            max-width: 200px;
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/file.css">
 
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="../include/header.jsp"/>
@@ -37,17 +33,19 @@
             </div>
         </div>
 
-        <div class="row row-cols-2 justify-content-center text-center">
-            <div class="col-md-4 ">
-                    <span id="output">
+
+        <div class="row justify-content-center">
+            <input type="file" class="form-control" style="display:none;" name="avatar" id="file" accept=".png, .jpg, .jpeg" required>
+            <div class="col-md-4 d-flex justify-content-center">
+
+                    <span id="output" class="d-flex justify-content-center mt-md-4" onclick="document.getElementById('file').click();">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user.photo.data}">
                                 <img class="thumb" title="${sessionScope.user.photo.name}"
                                      src="${sessionScope.user.photo.data}"/>
                             </c:when>
                             <c:otherwise>
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     style="width: 100%; max-width: 200px; " fill="blue"
+                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 200px; max-width: 200px; " fill="blue"
                                      class="bi bi-person-circle my-2" viewBox="0 0 16 16">
                                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                                             <path fill-rule="evenodd"
@@ -55,17 +53,9 @@
                                         </svg>
                             </c:otherwise>
                         </c:choose>
-
                     </span>
+
             </div>
-
-
-        </div>
-        <div class="row justify-content-center mt-2">
-            <div class="col-md-8">
-                <input type="file" class="form-control" name="avatar" id="file" accept=".png, .jpg, .jpeg">
-            </div>
-
         </div>
 
         <div class="row justify-content-center">
@@ -118,9 +108,12 @@
                 </label>
                 <textarea id="description" class="form-control" id="text_area" rows="3" maxlength="255"
                           name="about_me">${sessionScope.user.description}</textarea>
+                <span id="review_message"></span>
+                <fmt:message key="rating.textarea.char_remaining" bundle="${lang}"/>
                 <div class="invalid-feedback">
                     <fmt:message key="edit_profile.error.description" bundle="${lang}"/>
                 </div>
+
             </div>
         </div>
 
@@ -251,6 +244,5 @@
 
 <jsp:include page="../include/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/js/editProfile.js"></script>
-<script src="${pageContext.request.contextPath}/js/signUpFormValidation.js"></script>
 </body>
 </html>

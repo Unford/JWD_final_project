@@ -4,17 +4,15 @@ import by.epam.bartenderhelper.model.dao.sql.Column;
 import by.epam.bartenderhelper.model.dao.sql.Table;
 import by.epam.bartenderhelper.model.dao.sql.query.JoinType;
 import by.epam.bartenderhelper.model.dao.sql.query.LogicOperator;
-import by.epam.bartenderhelper.model.dao.sql.query.Select;
 import by.epam.bartenderhelper.model.dao.sql.query.SqlQuery;
-import by.epam.bartenderhelper.model.dao.sql.query.common.AggregationFunction;
-import by.epam.bartenderhelper.model.dao.sql.query.common.From;
+import by.epam.bartenderhelper.model.dao.sql.query.CommonSqlQuery;
 
 /**
  * The type Common sql query.
  *
  * @param <Q> the type parameter
  */
-abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, AggregationFunction<Q> {
+abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements CommonSqlQuery<Q> {
     /**
      * The Sql builder.
      */
@@ -30,7 +28,6 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
         sqlBuilder.append(") ");
         return get();
     }
-
 
 
     @Override
@@ -58,41 +55,43 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
     }
 
     @Override
-    public Q avg(Column column) {
-        appendAggregationFunction(" AVG", column.getFullName());
+    public Q avg(Column column, String as) {
+        appendAggregationFunction(" AVG", column, as);
         return get();
     }
 
     @Override
-    public Q max(Column column) {
-        appendAggregationFunction(" MAX", column.getFullName());
+    public Q max(Column column, String as) {
+        appendAggregationFunction(" MAX", column, as);
         return get();
     }
 
     @Override
-    public Q min(Column column) {
-        appendAggregationFunction(" MIN", column.getFullName());
+    public Q min(Column column, String as) {
+        appendAggregationFunction(" MIN", column, as);
         return get();
     }
 
     @Override
-    public Q sum(Column column) {
-        appendAggregationFunction(" SUM", column.getFullName());
+    public Q sum(Column column, String as) {
+        appendAggregationFunction(" SUM", column, as);
         return get();
     }
 
 
     @Override
-    public Q count(Column column, boolean distinct) {
+    public Q count(Column column, String as, boolean distinct) {
         sqlBuilder.append(" COUNT(")
                 .append(distinct ? "DISTINCT " : "")
-                .append(column.getFullName()).append("),");
+                .append(column.getFullName())
+                .append(") AS")
+                .append(as);
         return get();
     }
 
     @Override
-    public Q count(Column column) {
-        return count(column, false);
+    public Q count(Column column, String as) {
+        return count(column, as, false);
     }
 
     @Override
@@ -118,7 +117,6 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
         sqlBuilder.append(" OR ").append(column);
         return get();
     }
-
 
 
     @Override
@@ -204,8 +202,8 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
         return sqlBuilder.toString();
     }
 
-    private void appendAggregationFunction(String function, String value){
-        sqlBuilder.append(function).append('(').append(value).append("),");
+    private void appendAggregationFunction(String function, Column value, String as) {
+        sqlBuilder.append(function).append('(').append(value.getFullName()).append(") AS ").append(as).append(',');
     }
 
     /**
@@ -215,7 +213,7 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements From<Q>, Aggreg
      * @param operator the operator
      * @param value    the value
      */
-    protected void appendExpression(Column column, LogicOperator operator, String value){
+    protected void appendExpression(Column column, LogicOperator operator, String value) {
         sqlBuilder.append(column.getFullName())
                 .append(operator)
                 .append(value);

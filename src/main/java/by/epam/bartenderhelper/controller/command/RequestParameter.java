@@ -120,6 +120,22 @@ public final class RequestParameter {
 
     public static final String PAGINATION_PAGE = "page";
 
+    public static final String IMAGE = "image";
+
+    public static final String INGREDIENT= "ingredient";
+    public static final String MEASURE = "measure";
+    public static final String PRICE = "price";
+    public static final String CALORIE = "calorie";
+    public static final String NAME = "name";
+    public static final String INGREDIENT_DESCRIPTION = "description";
+
+    public static final String MEASURES = "measures";
+
+
+
+
+
+
     private RequestParameter(){}
 
     /**

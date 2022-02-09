@@ -1,6 +1,7 @@
 package by.epam.bartenderhelper.controller.command;
 
 import by.epam.bartenderhelper.controller.command.impl.admin.ChangeAccountStatusCommand;
+import by.epam.bartenderhelper.controller.command.impl.admin.CreateIngredientCommand;
 import by.epam.bartenderhelper.controller.command.impl.auth.*;
 import by.epam.bartenderhelper.controller.command.impl.common.*;
 import by.epam.bartenderhelper.controller.command.impl.guest.LogInCommand;
@@ -41,6 +42,9 @@ public enum CommandType {
      * The Go to ingredients.
      */
     GO_TO_INGREDIENTS(new GoToIngredientsPageCommand()),
+
+    GO_TO_ADD_INGREDIENT(new GoToAddIngredientPageCommand(), ADMIN, BARTENDER),
+
     /**
      * The Go to search.
      */
@@ -87,7 +91,7 @@ public enum CommandType {
     /**
      * The Sign out.
      */
-    SIGN_OUT(new SignOutCommand(), CLIENT, ADMIN, BARTENDER),//todo all???
+    SIGN_OUT(new SignOutCommand(), CLIENT, ADMIN, BARTENDER),
     /**
      * The Edit profile.
      */
@@ -108,7 +112,10 @@ public enum CommandType {
     /**
      * The Change account status.
      */
-    CHANGE_ACCOUNT_STATUS(new ChangeAccountStatusCommand(), ADMIN);
+    CHANGE_ACCOUNT_STATUS(new ChangeAccountStatusCommand(), ADMIN),
+
+    CREATE_INGREDIENT(new CreateIngredientCommand(), ADMIN, BARTENDER),
+    SHOW_INGREDIENT(new ShowIngredientCommand());
 
 
     private static final Logger logger = LogManager.getLogger();

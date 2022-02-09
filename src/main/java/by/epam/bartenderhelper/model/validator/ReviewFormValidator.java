@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * The interface Review form validator.
  */
-public interface ReviewFormValidator {
+public interface ReviewFormValidator extends FormValidator{
     /**
      * Is review form valid boolean.
      *

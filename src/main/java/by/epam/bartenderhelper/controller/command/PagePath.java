@@ -25,6 +25,9 @@ public final class PagePath {
      * The constant INGREDIENTS.
      */
     public static final String INGREDIENTS = "jsp/ingredients.jsp";
+
+    public static final String ADD_INGREDIENT = "jsp/client/addNewIngredient.jsp";
+
     /**
      * The constant SEARCH.
      */
@@ -48,12 +51,17 @@ public final class PagePath {
      */
     public static final String PROFILE = "jsp/client/profile.jsp";
 
+    public static final String INGREDIENT = "jsp/ingredient.jsp";
+
     /**
      * The constant GO_TO_LOG_IN.
      */
     public static final String GO_TO_LOG_IN = "/controller?command=go_to_login&"
             + RequestParameter.LOGIN + "=%s&"
             + RequestParameter.MESSAGE + "=%d";
+
+    public static final String SHOW_INGREDIENT = "/controller?command=show_ingredient&"
+            + RequestParameter.INGREDIENT + "=%s";
 
     /**
      * The constant GO_TO_MAIN.

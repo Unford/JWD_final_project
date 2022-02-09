@@ -121,20 +121,12 @@
                                         </h1>
 
                                     </div>
-                                    <div class=" row row-cols-2 text-center lead">
-                                        <div class="col">
-                                            <fmt:message key="profile.cocktail.rating" bundle="${lang}"/>
-                                        </div>
+                                    <div class=" row row-cols-1  text-center lead">
                                         <div class="col">
                                             <fmt:message key="profile.user.rating" bundle="${lang}"/>
                                         </div>
                                         <div class="col">
-                                            <cst:rating value="4.5"/>
-
-                                        </div>
-                                        <div class="col">
-                                            <cst:rating value="4.5"/>
-
+                                            <cst:rating value="${requestScope.user.userRating}"/>
                                         </div>
                                     </div>
                                     </h3>

@@ -17,13 +17,18 @@
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="include/header.jsp"/>
 <main>
-    <main>
+
 
         <div class="row justify-content-center mb-4 ms-2 me-2">
             <form >
                 <input type="search" class="form-control fs-3" placeholder="Ingredient" aria-label="Search">
             </form>
         </div>
+        <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'BARTENDER'}">
+            <div>
+                <a href="${pageContext.request.contextPath}/controller?command=go_to_add_ingredient"> add new</a>
+            </div>
+        </c:if>
 
         <div class="container">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
@@ -109,7 +114,6 @@
             </div>
 
         </div>
-    </main>
     <jsp:include page="include/footer.jsp"/>
 </main>
 </body>

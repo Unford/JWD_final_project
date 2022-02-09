@@ -27,6 +27,7 @@ import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String COCKTAILS_CONCAT = "cocktails";
     private static final String REVIEWS_CONCAT = "reviews";
+    private static final String USER_RATING = "userRating";
 
 
     private static final String FIND_ALL_USERS_QUERY = getUserSelectQuery()
@@ -95,6 +96,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static Select getUserSelectQuery() {
         return SqlBuilderFactory.select()
                 .selectColumns(Table.USERS)
+                .avg(REVIEW_SCORE, USER_RATING)
                 .selectColumn(PHOTO_DATA)
                 .selectColumn(PHOTO_NAME)
                 .groupConcat(USERS_COCKTAILS_COCKTAIL_ID, COCKTAILS_CONCAT)
@@ -102,7 +104,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 .from(Table.USERS)
                 .join(JoinType.LEFT, Table.PHOTOS).using(PHOTO_ID)
                 .join(JoinType.LEFT, Table.USERS_COCKTAILS).on(USERS_COCKTAILS_USER_ID, USER_ID)
-                .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID);
+                .join(JoinType.LEFT, Table.USERS_REVIEWS).on(USERS_REVIEWS_USER_ID, USER_ID)
+                .join(JoinType.LEFT, Table.REVIEWS).on(USERS_REVIEWS_REVIEW_ID, REVIEW_ID);
     }
 
     @Override
@@ -341,6 +344,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     .email(resultSet.getString(USER_EMAIL.getName()))
                     .role(UserRole.defineRole(resultSet.getObject(USER_ROLE.getName()).toString()))
                     .status(User.Status.defineStatus(resultSet.getObject(USER_STATUS.getName()).toString()))
+                    .userRating(resultSet.getDouble(USER_RATING))
                     .isDeleted(resultSet.getBoolean(USER_IS_DELETED.getName()))
                     .photo(new Photo.PhotoBuilder()
                             .photoId(resultSet.getLong(USER_PHOTO_ID.getName()))

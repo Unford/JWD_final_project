@@ -2,13 +2,12 @@ package by.epam.bartenderhelper.model.dao.sql.query;
 
 import by.epam.bartenderhelper.model.dao.sql.Column;
 import by.epam.bartenderhelper.model.dao.sql.Table;
-import by.epam.bartenderhelper.model.dao.sql.query.common.From;
-import by.epam.bartenderhelper.model.dao.sql.query.common.Where;
+
 
 /**
  * The interface Update.
  */
-public interface Update extends SqlQuery, From<Update> {
+public interface Update extends SqlQuery, CommonSqlQuery<Update> {
     /**
      * Set update.
      *

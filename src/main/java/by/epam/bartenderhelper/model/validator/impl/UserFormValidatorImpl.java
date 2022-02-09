@@ -8,12 +8,11 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
-import static by.epam.bartenderhelper.model.validator.impl.CommonValidator.INTEGER_REGEX;
 
 /**
  * The type User form validator.
  */
-public class UserFormValidatorImpl implements UserFormValidator {
+public class UserFormValidatorImpl extends AbstractFormValidator implements UserFormValidator {
     private static final int EMAIL_MAX_LENGTH = 40;
     private static final int DESCRIPTION_MAX_LENGTH = 255;
 
@@ -128,7 +127,7 @@ public class UserFormValidatorImpl implements UserFormValidator {
 
     @Override
     public boolean isIdValid(String id) {
-        return id != null && id.matches(INTEGER_REGEX);
+        return this.isIntegerValid(id);
     }
 
     @Override

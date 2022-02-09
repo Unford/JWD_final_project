@@ -5,18 +5,17 @@ import by.epam.bartenderhelper.model.validator.ReviewFormValidator;
 import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
-import static by.epam.bartenderhelper.model.validator.impl.CommonValidator.INTEGER_REGEX;
 
 /**
  * The type Review form validator.
  */
-public class ReviewFormValidatorImpl implements ReviewFormValidator {
+public class ReviewFormValidatorImpl extends AbstractFormValidator implements ReviewFormValidator {
     private static final int MESSAGE_MAX_LENGTH = 255;
     private static final String RATING_VALUE_REGEX = "^([1-5]|([0-5]\\.((?<!0\\.)0|(?<!5\\.)5)))$";
 
     private static ReviewFormValidatorImpl instance;
 
-    private ReviewFormValidatorImpl(){
+    private ReviewFormValidatorImpl() {
     }
 
     /**
@@ -25,7 +24,7 @@ public class ReviewFormValidatorImpl implements ReviewFormValidator {
      * @return the instance
      */
     public static ReviewFormValidatorImpl getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new ReviewFormValidatorImpl();
         }
         return instance;
@@ -51,7 +50,7 @@ public class ReviewFormValidatorImpl implements ReviewFormValidator {
 
     @Override
     public boolean isTargetIdValid(String id) {
-        return id != null && id.matches(INTEGER_REGEX);
+        return this.isIntegerValid(id);
     }
 
     @Override

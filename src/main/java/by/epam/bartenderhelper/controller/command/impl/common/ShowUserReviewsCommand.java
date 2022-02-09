@@ -9,7 +9,9 @@ import by.epam.bartenderhelper.exception.ServiceException;
 import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 import by.epam.bartenderhelper.model.service.ReviewService;
 import by.epam.bartenderhelper.model.service.impl.ReviewServiceImpl;
-import by.epam.bartenderhelper.model.validator.impl.CommonValidator;
+import by.epam.bartenderhelper.model.validator.ReviewFormValidator;
+import by.epam.bartenderhelper.model.validator.impl.AbstractFormValidator;
+import by.epam.bartenderhelper.model.validator.impl.ReviewFormValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class ShowUserReviewsCommand implements Command {
 
         String userIdText = request.getParameter(RequestParameter.USER);
         String pageText = request.getParameter(RequestParameter.PAGINATION_PAGE);
-        CommonValidator validator = CommonValidator.getInstance();
+        ReviewFormValidator validator = ReviewFormValidatorImpl.getInstance();
 
         if (validator.isIntegerValid(pageText) && validator.isIntegerValid(userIdText)) {
             ReviewService service = ReviewServiceImpl.getInstance();

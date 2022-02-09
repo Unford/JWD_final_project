@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * The interface User form validator.
  */
-public interface UserFormValidator {
+public interface UserFormValidator extends FormValidator{
     /**
      * Is form sign up valid boolean.
      *

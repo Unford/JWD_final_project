@@ -10,7 +10,7 @@ public final class Ingredient extends AbstractDaoEntity {
     private final String description;
     private final boolean verified;
     private final BigDecimal price;
-    private final BigDecimal calorie;
+    private final long calorie;
     private final Photo photo;
     private final Measure measure;
     private final double amount;
@@ -68,7 +68,7 @@ public final class Ingredient extends AbstractDaoEntity {
      *
      * @return the calorie
      */
-    public BigDecimal getCalorie() {
+    public long getCalorie() {
         return calorie;
     }
 
@@ -108,11 +108,11 @@ public final class Ingredient extends AbstractDaoEntity {
         Ingredient that = (Ingredient) o;
 
         if (verified != that.verified) return false;
+        if (calorie != that.calorie) return false;
         if (Double.compare(that.amount, amount) != 0) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (calorie != null ? !calorie.equals(that.calorie) : that.calorie != null) return false;
         if (photo != null ? !photo.equals(that.photo) : that.photo != null) return false;
         return measure != null ? measure.equals(that.measure) : that.measure == null;
     }
@@ -125,7 +125,7 @@ public final class Ingredient extends AbstractDaoEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (verified ? 1 : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (calorie != null ? calorie.hashCode() : 0);
+        result = 31 * result + (int) (calorie ^ (calorie >>> 32));
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (measure != null ? measure.hashCode() : 0);
         temp = Double.doubleToLongBits(amount);
@@ -158,7 +158,7 @@ public final class Ingredient extends AbstractDaoEntity {
         private String description;
         private boolean verified;
         private BigDecimal price;
-        private BigDecimal calorie;
+        private long calorie;
         private Photo photo;
         private Measure measure;
         private double amount;
@@ -224,7 +224,7 @@ public final class Ingredient extends AbstractDaoEntity {
          * @param calorie the calorie
          * @return the ingredient builder
          */
-        public IngredientBuilder calorie(BigDecimal calorie){
+        public IngredientBuilder calorie(long calorie){
             this.calorie = calorie;
             return this;
         }

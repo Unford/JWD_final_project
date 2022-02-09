@@ -3,7 +3,7 @@ package by.epam.bartenderhelper.model.validator;
 /**
  * The interface Locale validator.
  */
-public interface LocaleValidator {
+public interface LocaleValidator extends FormValidator{
     /**
      * Is locale valid boolean.
      *

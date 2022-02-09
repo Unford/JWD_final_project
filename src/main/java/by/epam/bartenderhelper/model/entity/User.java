@@ -13,9 +13,11 @@ public final class User extends AbstractDaoEntity {
     private String email;
     private UserRole userRole;
     private Status status;
+    private double userRating;
     private boolean isDeleted;
     private Photo photo;
     private List<Long> reviews;
+
     private List<Long> cocktails;
 
     private User(UserBuilder builder) {
@@ -27,6 +29,7 @@ public final class User extends AbstractDaoEntity {
         this.email = builder.email;
         this.userRole = builder.userRole;
         this.status = builder.status;
+        this.userRating = builder.userRating;
         this.isDeleted = builder.isDeleted;
         this.photo = builder.photo;
         this.reviews = builder.reviews;
@@ -48,7 +51,7 @@ public final class User extends AbstractDaoEntity {
         WORKING;
 
         @Override
-        public String toString(){
+        public String toString() {
             return super.toString().toLowerCase();
         }
 
@@ -58,7 +61,7 @@ public final class User extends AbstractDaoEntity {
          * @param from the from
          * @return the status
          */
-        public static Status defineStatus(String from){
+        public static Status defineStatus(String from) {
             return Status.valueOf(from.toUpperCase());
         }
     }
@@ -270,6 +273,14 @@ public final class User extends AbstractDaoEntity {
         this.cocktails = cocktails;
     }
 
+    public double getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(double userRating) {
+        this.userRating = userRating;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -278,6 +289,7 @@ public final class User extends AbstractDaoEntity {
 
         User user = (User) o;
 
+        if (Double.compare(user.userRating, userRating) != 0) return false;
         if (isDeleted != user.isDeleted) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
@@ -294,6 +306,7 @@ public final class User extends AbstractDaoEntity {
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        long temp;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
@@ -301,6 +314,8 @@ public final class User extends AbstractDaoEntity {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        temp = Double.doubleToLongBits(userRating);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (isDeleted ? 1 : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (reviews != null ? reviews.hashCode() : 0);
@@ -319,6 +334,7 @@ public final class User extends AbstractDaoEntity {
         sb.append(", email='").append(email).append('\'');
         sb.append(", userRole=").append(userRole);
         sb.append(", status=").append(status);
+        sb.append(", userRating=").append(userRating);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", photo=").append(photo);
         sb.append(", reviews=").append(reviews);
@@ -339,6 +355,7 @@ public final class User extends AbstractDaoEntity {
         private String email;
         private UserRole userRole;
         private Status status;
+        private double userRating;
         private boolean isDeleted;
         private Photo photo;
         private List<Long> reviews;
@@ -350,7 +367,7 @@ public final class User extends AbstractDaoEntity {
          * @param userId the user id
          * @return the user builder
          */
-        public UserBuilder userId(long userId){
+        public UserBuilder userId(long userId) {
             this.userId = userId;
             return this;
         }
@@ -361,7 +378,7 @@ public final class User extends AbstractDaoEntity {
          * @param username the username
          * @return the user builder
          */
-        public UserBuilder username(String username){
+        public UserBuilder username(String username) {
             this.username = username;
             return this;
         }
@@ -372,7 +389,7 @@ public final class User extends AbstractDaoEntity {
          * @param firstName the first name
          * @return the user builder
          */
-        public UserBuilder firstName(String firstName){
+        public UserBuilder firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
@@ -383,7 +400,7 @@ public final class User extends AbstractDaoEntity {
          * @param lastName the last name
          * @return the user builder
          */
-        public UserBuilder lastName(String lastName){
+        public UserBuilder lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
@@ -394,7 +411,7 @@ public final class User extends AbstractDaoEntity {
          * @param description the description
          * @return the user builder
          */
-        public UserBuilder description(String description){
+        public UserBuilder description(String description) {
             this.description = description;
             return this;
         }
@@ -405,7 +422,7 @@ public final class User extends AbstractDaoEntity {
          * @param email the email
          * @return the user builder
          */
-        public UserBuilder email(String email){
+        public UserBuilder email(String email) {
             this.email = email;
             return this;
         }
@@ -416,7 +433,7 @@ public final class User extends AbstractDaoEntity {
          * @param reviews the reviews
          * @return the user builder
          */
-        public UserBuilder reviews(List<Long> reviews){
+        public UserBuilder reviews(List<Long> reviews) {
             this.reviews = reviews;
             return this;
         }
@@ -427,7 +444,7 @@ public final class User extends AbstractDaoEntity {
          * @param userRole the user role
          * @return the user builder
          */
-        public UserBuilder role(UserRole userRole){
+        public UserBuilder role(UserRole userRole) {
             this.userRole = userRole;
             return this;
         }
@@ -438,8 +455,13 @@ public final class User extends AbstractDaoEntity {
          * @param status the status
          * @return the user builder
          */
-        public UserBuilder status(Status status){
+        public UserBuilder status(Status status) {
             this.status = status;
+            return this;
+        }
+
+        public UserBuilder userRating(double userRating) {
+            this.userRating = userRating;
             return this;
         }
 
@@ -449,7 +471,7 @@ public final class User extends AbstractDaoEntity {
          * @param isDeleted the is deleted
          * @return the user builder
          */
-        public UserBuilder isDeleted(boolean isDeleted){
+        public UserBuilder isDeleted(boolean isDeleted) {
             this.isDeleted = isDeleted;
             return this;
         }
@@ -460,7 +482,7 @@ public final class User extends AbstractDaoEntity {
          * @param photo the photo
          * @return the user builder
          */
-        public UserBuilder photo(Photo photo){
+        public UserBuilder photo(Photo photo) {
             this.photo = photo;
             return this;
         }
@@ -471,7 +493,7 @@ public final class User extends AbstractDaoEntity {
          * @param cocktails the cocktails
          * @return the user builder
          */
-        public UserBuilder cocktails(List<Long> cocktails){
+        public UserBuilder cocktails(List<Long> cocktails) {
             this.cocktails = cocktails;
             return this;
         }
@@ -481,7 +503,7 @@ public final class User extends AbstractDaoEntity {
          *
          * @return the user
          */
-        public User build(){
+        public User build() {
             return new User(this);
         }
     }

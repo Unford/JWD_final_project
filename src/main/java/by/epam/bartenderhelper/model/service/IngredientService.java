@@ -1,0 +1,15 @@
+package by.epam.bartenderhelper.model.service;
+
+import by.epam.bartenderhelper.exception.ServiceException;
+import by.epam.bartenderhelper.model.entity.Ingredient;
+import by.epam.bartenderhelper.model.entity.Measure;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface IngredientService {
+    boolean createIngredient(Ingredient ingredient) throws ServiceException;
+    List<Measure> findAllMeasures() throws ServiceException;
+
+    Optional<Ingredient> findIngredientById(long id) throws ServiceException;
+}

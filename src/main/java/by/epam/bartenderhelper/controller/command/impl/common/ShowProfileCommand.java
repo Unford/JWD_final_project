@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
+
 /**
  * The type Show profile command.
  */
@@ -27,7 +29,7 @@ public class ShowProfileCommand implements Command {
         Router router = new Router();
         router.setType(Router.RouterType.ERROR);
 
-        String user = request.getParameter(RequestParameter.USER);
+        String user = request.getParameter(USER);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
         User currentUser = (User) request.getSession().getAttribute(SessionAttribute.USER);
         User userProfile = null;
@@ -47,14 +49,14 @@ public class ShowProfileCommand implements Command {
 
             if (userProfile != null) {
                 ReviewService reviewService = ReviewServiceImpl.getInstance();
-                if (userProfile.getId() != currentUser.getId()){
+                if (userProfile.getId() != currentUser.getId()) {
                     Optional<Review> currentUserReview = reviewService.findUserReviewByAuthor(userProfile.getId(), currentUser.getId());
-                    currentUserReview.ifPresent(review -> request.setAttribute(RequestParameter.MY_REVIEW, review));
+                    currentUserReview.ifPresent(review -> request.setAttribute(MY_REVIEW, review));
                 }
                 List<ReviewDto> reviews = reviewService.findUserReviewsPart(userProfile.getId(), 1);
 
-                request.setAttribute(RequestParameter.USER, userProfile);
-                request.setAttribute(RequestParameter.REVIEWS, reviews);
+                request.setAttribute(USER, userProfile);
+                request.setAttribute(REVIEWS, reviews);
 
                 router.setPage(PagePath.PROFILE);
                 router.setType(Router.RouterType.FORWARD);

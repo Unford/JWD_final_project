@@ -4,7 +4,7 @@ package by.epam.bartenderhelper.model.entity;
  * The type Measure.
  */
 public final class Measure extends AbstractDaoEntity {
-    private final String name;
+    private String name;
 
     /**
      * Instantiates a new Measure.
@@ -12,19 +12,27 @@ public final class Measure extends AbstractDaoEntity {
      * @param id   the id
      * @param name the name
      */
-    public Measure(long id, String name){
+    public Measure(long id, String name) {
         super(id);
         this.name = name;
     }
 
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
+    public Measure(long id) {
+        super(id);
+    }
+
+    public Measure() {
+        super(0);
+    }
+
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     @Override
     public boolean equals(Object o) {
