@@ -64,12 +64,7 @@
                     <fmt:message key="sign_up.first_name" bundle="${lang}"/>
                 </label>
                 <input type="text"
-                       class="form-control
-                       <c:choose>
-                        <c:when test="${empty requestScope.parameters}"></c:when>
-                        <c:when test="${empty requestScope.parameters.first_name}">is-invalid</c:when>
-                        <c:otherwise>is-valid</c:otherwise>
-                       </c:choose>"
+                       class="form-control"
                        id="first_name" required name="first_name" minlength="2" maxlength="30"
                        value="${sessionScope.user.firstName}"
                        pattern="[А-ЯA-Z][а-яa-z]{1,29}">
@@ -84,12 +79,7 @@
                     <fmt:message key="sign_up.last_name" bundle="${lang}"/>
                 </label>
                 <input type="text"
-                       class="form-control
-                       <c:choose>
-                        <c:when test="${empty requestScope.parameters}"></c:when>
-                        <c:when test="${empty requestScope.parameters.last_name}">is-invalid</c:when>
-                        <c:otherwise>is-valid</c:otherwise>
-                       </c:choose>"
+                       class="form-control"
                        id="last_name" required name="last_name" minlength="2" maxlength="30"
                        value="${sessionScope.user.lastName}"
                        pattern="[А-ЯA-Z][а-яa-z]{1,29}">
@@ -126,17 +116,17 @@
             </div>
         </div>
 
-        <c:if test="${not empty requestScope.m}">
+        <c:if test="${not empty sessionScope.message}">
         <div class="row justify-content-center mt-2">
             <div class="col-8">
                     <c:choose>
-                        <c:when test="${requestScope.m == 3}">
+                        <c:when test="${sessionScope.message == 3}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <fmt:message key="edit_profile.info.invalid_dat" bundle="${lang}"/>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </c:when>
-                        <c:when test="${requestScope.m == 4}">
+                        <c:when test="${sessionScope.message == 4}">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <fmt:message key="edit_profile.info.success" bundle="${lang}"/>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -216,17 +206,17 @@
                 </button>
             </div>
         </div>
-        <c:if test="${not empty requestScope.m}">
+        <c:if test="${not empty sessionScope.message}">
             <div class="row justify-content-center mt-2">
                 <div class="col-8">
                     <c:choose>
-                        <c:when test="${requestScope.m == 1}">
+                        <c:when test="${sessionScope.message == 1}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <fmt:message key="edit_profile.password.invalid_dat" bundle="${lang}"/>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </c:when>
-                        <c:when test="${requestScope.m == 2}">
+                        <c:when test="${sessionScope.message == 2}">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <fmt:message key="edit_profile.password.success" bundle="${lang}"/>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -241,6 +231,7 @@
 
 
 </main>
+
 
 <jsp:include page="../include/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/js/editProfile.js"></script>

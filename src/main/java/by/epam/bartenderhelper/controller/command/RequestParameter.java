@@ -75,7 +75,7 @@ public final class RequestParameter {
     /**
      * The constant MESSAGE.
      */
-    public static final String MESSAGE = "m";
+    public static final String MESSAGE = "message";
 
     /**
      * The constant USER.
@@ -130,6 +130,8 @@ public final class RequestParameter {
     public static final String INGREDIENT_DESCRIPTION = "description";
 
     public static final String MEASURES = "measures";
+
+    public static final String VALUE = "value";
 
 
 

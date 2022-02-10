@@ -12,6 +12,9 @@ public final class MessageCode {
      * The constant INVALID_DATA.
      */
     public static final int INVALID_DATA = 1;
+
+    public static final int NOT_UNIQUE_DATA = 2;
+
     /**
      * The constant INVALID_USER_DATA.
      */

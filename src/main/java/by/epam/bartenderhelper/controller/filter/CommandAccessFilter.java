@@ -42,7 +42,7 @@ public class CommandAccessFilter implements Filter {
         if (command.isAvailableFor(userRole)){
             filterChain.doFilter(servletRequest, servletResponse);
         }else {
-            String redirect = httpServletRequest.getContextPath() + PagePath.GO_TO_MAIN;//todo goto
+            String redirect = httpServletRequest.getContextPath() + PagePath.GO_TO_MAIN;
             httpServletResponse.sendRedirect(redirect);
         }
 

@@ -29,9 +29,15 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
     private static final String FIND_INGREDIENT_BY_ID_QUERY = getIngredientSelectQuery()
             .where(INGREDIENT_ID, LogicOperator.EQUALS).toString();
 
+    private static final String FIND_INGREDIENT_BY_NAME_QUERY = getIngredientSelectQuery()
+            .where(INGREDIENT_NAME, LogicOperator.EQUALS).toString();
+
     private static final String CREATE_INGREDIENT_QUERY = SqlBuilderFactory.commonInsert(Table.INGREDIENTS).toString();
 
     private static final String UPDATE_INGREDIENT_QUERY = SqlBuilderFactory.commonUpdateById(Table.INGREDIENTS).toString();
+
+    private static final String UPDATE_INGREDIENT_STATUS_QUERY = SqlBuilderFactory
+            .update(Table.INGREDIENTS).set(INGREDIENT_STATUS).where(INGREDIENT_ID, LogicOperator.EQUALS).toString();
 
     private static final String DELETE_INGREDIENT_BY_ID_QUERY = SqlBuilderFactory.commonDeleteById(Table.INGREDIENTS).toString();
 
@@ -124,6 +130,37 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
     }
 
     @Override
+    public boolean updateStatus(long id, boolean status) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_INGREDIENT_STATUS_QUERY)) {
+            statement.setInt(1, status ? 1 : 0);
+            statement.setLong(2, id);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Update ingredient status query error", e);
+            throw new DaoException("Update ingredient status query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
+    public Optional<Ingredient> findByName(String name) throws DaoException {
+        Optional<Ingredient> ingredient = Optional.empty();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_INGREDIENT_BY_NAME_QUERY)) {
+            statement.setString(1, name);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    ingredient = Optional.ofNullable(mapEntity(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Find ingredient by name query error", e);
+            throw new DaoException("Find ingredient by name query error", e);
+        }
+        return ingredient;
+    }
+
+    @Override
     protected Ingredient mapEntity(ResultSet resultSet) throws DaoException {
         try {
             Measure measure = new Measure(resultSet.getLong(MEASURE_ID.getName()),
@@ -163,4 +200,6 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
             throw new DaoException("error while setting ingredient statement parameters", e);
         }
     }
+
+
 }

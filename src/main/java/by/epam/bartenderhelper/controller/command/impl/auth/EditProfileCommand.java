@@ -30,10 +30,10 @@ public class EditProfileCommand implements Command {
         Map<String, String> parameters = extractParameters(request);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
         Optional<String> avatar = FileEncoder.encodeFile(request, AVATAR);
-        int message = MessageCode.INVALID_DATA;
+        int message = MessageCode.INVALID_USER_DATA;
+        HttpSession session = request.getSession();
 
         if (validator.isFormUpdateValid(parameters)) {
-            HttpSession session = request.getSession();
             UserService service = UserServiceImpl.getInstance();
             User currentUser = (User) session.getAttribute(USER);
 
@@ -65,8 +65,9 @@ public class EditProfileCommand implements Command {
             }
         }
 
-        request.setAttribute(OLD_PARAMETERS, parameters);
-        request.setAttribute(RequestParameter.MESSAGE, message);
-        return new Router(PagePath.EDIT_PROFILE, Router.RouterType.FORWARD);
+        session.setAttribute(OLD_PARAMETERS, parameters);
+        session.setAttribute(RequestParameter.MESSAGE, message);
+        return new Router(request.getContextPath() + PagePath.GO_TO_EDIT_PROFILE, Router.RouterType.REDIRECT);
+
     }
 }

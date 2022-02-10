@@ -23,7 +23,7 @@ public class GoToAddIngredientPageCommand implements Command {
             logger.error(e);
             throw new CommandException(e);
         }
-        return new Router(PagePath.ADD_INGREDIENT, Router.RouterType.FORWARD);
+        return new Router(PagePath.ADD_INGREDIENT_JSP, Router.RouterType.FORWARD);
 
     }
 }

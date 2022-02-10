@@ -33,6 +33,6 @@ public class ChangePasswordCommand implements Command {
         }
 
         request.setAttribute(RequestParameter.MESSAGE, message);
-        return new Router(PagePath.EDIT_PROFILE, Router.RouterType.FORWARD);
+        return new Router(PagePath.EDIT_PROFILE_JSP, Router.RouterType.FORWARD);
     }
 }

@@ -94,12 +94,12 @@
 
     </form>
     <c:choose>
-        <c:when test="${param.m == 1}">
+        <c:when test="${param.message == 1}">
             <div class="alert alert-danger" role="alert">
                 <fmt:message key="logIn.error.auth" bundle="${lang}"/>
             </div>
         </c:when>
-        <c:when test="${param.m == 2}">
+        <c:when test="${param.message == 2}">
             <div class="alert alert-danger" role="alert">
                 <fmt:message key="logIn.error.ban" bundle="${lang}"/>
             </div>

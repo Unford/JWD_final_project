@@ -13,6 +13,6 @@ public class GoToLoginPageCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        return new Router(PagePath.LOG_IN, Router.RouterType.FORWARD);
+        return new Router(PagePath.LOGIN_JSP, Router.RouterType.FORWARD);
     }
 }

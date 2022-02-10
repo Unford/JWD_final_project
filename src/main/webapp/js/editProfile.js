@@ -34,21 +34,10 @@ setInterval(checkLength, 300);
                 let actual_desc = document.getElementById("description").value
                 let fileInput = document.getElementById("file").value;
 
-                console.log(actual_firstname + " - " + oldParameters.firstName)
-                console.log(oldParameters.firstName === actual_firstname)
-                console.log(actual_lastname + " - " + oldParameters.lastName)
-                console.log(oldParameters.lastName === actual_lastname)
-
-                console.log(actual_desc + " - " + oldParameters.description)
-                console.log(oldParameters.description === actual_desc)
-
-                console.log(fileInput)
-                console.log(fileInput === "")
                 var bool = oldParameters.firstName === actual_firstname
                     && oldParameters.lastName === actual_lastname
                     && oldParameters.description === actual_desc
                     && fileInput === "";
-                console.log(bool)
 
                 if (!form.checkValidity() && bool) {
                     event.preventDefault()

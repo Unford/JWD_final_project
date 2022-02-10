@@ -5,7 +5,6 @@ var maxLength = area.getAttribute("maxlength");
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 }
-
 var checkLength = function () {
     if (area.value.length < maxLength) {
         message.innerHTML = (maxLength - area.value.length);
@@ -15,7 +14,10 @@ var checkLength = function () {
 
     }
 }
+
 setInterval(checkLength, 300);
+
+var span = document.getElementById('output');
 
 (function () {
     'use strict'
@@ -26,6 +28,12 @@ setInterval(checkLength, 300);
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
+                if (document.getElementById("file").checkValidity()){
+                    span.classList.remove("border", "border-danger")
+                }else {
+                    span.classList.add("border", "border-danger")
+                }
+
                 if (!form.checkValidity() || isBlank(area.value)) {
                     event.preventDefault()
                     event.stopPropagation()
@@ -35,3 +43,19 @@ setInterval(checkLength, 300);
             }, false)
         })
 })()
+
+
+function handleFileSelect(evt) {
+    var file = evt.target.files;
+    var f = file[0];
+    var reader = new FileReader();
+    span.classList.remove("border", "border-danger")
+    reader.onload = (function (theFile) {
+        return function (e) {
+            span.innerHTML = ['<img class="thumb" title="', escape(theFile.name), '" src="', e.target.result, '" />'].join('');
+        };
+    })(f);
+    reader.readAsDataURL(f);
+}
+
+document.getElementById('file').addEventListener('change', handleFileSelect, false);

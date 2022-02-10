@@ -12,4 +12,8 @@ public interface IngredientService {
     List<Measure> findAllMeasures() throws ServiceException;
 
     Optional<Ingredient> findIngredientById(long id) throws ServiceException;
+
+    boolean changeIngredientStatus(long id, boolean status) throws ServiceException;
+
+    boolean isUniqueName(String name) throws ServiceException;
 }

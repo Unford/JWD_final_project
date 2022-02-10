@@ -1,6 +1,6 @@
 package by.epam.bartenderhelper.controller.command;
 
-import static by.epam.bartenderhelper.controller.command.PagePath.INDEX;
+import static by.epam.bartenderhelper.controller.command.PagePath.INDEX_JSP;
 
 /**
  * The type Router.
@@ -24,7 +24,7 @@ public class Router {
         ERROR
     }
 
-    private String page = INDEX;
+    private String page = INDEX_JSP;
     private RouterType type = RouterType.FORWARD;
     private int errorCode = 404;
 

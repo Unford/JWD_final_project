@@ -61,7 +61,7 @@ public class SignUpCommand implements Command {
                     service.createAccount(user, parameters.get(PASSWORD));//dto todo
                     logger.log(Level.INFO, "User was created");
 
-                    router.setPage(PagePath.MAIN);
+                    router.setPage(PagePath.MAIN_JSP);
 
                     return router;
                 }
@@ -73,7 +73,7 @@ public class SignUpCommand implements Command {
 
         }
         request.setAttribute(OLD_PARAMETERS, parameters);
-        router.setPage(PagePath.SIGN_UP);
+        router.setPage(PagePath.REGISTRATION_JSP);
 
         logger.log(Level.INFO, "User wasn't created");
 

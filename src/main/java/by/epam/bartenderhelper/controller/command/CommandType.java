@@ -1,6 +1,7 @@
 package by.epam.bartenderhelper.controller.command;
 
 import by.epam.bartenderhelper.controller.command.impl.admin.ChangeAccountStatusCommand;
+import by.epam.bartenderhelper.controller.command.impl.admin.ChangeIngredientStatusCommand;
 import by.epam.bartenderhelper.controller.command.impl.admin.CreateIngredientCommand;
 import by.epam.bartenderhelper.controller.command.impl.auth.*;
 import by.epam.bartenderhelper.controller.command.impl.common.*;
@@ -53,6 +54,8 @@ public enum CommandType {
      * The Go to edit profile.
      */
     GO_TO_EDIT_PROFILE(new GoToEditProfilePageCommand(), CLIENT, BARTENDER, ADMIN),
+    GO_TO_EDIT_INGREDIENT(new GoToEditIngredientPageCommand(), ADMIN),
+
 
     /**
      * The Show user reviews.
@@ -115,8 +118,8 @@ public enum CommandType {
     CHANGE_ACCOUNT_STATUS(new ChangeAccountStatusCommand(), ADMIN),
 
     CREATE_INGREDIENT(new CreateIngredientCommand(), ADMIN, BARTENDER),
-    SHOW_INGREDIENT(new ShowIngredientCommand());
-
+    SHOW_INGREDIENT(new ShowIngredientCommand()),
+    CHANGE_INGREDIENT_STATUS(new ChangeIngredientStatusCommand(), ADMIN);
 
     private static final Logger logger = LogManager.getLogger();
 

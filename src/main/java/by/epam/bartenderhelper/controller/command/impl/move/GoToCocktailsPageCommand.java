@@ -13,6 +13,6 @@ public class GoToCocktailsPageCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        return new Router(PagePath.COCKTAILS, Router.RouterType.FORWARD);
+        return new Router(PagePath.COCKTAILS_JSP, Router.RouterType.FORWARD);
     }
 }

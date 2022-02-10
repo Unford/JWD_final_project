@@ -60,6 +60,6 @@ public class ReviewFormValidatorImpl extends AbstractFormValidator implements Re
 
     @Override
     public boolean isMessageValid(String message) {
-        return message != null && message.length() <= MESSAGE_MAX_LENGTH;
+        return message != null && message.length() <= MESSAGE_MAX_LENGTH && !message.isBlank();
     }
 }

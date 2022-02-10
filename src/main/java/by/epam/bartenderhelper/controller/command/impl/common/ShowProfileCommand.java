@@ -58,7 +58,7 @@ public class ShowProfileCommand implements Command {
                 request.setAttribute(USER, userProfile);
                 request.setAttribute(REVIEWS, reviews);
 
-                router.setPage(PagePath.PROFILE);
+                router.setPage(PagePath.PROFILE_JSP);
                 router.setType(Router.RouterType.FORWARD);
             }
         } catch (ServiceException e) {

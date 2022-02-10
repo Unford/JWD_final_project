@@ -61,7 +61,8 @@ public class IngredientFormValidatorImpl extends AbstractFormValidator implement
     public boolean isDescriptionValid(String description) {
         return description != null
                 && description.length() <= DESCRIPTION_MAX_LENGTH
-                && description.length() >= DESCRIPTION_MIN_LENGTH;
+                && description.length() >= DESCRIPTION_MIN_LENGTH
+                && !description.isBlank();
     }
 
     @Override

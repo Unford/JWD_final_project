@@ -3,12 +3,10 @@ package by.epam.bartenderhelper.model.service.impl;
 import by.epam.bartenderhelper.exception.DaoException;
 import by.epam.bartenderhelper.exception.ServiceException;
 import by.epam.bartenderhelper.model.dao.EntityTransaction;
-import by.epam.bartenderhelper.model.dao.impl.IngredientDaoImpl;
-import by.epam.bartenderhelper.model.dao.impl.MeasureDaoImpl;
-import by.epam.bartenderhelper.model.dao.impl.PhotoDaoImpl;
-import by.epam.bartenderhelper.model.dao.impl.ReviewDaoImpl;
+import by.epam.bartenderhelper.model.dao.impl.*;
 import by.epam.bartenderhelper.model.entity.Ingredient;
 import by.epam.bartenderhelper.model.entity.Measure;
+import by.epam.bartenderhelper.model.entity.User;
 import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 import by.epam.bartenderhelper.model.service.IngredientService;
 import org.apache.logging.log4j.LogManager;
@@ -84,5 +82,35 @@ public class IngredientServiceImpl implements IngredientService {
             throw new ServiceException(e);
         }
         return ingredient;
+    }
+
+    @Override
+    public boolean changeIngredientStatus(long id, boolean status) throws ServiceException {
+        boolean result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            transaction.initialize(ingredientDao);
+            result = ingredientDao.updateStatus(id, status);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isUniqueName(String name) throws ServiceException {
+        Optional<Ingredient> ingredient;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            transaction.initialize(ingredientDao);
+            ingredient = ingredientDao.findByName(name);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return ingredient.isEmpty();
     }
 }

@@ -2,6 +2,9 @@ var area = document.getElementById("text_area");
 var message = document.getElementById("review_message");
 var maxLength = area.getAttribute("maxlength");
 
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
 
 var checkLength = function () {
     if (area.value.length < maxLength) {
@@ -32,7 +35,7 @@ var span = document.getElementById('output');
                     span.classList.add("border", "border-danger")
                 }
 
-                if (!form.checkValidity()) {
+                if (!form.checkValidity() || isBlank(area.value)) {
                     event.preventDefault()
                     event.stopPropagation()
                 }

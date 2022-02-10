@@ -11,7 +11,9 @@ public abstract class AbstractFormValidator implements FormValidator {
      */
     static final String INTEGER_REGEX = "\\d+";
     private static final String DOUBLE_REGEX = "^\\d+\\.?\\d+$";
+    private static final String BOOLEAN_REGEX = "^false|true$";
 
+    @Override
     public boolean isIntegerValid(String number) {
         return number != null && number.matches(INTEGER_REGEX);
     }
@@ -19,5 +21,10 @@ public abstract class AbstractFormValidator implements FormValidator {
     @Override
     public boolean isDoubleValid(String number) {
         return number != null && number.matches(DOUBLE_REGEX);
+    }
+
+    @Override
+    public boolean isBooleanValid(String value) {
+        return value != null && value.matches(BOOLEAN_REGEX);
     }
 }

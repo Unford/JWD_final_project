@@ -22,6 +22,8 @@ public class UserFormValidatorImpl extends AbstractFormValidator implements User
     private static final String NAME_REGEX = "[А-Я\\p{Upper}][а-я\\p{Lower}]{2,30}";
     private static final String EMAIL_REGEX = "[\\p{Lower}\\d._%+-]+@[\\p{Lower}\\d.-]+\\.[\\p{Lower}]{2,4}$";
     private static final String PROFILE_REGEX = INTEGER_REGEX + "|" + USERNAME_REGEX;
+    private static final String WHITESPACE_REGEX = "^\\s+$";
+
 
     private static UserFormValidatorImpl instance;
 
@@ -121,7 +123,9 @@ public class UserFormValidatorImpl extends AbstractFormValidator implements User
 
     @Override
     public boolean isDescriptionValid(String description) {
-        return description != null && description.length() <= DESCRIPTION_MAX_LENGTH;
+        return description != null
+                && description.length() <= DESCRIPTION_MAX_LENGTH
+                && !description.matches(WHITESPACE_REGEX);
     }
 
 
