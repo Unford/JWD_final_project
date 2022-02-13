@@ -11,7 +11,11 @@ var checkLength = function () {
     } else {
 
         message.innerHTML = ""
-
+    }
+    if (isBlank(area.value)){
+        area.setCustomValidity("Invalid field.");
+    }else {
+        area.setCustomValidity("");
     }
 }
 
@@ -34,7 +38,7 @@ var span = document.getElementById('output');
                     span.classList.add("border", "border-danger")
                 }
 
-                if (!form.checkValidity() || isBlank(area.value)) {
+                if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
                 }

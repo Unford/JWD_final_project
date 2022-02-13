@@ -19,10 +19,10 @@
 
 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
     <li class="nav-item">
-        <a href="${pageContext.request.contextPath}/controller?command=go_to_cocktails"
+        <a href="${pageContext.request.contextPath}/controller?command=show_cocktails"
            class="nav-link px-2 ">
             <fmt:message key="header.cocktails" bundle="${lang}"/></a></li>
-    <li class="nav-item"><a href="${pageContext.request.contextPath}/controller?command=go_to_ingredients"
+    <li class="nav-item"><a href="${pageContext.request.contextPath}/controller?command=show_ingredients"
                             class="nav-link px-2 ">
         <fmt:message key="header.ingredients" bundle="${lang}"/></a></li>
     <li class="nav-item dropdown">

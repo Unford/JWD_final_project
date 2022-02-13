@@ -16,4 +16,11 @@ public interface IngredientService {
     boolean changeIngredientStatus(long id, boolean status) throws ServiceException;
 
     boolean isUniqueName(String name) throws ServiceException;
+    boolean isUniqueName(String name, long id) throws ServiceException;
+
+    boolean updateIngredient(Ingredient ingredient) throws ServiceException;
+
+    long calculateIngredientsSize(String name) throws ServiceException;
+
+    List<Ingredient> findIngredientsByName(String name, long page) throws ServiceException;
 }

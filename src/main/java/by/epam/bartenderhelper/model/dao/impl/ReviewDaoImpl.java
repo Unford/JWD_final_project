@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_REVIEWS_ONE_PAGE_SIZE;
+import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_PROFILE_ONE_PAGE_SIZE;
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 /**
@@ -175,8 +175,8 @@ public class ReviewDaoImpl extends AbstractDao<Review> implements ReviewDao {
         List<ReviewDto> reviews = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(FIND_PART_OF_ALL_USER_REVIEWS_QUERY)) {
             statement.setLong(1, userId);
-            statement.setLong(2, (long) (page - 1) * DEFAULT_PAGINATION_REVIEWS_ONE_PAGE_SIZE);
-            statement.setLong(3, DEFAULT_PAGINATION_REVIEWS_ONE_PAGE_SIZE);
+            statement.setLong(2, (long) (page - 1) * DEFAULT_PAGINATION_PROFILE_ONE_PAGE_SIZE);
+            statement.setLong(3, DEFAULT_PAGINATION_PROFILE_ONE_PAGE_SIZE);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

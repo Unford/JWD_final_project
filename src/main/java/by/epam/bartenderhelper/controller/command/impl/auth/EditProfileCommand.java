@@ -57,7 +57,7 @@ public class EditProfileCommand implements Command {
                     currentUser.setFirstName(parameters.get(FIRST_NAME));
                     currentUser.setLastName(parameters.get(LAST_NAME));
                     currentUser.setPhoto(photo.getData() == null ? currentUser.getPhoto() : photo);
-                    message = MessageCode.UPDATE_USER_SUCCESS;
+                    message = MessageCode.UPDATE_SUCCESS;
                 }
             } catch (ServiceException e) {
                 logger.error(e);

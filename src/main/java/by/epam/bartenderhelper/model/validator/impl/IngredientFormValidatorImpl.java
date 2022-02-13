@@ -12,7 +12,7 @@ public class IngredientFormValidatorImpl extends AbstractFormValidator implement
 
     private static final int INGREDIENT_NAME_MAX_LENGTH = 40;
     private static final String INGREDIENT_NAME_REGEX = "^([\\p{Upper}А-Я][\\p{Lower}а-я]+)+(?=( ?))(?:\\2[\\p{Lower}а-я]+)+$";
-    private static final String PRICE_REGEX = "^\\d{1,4}\\.?\\d{1,2}$";
+    private static final String PRICE_REGEX = "^\\d{1,4}(\\.\\d{1,2})?$";
 
     private static IngredientFormValidatorImpl instance;
 
@@ -47,6 +47,16 @@ public class IngredientFormValidatorImpl extends AbstractFormValidator implement
         }
         if (!isDescriptionValid(parameters.get(INGREDIENT_DESCRIPTION))) {
             parameters.put(INGREDIENT_DESCRIPTION, INVALID_VALUE_PARAMETER);
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isEditIngredientFormValid(Map<String, String> parameters) {
+        boolean result = isCreateIngredientFormValid(parameters);
+        if (!isPriceValid(parameters.get(INGREDIENT))) {
+            parameters.put(INGREDIENT, INVALID_VALUE_PARAMETER);
             result = false;
         }
         return result;

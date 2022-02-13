@@ -20,11 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_ONE_PAGE_SIZE;
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 import static by.epam.bartenderhelper.model.dao.sql.Column.PHOTO_DATA;
 
 public class IngredientDaoImpl extends AbstractDao<Ingredient> implements IngredientDao {
+    private static final String INGREDIENTS_SIZE = "size";
+
     private static final String FIND_ALL_INGREDIENTS_QUERY = getIngredientSelectQuery().toString();
+
+    private static final String FIND_PART_OF_ALL_INGREDIENTS_QUERY = getIngredientSelectQuery()
+            .where(INGREDIENT_STATUS, LogicOperator.EQUALS, "1")
+            .and(INGREDIENT_NAME).like()
+            .limit()
+            .toString();
 
     private static final String FIND_INGREDIENT_BY_ID_QUERY = getIngredientSelectQuery()
             .where(INGREDIENT_ID, LogicOperator.EQUALS).toString();
@@ -32,9 +41,20 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
     private static final String FIND_INGREDIENT_BY_NAME_QUERY = getIngredientSelectQuery()
             .where(INGREDIENT_NAME, LogicOperator.EQUALS).toString();
 
+    private static final String COUNT_VERIFIED_INGREDIENTS_QUERY = SqlBuilderFactory.select()
+            .count(INGREDIENT_ID, INGREDIENTS_SIZE)
+            .from(Table.INGREDIENTS)
+            .where(INGREDIENT_STATUS, LogicOperator.EQUALS, "1")
+            .and(INGREDIENT_NAME).like()
+            .toString();
+
     private static final String CREATE_INGREDIENT_QUERY = SqlBuilderFactory.commonInsert(Table.INGREDIENTS).toString();
 
-    private static final String UPDATE_INGREDIENT_QUERY = SqlBuilderFactory.commonUpdateById(Table.INGREDIENTS).toString();
+    private static final String UPDATE_INGREDIENT_QUERY = SqlBuilderFactory
+            .update(Table.INGREDIENTS)
+            .setAll(INGREDIENT_NAME, INGREDIENT_DESCRIPTION, INGREDIENT_PRICE, INGREDIENT_CALORIE, INGREDIENT_MEASURE_ID)
+            .where(INGREDIENT_ID, LogicOperator.EQUALS)
+            .toString();
 
     private static final String UPDATE_INGREDIENT_STATUS_QUERY = SqlBuilderFactory
             .update(Table.INGREDIENTS).set(INGREDIENT_STATUS).where(INGREDIENT_ID, LogicOperator.EQUALS).toString();
@@ -65,6 +85,44 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
             throw new DaoException("Find all ingredients query error", e);
         }
         return ingredients;
+    }
+
+    @Override
+    public List<Ingredient> findPartOfAllVerifiedByName(String name, long page) throws DaoException {
+        List<Ingredient> ingredients = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_PART_OF_ALL_INGREDIENTS_QUERY)) {
+            statement.setString(1, "%" +(name == null ? "" : name) + "%");
+            statement.setLong(2, (page - 1) * DEFAULT_PAGINATION_ONE_PAGE_SIZE);
+            statement.setLong(3, DEFAULT_PAGINATION_ONE_PAGE_SIZE);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Ingredient ingredient = mapEntity(resultSet);
+                    ingredients.add(ingredient);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Find part of all ingredients query error", e);
+            throw new DaoException("Find part of all ingredients query error", e);
+        }
+        return ingredients;
+    }
+
+    @Override
+    public long countVerifiedByName(String name) throws DaoException {
+        long result = 0;
+        try (PreparedStatement statement = connection.prepareStatement(COUNT_VERIFIED_INGREDIENTS_QUERY)) {
+            statement.setString(1, "%" +(name == null ? "" : name) + "%");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    result = resultSet.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Count verified ingredients query error", e);
+            throw new DaoException("Count verified ingredients query error", e);
+        }
+        return result;
     }
 
     @Override
@@ -106,8 +164,12 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
     public boolean update(Ingredient entity) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_INGREDIENT_QUERY)) {
-            setPreparedStatement(statement, entity);
-            statement.setLong(3, entity.getId());//todo
+            statement.setString(1, entity.getName());
+            statement.setString(2, entity.getDescription());
+            statement.setBigDecimal(3, entity.getPrice());
+            statement.setLong(4, entity.getCalorie());
+            statement.setLong(5, entity.getMeasure().getId());
+            statement.setLong(6, entity.getId());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Update ingredient query error", e);
@@ -159,6 +221,7 @@ public class IngredientDaoImpl extends AbstractDao<Ingredient> implements Ingred
         }
         return ingredient;
     }
+
 
     @Override
     protected Ingredient mapEntity(ResultSet resultSet) throws DaoException {

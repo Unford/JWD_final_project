@@ -1,4 +1,4 @@
-package by.epam.bartenderhelper.controller.command.impl.move;
+package by.epam.bartenderhelper.controller.command.impl.common;
 
 import by.epam.bartenderhelper.controller.command.Command;
 import by.epam.bartenderhelper.controller.command.PagePath;
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * The type Go to cocktails page command.
  */
-public class GoToCocktailsPageCommand implements Command {
+public class ShowCocktailsCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

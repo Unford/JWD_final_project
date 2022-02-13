@@ -37,8 +37,8 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements CommonSqlQuery<
     }
 
     @Override
-    public Q like(String pattern) {
-        sqlBuilder.append(" LIKE ").append(pattern);
+    public Q like() {
+        sqlBuilder.append(" LIKE ?");
         return get();
     }
 
@@ -84,8 +84,8 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements CommonSqlQuery<
         sqlBuilder.append(" COUNT(")
                 .append(distinct ? "DISTINCT " : "")
                 .append(column.getFullName())
-                .append(") AS")
-                .append(as);
+                .append(") AS ")
+                .append(as).append(' ');
         return get();
     }
 
@@ -114,7 +114,7 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements CommonSqlQuery<
 
     @Override
     public Q or(Column column) {
-        sqlBuilder.append(" OR ").append(column);
+        sqlBuilder.append(" OR ").append(column.getFullName());
         return get();
     }
 
@@ -133,7 +133,7 @@ abstract class CommonSqlQueryImpl<Q extends SqlQuery> implements CommonSqlQuery<
 
     @Override
     public Q and(Column column) {
-        sqlBuilder.append(" AND ").append(column).append(' ');
+        sqlBuilder.append(" AND ").append(column.getFullName()).append(' ');
         return get();
     }
 

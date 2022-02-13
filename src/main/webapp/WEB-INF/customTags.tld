@@ -31,7 +31,30 @@
             <required>true</required>
             <rtexprvalue>yes</rtexprvalue>
         </attribute>
-
     </tag>
 
+    <tag>
+        <name>pagination</name>
+        <tag-class>by.epam.bartenderhelper.view.PaginationTag</tag-class>
+        <attribute>
+            <name>itemsSize</name>
+            <required>true</required>
+            <rtexprvalue>yes</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>command</name>
+            <required>true</required>
+            <rtexprvalue>yes</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>currentPage</name>
+            <required>true</required>
+            <rtexprvalue>yes</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>search</name>
+            <required>true</required>
+            <rtexprvalue>yes</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

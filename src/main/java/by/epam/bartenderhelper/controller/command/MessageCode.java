@@ -26,7 +26,7 @@ public final class MessageCode {
     /**
      * The constant UPDATE_USER_SUCCESS.
      */
-    public static final int UPDATE_USER_SUCCESS = 4;
+    public static final int UPDATE_SUCCESS = 4;
 
     private MessageCode(){}
 }

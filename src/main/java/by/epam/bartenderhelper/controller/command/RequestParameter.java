@@ -101,10 +101,7 @@ public final class RequestParameter {
      */
 //rating
     public static final String RATING = "rating";
-    /**
-     * The constant COMMENT.
-     */
-    public static final String COMMENT = "comment";
+
     /**
      * The constant REVIEW_MESSAGE.
      */
@@ -122,6 +119,9 @@ public final class RequestParameter {
 
     public static final String IMAGE = "image";
 
+    public static final String INGREDIENTS= "ingredients";
+    public static final String INGREDIENTS_SIZE = "ingredients_size";
+
     public static final String INGREDIENT= "ingredient";
     public static final String MEASURE = "measure";
     public static final String PRICE = "price";
@@ -130,11 +130,9 @@ public final class RequestParameter {
     public static final String INGREDIENT_DESCRIPTION = "description";
 
     public static final String MEASURES = "measures";
-
     public static final String VALUE = "value";
 
-
-
+    public static final String SEARCH = "search";
 
 
 

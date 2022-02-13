@@ -32,8 +32,9 @@ public interface CommonSqlQuery<Q extends SqlQuery> {
     Q and(Column column, LogicOperator operator, String value);
     Q and(Column column, LogicOperator operator);
     Q and(Column column);
+
     Q between(String from, String to);
-    Q like(String pattern);
+    Q like();
     Q isNull();
     Q isNotNull();
     Q not();

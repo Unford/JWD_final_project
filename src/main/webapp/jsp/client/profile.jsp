@@ -302,12 +302,13 @@
                             </div>
                         </div>
                         <div id="users_reviews" class="row d-flex align-items-center" style="min-height: 300px">
-                            <jsp:include page="../include/review.jsp"/>
+                            <jsp:include page="../include/review/review.jsp"/>
                         </div>
 
                         <c:set var="reviews_page_count" scope="page">
                             <fmt:formatNumber
-                                    value="${requestScope.user.reviews.size() / applicationScope.pagination_one_page_size}"
+                                    value="${requestScope.user.reviews.size() / applicationScope.pagination_profile_one_page_size
+                                     + ((requestScope.user.reviews.size() / applicationScope.pagination_profile_one_page_size) % 1 == 0 ? 0 : 0.5)}"
                                     maxFractionDigits="0"/>
                         </c:set>
                         <c:if test="${reviews_page_count > 1}">

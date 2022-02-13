@@ -3,6 +3,7 @@ package by.epam.bartenderhelper.controller.command;
 import by.epam.bartenderhelper.controller.command.impl.admin.ChangeAccountStatusCommand;
 import by.epam.bartenderhelper.controller.command.impl.admin.ChangeIngredientStatusCommand;
 import by.epam.bartenderhelper.controller.command.impl.admin.CreateIngredientCommand;
+import by.epam.bartenderhelper.controller.command.impl.admin.EditIngredientCommand;
 import by.epam.bartenderhelper.controller.command.impl.auth.*;
 import by.epam.bartenderhelper.controller.command.impl.common.*;
 import by.epam.bartenderhelper.controller.command.impl.guest.LogInCommand;
@@ -38,11 +39,11 @@ public enum CommandType {
     /**
      * The Go to cocktails.
      */
-    GO_TO_COCKTAILS(new GoToCocktailsPageCommand()),
+    SHOW_COCKTAILS(new ShowCocktailsCommand()),
     /**
      * The Go to ingredients.
      */
-    GO_TO_INGREDIENTS(new GoToIngredientsPageCommand()),
+    SHOW_INGREDIENTS(new ShowIngredientsCommand()),
 
     GO_TO_ADD_INGREDIENT(new GoToAddIngredientPageCommand(), ADMIN, BARTENDER),
 
@@ -119,7 +120,8 @@ public enum CommandType {
 
     CREATE_INGREDIENT(new CreateIngredientCommand(), ADMIN, BARTENDER),
     SHOW_INGREDIENT(new ShowIngredientCommand()),
-    CHANGE_INGREDIENT_STATUS(new ChangeIngredientStatusCommand(), ADMIN);
+    CHANGE_INGREDIENT_STATUS(new ChangeIngredientStatusCommand(), ADMIN),
+    EDIT_INGREDIENT(new EditIngredientCommand(), ADMIN);
 
     private static final Logger logger = LogManager.getLogger();
 

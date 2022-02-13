@@ -2,7 +2,6 @@ package by.epam.bartenderhelper.controller.command.impl.admin;
 
 import by.epam.bartenderhelper.controller.command.Command;
 import by.epam.bartenderhelper.controller.command.PagePath;
-import by.epam.bartenderhelper.controller.command.RequestParameter;
 import by.epam.bartenderhelper.controller.command.Router;
 import by.epam.bartenderhelper.exception.CommandException;
 import by.epam.bartenderhelper.exception.ServiceException;
@@ -13,7 +12,6 @@ import by.epam.bartenderhelper.model.validator.UserFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.UserFormValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.USER;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.STATUS;

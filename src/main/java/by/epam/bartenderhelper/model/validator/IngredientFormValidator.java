@@ -4,6 +4,7 @@ import java.util.Map;
 
 public interface IngredientFormValidator extends FormValidator{
     boolean isCreateIngredientFormValid(Map<String, String> parameters);
+    boolean isEditIngredientFormValid(Map<String, String> parameters);
     boolean isNameValid(String name);
     boolean isDescriptionValid(String description);
     boolean isMeasureIdValid(String measure);

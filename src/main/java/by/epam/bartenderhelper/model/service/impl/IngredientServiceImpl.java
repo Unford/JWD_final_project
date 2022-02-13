@@ -6,8 +6,6 @@ import by.epam.bartenderhelper.model.dao.EntityTransaction;
 import by.epam.bartenderhelper.model.dao.impl.*;
 import by.epam.bartenderhelper.model.entity.Ingredient;
 import by.epam.bartenderhelper.model.entity.Measure;
-import by.epam.bartenderhelper.model.entity.User;
-import by.epam.bartenderhelper.model.entity.dto.ReviewDto;
 import by.epam.bartenderhelper.model.service.IngredientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -112,5 +110,76 @@ public class IngredientServiceImpl implements IngredientService {
             throw new ServiceException(e);
         }
         return ingredient.isEmpty();
+    }
+
+    @Override
+    public boolean isUniqueName(String name, long id) throws ServiceException {
+        Optional<Ingredient> ingredient;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            transaction.initialize(ingredientDao);
+            ingredient = ingredientDao.findByName(name);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+
+        return ingredient.isEmpty() || ingredient.get().getId() == id;
+    }
+
+    @Override
+    public boolean updateIngredient(Ingredient ingredient) throws ServiceException {
+        boolean result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            PhotoDaoImpl photoDao = new PhotoDaoImpl();
+            transaction.initializeTransaction(ingredientDao, photoDao);
+
+            if (ingredient.getPhoto().getData() != null) {
+                Optional<Ingredient> currentIngredient = ingredientDao.findById(ingredient.getId());
+                long currentPhotoId = currentIngredient.get().getPhoto().getId();
+                ingredient.getPhoto().setId(currentPhotoId);
+                photoDao.update(ingredient.getPhoto());
+            }
+            result = ingredientDao.update(ingredient);
+            transaction.commit();
+        } catch (DaoException e) {
+            transaction.rollback();
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public long calculateIngredientsSize(String name) throws ServiceException {
+        long result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            transaction.initialize(ingredientDao);
+            result = ingredientDao.countVerifiedByName(name);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Ingredient> findIngredientsByName(String name, long page) throws ServiceException {
+        List<Ingredient> ingredients;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            transaction.initialize(ingredientDao);
+            ingredients = ingredientDao.findPartOfAllVerifiedByName(name, page);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return ingredients;
     }
 }

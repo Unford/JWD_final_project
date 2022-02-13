@@ -37,16 +37,16 @@
 
         <div class="row justify-content-center">
             <input type="file" class="form-control" style="display:none;" name="image" id="file"
-                   accept=".png, .jpg, .jpeg" required>
+                   accept=".png, .jpg, .jpeg">
             <div class="col-md-4 d-flex justify-content-center">
+                 <span id="output" class="d-flex justify-content-center mt-md-4"
+                       onclick="document.getElementById('file').click();">
                 <c:choose>
                     <c:when test="${not empty requestScope.ingredient.photo.data}">
                         <img class="thumb" title="${requestScope.ingredient.photo.name}"
                              src="${requestScope.ingredient.photo.data}" alt="${requestScope.ingredient.photo.name}"/>
                     </c:when>
                     <c:otherwise>
-                            <span id="output" class="d-flex justify-content-center mt-md-4"
-                                  onclick="document.getElementById('file').click();">
                         <svg class=" bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
                              width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img"
                              aria-label="Placeholder: 200x200" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -56,9 +56,9 @@
                                 <fmt:message key="addNewIngredient.imageName" bundle="${lang}"/>
                             </text>
                         </svg>
-                    </span>
                     </c:otherwise>
                 </c:choose>
+                 </span>
 
 
             </div>
@@ -171,13 +171,22 @@
                         <c:when test="${sessionScope.message == 1}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <fmt:message key="EditIngredient.error" bundle="${lang}"/>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                             </div>
                         </c:when>
                         <c:when test="${sessionScope.message == 2}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <fmt:message key="EditIngredient.error.unique" bundle="${lang}"/>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                        </div>
+                    </c:when>
+                        <c:when test="${sessionScope.message == 4}">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <fmt:message key="EditIngredient.success" bundle="${lang}"/>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                             </div>
                         </c:when>
 
