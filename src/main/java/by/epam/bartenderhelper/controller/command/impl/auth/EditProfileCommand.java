@@ -26,7 +26,7 @@ public class EditProfileCommand implements Command {
 
 
     @Override
-    public Router execute(HttpServletRequest request) throws CommandException {//todo
+    public Router execute(HttpServletRequest request) throws CommandException {
         Map<String, String> parameters = extractParameters(request);
         UserFormValidator validator = UserFormValidatorImpl.getInstance();
         Optional<String> avatar = FileEncoder.encodeFile(request, AVATAR);

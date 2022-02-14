@@ -1,6 +1,7 @@
 package by.epam.bartenderhelper.model.validator.impl;
 
 import by.epam.bartenderhelper.model.entity.User;
+import by.epam.bartenderhelper.model.entity.UserRole;
 import by.epam.bartenderhelper.model.validator.UserFormValidator;
 
 import java.util.Arrays;
@@ -143,6 +144,12 @@ public class UserFormValidatorImpl extends AbstractFormValidator implements User
     public boolean isUserStatusValid(String status) {
         return status != null && Arrays.stream(User.Status.values())
                 .anyMatch(s -> s.name().equals(status));
+    }
+
+    @Override
+    public boolean isUserRoleValid(String role) {
+        return role != null && Arrays.stream(UserRole.values())
+                .anyMatch(s -> s.name().equals(role));
     }
 }
 

@@ -17,18 +17,36 @@ public final class Measure extends AbstractDaoEntity {
         this.name = name;
     }
 
+    /**
+     * Instantiates a new Measure.
+     *
+     * @param id the id
+     */
     public Measure(long id) {
         super(id);
     }
 
+    /**
+     * Instantiates a new Measure.
+     */
     public Measure() {
         super(0);
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }

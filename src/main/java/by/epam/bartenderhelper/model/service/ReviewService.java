@@ -41,9 +41,33 @@ public interface ReviewService {
      */
     Optional<Review> findUserReviewByAuthor(long userId, long authorId) throws ServiceException;
 
+    /**
+     * Find user reviews part list.
+     *
+     * @param userId the user id
+     * @param page   the page
+     * @return the list
+     * @throws ServiceException the service exception
+     */
     List<ReviewDto> findUserReviewsPart(long userId, int page) throws ServiceException;
 
+    /**
+     * Delete user review by author boolean.
+     *
+     * @param userId   the user id
+     * @param authorId the author id
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
     boolean deleteUserReviewByAuthor(long userId, long authorId) throws ServiceException;
 
+    /**
+     * Update user review boolean.
+     *
+     * @param review the review
+     * @param userId the user id
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
     boolean updateUserReview(Review review, long userId) throws ServiceException;
 }

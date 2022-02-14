@@ -21,9 +21,33 @@ public interface ReviewDao {
      */
     Optional<Review> findUserReviewsByAuthor(long userId, long authorId) throws DaoException;
 
+    /**
+     * Find all information part list.
+     *
+     * @param userId the user id
+     * @param limit  the limit
+     * @return the list
+     * @throws DaoException the dao exception
+     */
     List<ReviewDto> findAllInformationPart(long userId, int limit) throws DaoException;
 
+    /**
+     * Delete by author id boolean.
+     *
+     * @param userId   the user id
+     * @param authorId the author id
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
     boolean deleteByAuthorId(long userId, long authorId) throws DaoException;
 
+    /**
+     * Update user review boolean.
+     *
+     * @param review the review
+     * @param userId the user id
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
     boolean updateUserReview(Review review, long userId) throws DaoException;
 }

@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 /**
  * The enum Resource manager.
  */
-public enum ResourceManager {//fixme
+public enum ResourceManager {
     /**
      * App config resource manager.
      */

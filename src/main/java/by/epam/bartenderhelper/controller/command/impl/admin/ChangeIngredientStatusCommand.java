@@ -12,6 +12,9 @@ import by.epam.bartenderhelper.model.validator.IngredientFormValidator;
 import by.epam.bartenderhelper.model.validator.impl.IngredientFormValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * The type Change ingredient status command.
+ */
 public class ChangeIngredientStatusCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

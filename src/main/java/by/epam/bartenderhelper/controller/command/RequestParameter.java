@@ -82,11 +82,23 @@ public final class RequestParameter {
      */
 //profile
     public static final String USER = "user";
-
+    /**
+     * The constant USERS.
+     */
+    public static final String USERS = "users";
+    /**
+     * The constant USERS_SIZE.
+     */
+    public static final String USERS_SIZE = "users_size";
     /**
      * The constant STATUS.
      */
     public static final String STATUS = "status";
+    /**
+     * The constant ROLE.
+     */
+    public static final String ROLE = "role";
+
     /**
      * The constant AVATAR.
      */
@@ -115,28 +127,67 @@ public final class RequestParameter {
      */
     public static final String REVIEWS = "reviews";
 
+    /**
+     * The constant PAGINATION_PAGE.
+     */
     public static final String PAGINATION_PAGE = "page";
 
+    /**
+     * The constant IMAGE.
+     */
     public static final String IMAGE = "image";
 
-    public static final String INGREDIENTS= "ingredients";
+    /**
+     * The constant INGREDIENTS.
+     */
+    public static final String INGREDIENTS = "ingredients";
+    /**
+     * The constant INGREDIENTS_SIZE.
+     */
     public static final String INGREDIENTS_SIZE = "ingredients_size";
 
-    public static final String INGREDIENT= "ingredient";
+    /**
+     * The constant INGREDIENT.
+     */
+    public static final String INGREDIENT = "ingredient";
+    /**
+     * The constant MEASURE.
+     */
     public static final String MEASURE = "measure";
+    /**
+     * The constant PRICE.
+     */
     public static final String PRICE = "price";
+    /**
+     * The constant CALORIE.
+     */
     public static final String CALORIE = "calorie";
+    /**
+     * The constant NAME.
+     */
     public static final String NAME = "name";
+    /**
+     * The constant INGREDIENT_DESCRIPTION.
+     */
     public static final String INGREDIENT_DESCRIPTION = "description";
 
+    /**
+     * The constant MEASURES.
+     */
     public static final String MEASURES = "measures";
+    /**
+     * The constant VALUE.
+     */
     public static final String VALUE = "value";
 
+    /**
+     * The constant SEARCH.
+     */
     public static final String SEARCH = "search";
 
 
-
-    private RequestParameter(){}
+    private RequestParameter() {
+    }
 
     /**
      * Extract parameters map.
@@ -144,13 +195,11 @@ public final class RequestParameter {
      * @param request the request
      * @return the map
      */
-    public static Map<String, String> extractParameters(HttpServletRequest request){
+    public static Map<String, String> extractParameters(HttpServletRequest request) {
         Map<String, String> parameters = new HashMap<>();
         Enumeration<String> parameterNames = request.getParameterNames();
-        parameterNames.asIterator().forEachRemaining(s -> {
-            parameters.put(s, request.getParameter(s));
-        });
-        logger.debug("{} request parameters {}",request.getParameter(COMMAND) ,parameters);
+        parameterNames.asIterator().forEachRemaining(s -> parameters.put(s, request.getParameter(s)));
+        logger.debug("{} request parameters {}", request.getParameter(COMMAND), parameters);
         return parameters;
     }
 

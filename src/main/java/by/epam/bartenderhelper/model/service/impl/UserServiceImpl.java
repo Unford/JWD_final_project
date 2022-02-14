@@ -7,12 +7,14 @@ import by.epam.bartenderhelper.model.dao.EntityTransaction;
 import by.epam.bartenderhelper.model.dao.impl.PhotoDaoImpl;
 import by.epam.bartenderhelper.model.dao.impl.UserDaoImpl;
 import by.epam.bartenderhelper.model.entity.User;
+import by.epam.bartenderhelper.model.entity.UserRole;
 import by.epam.bartenderhelper.model.service.UserService;
 import by.epam.bartenderhelper.model.util.PasswordHash;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -138,6 +140,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean changeUserRole(long id, UserRole role) throws ServiceException {
+        boolean result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            UserDaoImpl userDao = new UserDaoImpl();
+            transaction.initialize(userDao);
+            result = userDao.updateRole(id, role);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
+    }
+
+    @Override
     public boolean changePassword(long id, String password) throws ServiceException {
         boolean result;
         EntityTransaction transaction = new EntityTransaction();
@@ -187,6 +204,36 @@ public class UserServiceImpl implements UserService {
             transaction.commit();
         } catch (DaoException e) {
             transaction.rollback();
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> findPartOfAllUsers(long page) throws ServiceException {
+        List<User> users;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            UserDaoImpl userDao = new UserDaoImpl();
+            transaction.initialize(userDao);
+            users = userDao.findPartOfAll(page);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return users;
+    }
+
+    @Override
+    public long calculateUsersSize() throws ServiceException {
+        long result;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            UserDaoImpl userDao = new UserDaoImpl();
+            transaction.initialize(userDao);
+            result = userDao.countAllUsers();
+        } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
         }

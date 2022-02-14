@@ -79,9 +79,7 @@
         <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">
             <fmt:message key="logIn.submit" bundle="${lang}"/>
         </button>
-        <a href="">
-            <fmt:message key="logIn.forgotPass" bundle="${lang}"/>
-        </a>
+
         <hr class="my-3">
         <div class="d-grid  d-md-flex justify-content-md-center">
             <a href="${pageContext.request.contextPath}/controller?command=go_to_sign_up">

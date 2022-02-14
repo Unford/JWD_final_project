@@ -1,4 +1,7 @@
 package by.epam.bartenderhelper.model.dao;
 
-public class CocktailDao {
+/**
+ * The interface Cocktail dao.
+ */
+public interface CocktailDao {
 }

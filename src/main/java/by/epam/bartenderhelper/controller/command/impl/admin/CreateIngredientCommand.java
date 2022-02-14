@@ -20,6 +20,9 @@ import static by.epam.bartenderhelper.controller.command.RequestParameter.OLD_PA
 import static by.epam.bartenderhelper.controller.command.Router.RouterType.REDIRECT;
 
 
+/**
+ * The type Create ingredient command.
+ */
 public class CreateIngredientCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_ONE_PAGE_SIZE;
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
 
@@ -28,6 +29,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String COCKTAILS_CONCAT = "cocktails";
     private static final String REVIEWS_CONCAT = "reviews";
     private static final String USER_RATING = "userRating";
+    private static final String USER_SIZE = "size";
+
 
 
     private static final String FIND_ALL_USERS_QUERY = getUserSelectQuery()
@@ -51,6 +54,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             .groupBy(USER_ID)
             .toString();
 
+    private static final String COUNT_ALL_USERS_QUERY = SqlBuilderFactory.select()
+            .count(USER_ID, USER_SIZE)
+            .from(Table.USERS)
+            .toString();
+
     private static final String CREATE_USER_QUERY = SqlBuilderFactory.commonInsert(Table.USERS).toString();
 
     private static final String UPDATE_USER_QUERY = SqlBuilderFactory.update(Table.USERS)
@@ -65,6 +73,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     private static final String UPDATE_USER_STATUS_QUERY = SqlBuilderFactory.update(Table.USERS)
             .set(USER_STATUS)
+            .where(USER_ID, LogicOperator.EQUALS)
+            .toString();
+
+    private static final String UPDATE_USER_ROLE_QUERY = SqlBuilderFactory.update(Table.USERS)
+            .set(USER_ROLE)
             .where(USER_ID, LogicOperator.EQUALS)
             .toString();
 
@@ -89,6 +102,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             .selectColumns(USER_PASSWORD)
             .from(Table.USERS)
             .where(USER_ID, LogicOperator.EQUALS)
+            .toString();
+
+    private static final String FIND_PART_OF_USERS_QUERY = getUserSelectQuery()
+            .groupBy(USER_ID)
+            .limit()
             .toString();
 
     private static final String CREATE_USERS_REVIEW_QUERY = SqlBuilderFactory.commonInsert(Table.USERS_REVIEWS).toString();
@@ -205,6 +223,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
+    public boolean updateRole(long id, UserRole role) throws DaoException {
+        int result;
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ROLE_QUERY)) {
+            statement.setString(1, role.toString());
+            statement.setLong(2, id);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Update user role query error", e);
+            throw new DaoException("Update user role query error", e);
+        }
+        return result > 0;
+    }
+
+    @Override
     public boolean updateIsDeleted(long id, boolean value) throws DaoException {
         int result;
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_IS_DELETED_QUERY)) {
@@ -233,6 +265,40 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
+    public List<User> findPartOfAll(long page) throws DaoException {
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(FIND_PART_OF_USERS_QUERY)) {
+            statement.setLong(1, (page - 1) * DEFAULT_PAGINATION_ONE_PAGE_SIZE);
+            statement.setLong(2, DEFAULT_PAGINATION_ONE_PAGE_SIZE);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = mapEntity(resultSet);
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Find part of all users query error", e);
+            throw new DaoException("Find part of all users query error", e);
+        }
+        return users;
+    }
+
+    @Override
+    public long countAllUsers() throws DaoException {
+        long result = 0;
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(COUNT_ALL_USERS_QUERY)) {
+            if (resultSet.next()) {
+                result = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            logger.error("Count all users query error", e);
+            throw new DaoException("Count all users query error", e);
+        }
+        return result;
+    }
+
+    @Override
     public Optional<User> findByUsername(String username) throws DaoException {
         Optional<User> user = Optional.empty();
         try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_USERNAME)) {
@@ -250,7 +316,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) throws DaoException {//todo duplicate
+    public Optional<User> findByEmail(String email) throws DaoException {
         Optional<User> user = Optional.empty();
         try (PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL_QUERY)) {
             statement.setString(1, email);

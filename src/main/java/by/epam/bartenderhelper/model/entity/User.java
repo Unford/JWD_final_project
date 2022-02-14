@@ -273,10 +273,20 @@ public final class User extends AbstractDaoEntity {
         this.cocktails = cocktails;
     }
 
+    /**
+     * Gets user rating.
+     *
+     * @return the user rating
+     */
     public double getUserRating() {
         return userRating;
     }
 
+    /**
+     * Sets user rating.
+     *
+     * @param userRating the user rating
+     */
     public void setUserRating(double userRating) {
         this.userRating = userRating;
     }
@@ -460,6 +470,12 @@ public final class User extends AbstractDaoEntity {
             return this;
         }
 
+        /**
+         * User rating user builder.
+         *
+         * @param userRating the user rating
+         * @return the user builder
+         */
         public UserBuilder userRating(double userRating) {
             this.userRating = userRating;
             return this;

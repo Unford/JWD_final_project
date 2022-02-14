@@ -26,7 +26,15 @@ public final class PagePath {
      */
     public static final String INGREDIENTS_JSP = "jsp/ingredients.jsp";
 
+    /**
+     * The constant ADD_INGREDIENT_JSP.
+     */
     public static final String ADD_INGREDIENT_JSP = "jsp/bartender/addNewIngredient.jsp";
+
+    /**
+     * The constant ADMINISTRATION.
+     */
+    public static final String ADMINISTRATION = "jsp/admin/admin.jsp";
 
     /**
      * The constant SEARCH.
@@ -51,8 +59,14 @@ public final class PagePath {
      */
     public static final String PROFILE_JSP = "jsp/client/profile.jsp";
 
+    /**
+     * The constant INGREDIENT_JSP.
+     */
     public static final String INGREDIENT_JSP = "jsp/ingredient.jsp";
 
+    /**
+     * The constant EDIT_INGREDIENT_JSP.
+     */
     public static final String EDIT_INGREDIENT_JSP = "jsp/admin/editIngredient.jsp";
 
 
@@ -63,8 +77,14 @@ public final class PagePath {
             + RequestParameter.LOGIN + "=%s&"
             + RequestParameter.MESSAGE + "=%d";
 
+    /**
+     * The constant GO_TO_EDIT_PROFILE.
+     */
     public static final String GO_TO_EDIT_PROFILE = "/controller?command=go_to_edit_profile";
 
+    /**
+     * The constant SHOW_INGREDIENT.
+     */
     public static final String SHOW_INGREDIENT = "/controller?command=show_ingredient&"
             + RequestParameter.INGREDIENT + "=%s";
 
@@ -73,6 +93,9 @@ public final class PagePath {
      */
     public static final String GO_TO_MAIN = "/controller?command=go_to_main";
 
+    /**
+     * The constant GO_TO_ADD_INGREDIENT.
+     */
     public static final String GO_TO_ADD_INGREDIENT = "/controller?command=go_to_add_ingredient";
     /**
      * The constant REVIEW_AJAX.

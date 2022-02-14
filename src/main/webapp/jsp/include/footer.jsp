@@ -16,6 +16,14 @@
                 <a href="${pageContext.request.contextPath}/controller?command=go_to_ingredients"
                    class="nav-link px-2 text-muted">
                     <fmt:message key="header.ingredients" bundle="${lang}"/></a></li>
+
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/controller?command=show_administration"
+                       class="nav-link px-2 text-muted">
+                        <fmt:message key="header.administration" bundle="${lang}"/></a></li>
+            </c:if>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-muted" href="#" id="dropdownLangFooter"
                    data-bs-toggle="dropdown"

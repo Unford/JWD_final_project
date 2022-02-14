@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
+/**
+ * The type Show ingredient command.
+ */
 public class ShowIngredientCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

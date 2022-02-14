@@ -28,7 +28,7 @@ public final class Photo extends AbstractDaoEntity {
      *
      * @return the data
      */
-    public String getData() {//todo
+    public String getData() {
         return data;
     }
 

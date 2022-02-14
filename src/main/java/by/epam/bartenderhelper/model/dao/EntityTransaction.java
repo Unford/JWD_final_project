@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * The type Entity transaction.
  */
-public class EntityTransaction implements AutoCloseable {//todo rename
+public class EntityTransaction implements AutoCloseable {
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 

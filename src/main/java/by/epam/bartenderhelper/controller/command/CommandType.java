@@ -1,9 +1,6 @@
 package by.epam.bartenderhelper.controller.command;
 
-import by.epam.bartenderhelper.controller.command.impl.admin.ChangeAccountStatusCommand;
-import by.epam.bartenderhelper.controller.command.impl.admin.ChangeIngredientStatusCommand;
-import by.epam.bartenderhelper.controller.command.impl.admin.CreateIngredientCommand;
-import by.epam.bartenderhelper.controller.command.impl.admin.EditIngredientCommand;
+import by.epam.bartenderhelper.controller.command.impl.admin.*;
 import by.epam.bartenderhelper.controller.command.impl.auth.*;
 import by.epam.bartenderhelper.controller.command.impl.common.*;
 import by.epam.bartenderhelper.controller.command.impl.guest.LogInCommand;
@@ -45,16 +42,19 @@ public enum CommandType {
      */
     SHOW_INGREDIENTS(new ShowIngredientsCommand()),
 
+    /**
+     * The Go to add ingredient.
+     */
     GO_TO_ADD_INGREDIENT(new GoToAddIngredientPageCommand(), ADMIN, BARTENDER),
 
-    /**
-     * The Go to search.
-     */
-    GO_TO_SEARCH(new GoToSearchPageCommand()),
+
     /**
      * The Go to edit profile.
      */
     GO_TO_EDIT_PROFILE(new GoToEditProfilePageCommand(), CLIENT, BARTENDER, ADMIN),
+    /**
+     * The Go to edit ingredient.
+     */
     GO_TO_EDIT_INGREDIENT(new GoToEditIngredientPageCommand(), ADMIN),
 
 
@@ -109,19 +109,45 @@ public enum CommandType {
      */
     SEND_USER_REVIEW(new SendUserReviewCommand(), CLIENT, ADMIN, BARTENDER),
 
+    /**
+     * The Edit user review.
+     */
     EDIT_USER_REVIEW(new EditUserReviewCommand(), CLIENT, ADMIN, BARTENDER),
 
+    /**
+     * The Delete user review.
+     */
     DELETE_USER_REVIEW(new DeleteUserReviewCommand(), CLIENT, ADMIN, BARTENDER),
 
     /**
      * The Change account status.
      */
     CHANGE_ACCOUNT_STATUS(new ChangeAccountStatusCommand(), ADMIN),
+    /**
+     * The Change account role.
+     */
+    CHANGE_ACCOUNT_ROLE(new ChangeAccountRoleCommand(), ADMIN),
 
+    /**
+     * The Create ingredient.
+     */
     CREATE_INGREDIENT(new CreateIngredientCommand(), ADMIN, BARTENDER),
+    /**
+     * The Show ingredient.
+     */
     SHOW_INGREDIENT(new ShowIngredientCommand()),
+    /**
+     * The Change ingredient status.
+     */
     CHANGE_INGREDIENT_STATUS(new ChangeIngredientStatusCommand(), ADMIN),
-    EDIT_INGREDIENT(new EditIngredientCommand(), ADMIN);
+    /**
+     * The Edit ingredient.
+     */
+    EDIT_INGREDIENT(new EditIngredientCommand(), ADMIN),
+    /**
+     * The Show administration.
+     */
+    SHOW_ADMINISTRATION(new ShowAdministrationCommand(), ADMIN);
 
     private static final Logger logger = LogManager.getLogger();
 

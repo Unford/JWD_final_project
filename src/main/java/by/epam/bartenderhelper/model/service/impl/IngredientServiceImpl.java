@@ -13,6 +13,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Ingredient service.
+ */
 public class IngredientServiceImpl implements IngredientService {
     private static final Logger logger = LogManager.getLogger();
 
@@ -154,13 +157,13 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public long calculateIngredientsSize(String name) throws ServiceException {
+    public long calculateIngredientsByNameAndStatus(String name, boolean status) throws ServiceException {
         long result;
         EntityTransaction transaction = new EntityTransaction();
         try (transaction) {
             IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
             transaction.initialize(ingredientDao);
-            result = ingredientDao.countVerifiedByName(name);
+            result = status ? ingredientDao.countAllVerifiedByName(name) : ingredientDao.countAllByName(name);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -169,13 +172,13 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public List<Ingredient> findIngredientsByName(String name, long page) throws ServiceException {
+    public List<Ingredient> findIngredientsByNameAndStatus(String name, boolean status, long page) throws ServiceException {
         List<Ingredient> ingredients;
         EntityTransaction transaction = new EntityTransaction();
         try (transaction) {
             IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
             transaction.initialize(ingredientDao);
-            ingredients = ingredientDao.findPartOfAllVerifiedByName(name, page);
+            ingredients = status ? ingredientDao.findPartOfAllVerifiedByName(name, page) : ingredientDao.findPartOfAllByName(name, page);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);

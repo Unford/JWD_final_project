@@ -29,6 +29,6 @@ public class LocaleValidatorImpl extends AbstractFormValidator implements Locale
 
     @Override
     public boolean isLocaleValid(String locale) {
-        return locales.contains(locale);
+        return locale != null && locales.contains(locale);
     }
 }

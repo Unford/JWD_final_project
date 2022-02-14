@@ -6,6 +6,9 @@ import java.util.Map;
 
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 
+/**
+ * The type Ingredient form validator.
+ */
 public class IngredientFormValidatorImpl extends AbstractFormValidator implements IngredientFormValidator {
     private static final int DESCRIPTION_MAX_LENGTH = 255;
     private static final int DESCRIPTION_MIN_LENGTH = 10;
@@ -19,6 +22,11 @@ public class IngredientFormValidatorImpl extends AbstractFormValidator implement
     private IngredientFormValidatorImpl() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static IngredientFormValidatorImpl getInstance() {
         if (instance == null) {
             instance = new IngredientFormValidatorImpl();

@@ -25,6 +25,11 @@
     <li class="nav-item"><a href="${pageContext.request.contextPath}/controller?command=show_ingredients"
                             class="nav-link px-2 ">
         <fmt:message key="header.ingredients" bundle="${lang}"/></a></li>
+    <c:if test="${sessionScope.user.role == 'ADMIN'}">
+        <li class="nav-item"><a href="${pageContext.request.contextPath}/controller?command=show_administration"
+                                class="nav-link px-2 ">
+            <fmt:message key="header.administration" bundle="${lang}"/></a></li>
+    </c:if>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle " href="#" id="dropdownLangHeader" data-bs-toggle="dropdown"
            aria-expanded="false">
@@ -51,13 +56,6 @@
     </li>
 </ul>
 
-
-<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="${pageContext.request.contextPath}/controller" method="get">
-    <input type="hidden" value="search" name="command">
-    <input type="search" class="form-control" name="value"
-    placeholder="<fmt:message key="header.search" bundle="${lang}"/>..."
-    aria-label="Search">
-    </form>
 
     <c:choose>
         <c:when test="${sessionScope.user.role != 'GUEST'}">
@@ -186,7 +184,6 @@
                             <button class="w-100 mt-2 mb-2 btn btn-lg rounded-4 btn-primary mt-2" type="submit">
                                 <fmt:message key="logIn.submit" bundle="${lang}"/>
                             </button>
-                            <a href="#"><fmt:message key="logIn.forgotPass" bundle="${lang}"/></a>
                             <hr class="my-4">
                             <div class="d-grid  d-md-flex justify-content-md-center">
                                 <a href="${pageContext.request.contextPath}/controller?command=go_to_sign_up">

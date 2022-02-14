@@ -6,13 +6,11 @@ import by.epam.bartenderhelper.model.dao.sql.query.impl.InsertQueryImpl;
 import by.epam.bartenderhelper.model.dao.sql.query.impl.SelectQueryImpl;
 import by.epam.bartenderhelper.model.dao.sql.query.impl.UpdateQueryImpl;
 
-import static by.epam.bartenderhelper.model.dao.sql.Column.REVIEW_ID;
 
 /**
  * The type Sql builder factory.
  */
 public final class SqlBuilderFactory {
-    //todo singletone
     private SqlBuilderFactory() {
     }
 
@@ -54,6 +52,12 @@ public final class SqlBuilderFactory {
         return new DeleteQueryImpl();
     }
 
+    /**
+     * Delete delete.
+     *
+     * @param table the table
+     * @return the delete
+     */
     public static Delete delete(Table table) {
         return new DeleteQueryImpl(table);
     }
@@ -116,6 +120,6 @@ public final class SqlBuilderFactory {
      * @return the delete
      */
     public static Delete commonDeleteById(Table table) {
-        return delete().from(table).where(table.getIdColumn());
+        return delete().from(table).where(table.getIdColumn(), LogicOperator.EQUALS);
     }
 }

@@ -94,4 +94,11 @@ public interface UserFormValidator extends FormValidator{
      */
     boolean isUserStatusValid(String status);
 
+    /**
+     * Is user role valid boolean.
+     *
+     * @param role the role
+     * @return the boolean
+     */
+    boolean isUserRoleValid(String role);
 }

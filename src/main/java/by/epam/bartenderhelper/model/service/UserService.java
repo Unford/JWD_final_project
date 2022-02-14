@@ -2,7 +2,9 @@ package by.epam.bartenderhelper.model.service;
 
 import by.epam.bartenderhelper.exception.ServiceException;
 import by.epam.bartenderhelper.model.entity.User;
+import by.epam.bartenderhelper.model.entity.UserRole;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -68,6 +70,16 @@ public interface UserService {
     boolean changeUserStatus(long id, User.Status status) throws ServiceException;
 
     /**
+     * Change user role boolean.
+     *
+     * @param id   the id
+     * @param role the role
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean changeUserRole(long id, UserRole role) throws ServiceException;
+
+    /**
      * Change password boolean.
      *
      * @param id       the id
@@ -96,5 +108,21 @@ public interface UserService {
     boolean updateUser(User user) throws ServiceException;
 
 
+    /**
+     * Find part of all users list.
+     *
+     * @param page the page
+     * @return the list
+     * @throws ServiceException the service exception
+     */
+    List<User> findPartOfAllUsers(long page) throws ServiceException;
+
+    /**
+     * Calculate users size long.
+     *
+     * @return the long
+     * @throws ServiceException the service exception
+     */
+    long calculateUsersSize() throws ServiceException;
 
 }

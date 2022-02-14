@@ -1,51 +1,91 @@
 package by.epam.bartenderhelper.view;
 
-import by.epam.bartenderhelper.controller.command.ServletContextAttribute;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
-import org.decimal4j.util.DoubleRounder;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_NAV_LENGTH;
 import static by.epam.bartenderhelper.controller.command.ServletContextAttribute.DEFAULT_PAGINATION_ONE_PAGE_SIZE;
 
+/**
+ * The type Pagination tag.
+ */
 public class PaginationTag extends TagSupport {
     private long itemsSize;
     private String command;
     private int currentPage;
     private String search;
 
+    /**
+     * Gets items size.
+     *
+     * @return the items size
+     */
     public long getItemsSize() {
         return itemsSize;
     }
 
+    /**
+     * Sets items size.
+     *
+     * @param itemsSize the items size
+     */
     public void setItemsSize(long itemsSize) {
         this.itemsSize = itemsSize;
     }
 
+    /**
+     * Gets command.
+     *
+     * @return the command
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     * Sets command.
+     *
+     * @param command the command
+     */
     public void setCommand(String command) {
         this.command = command;
     }
 
+    /**
+     * Gets current page.
+     *
+     * @return the current page
+     */
     public int getCurrentPage() {
         return currentPage;
     }
 
+    /**
+     * Sets current page.
+     *
+     * @param currentPage the current page
+     */
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
 
+    /**
+     * Gets search.
+     *
+     * @return the search
+     */
     public String getSearch() {
         return search;
     }
 
+    /**
+     * Sets search.
+     *
+     * @param search the search
+     */
     public void setSearch(String search) {
         this.search = search;
     }

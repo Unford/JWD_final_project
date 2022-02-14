@@ -2,6 +2,9 @@ package by.epam.bartenderhelper.model.entity.dto;
 
 import java.time.Instant;
 
+/**
+ * The type Review dto.
+ */
 public class ReviewDto {
     private long reviewId;
     private String message;
@@ -12,59 +15,128 @@ public class ReviewDto {
     private String photoData;
 
 
-
+    /**
+     * Gets review id.
+     *
+     * @return the review id
+     */
     public long getReviewId() {
         return reviewId;
     }
 
+    /**
+     * Sets review id.
+     *
+     * @param reviewId the review id
+     */
     public void setReviewId(long reviewId) {
         this.reviewId = reviewId;
     }
 
+    /**
+     * Gets message.
+     *
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Sets message.
+     *
+     * @param message the message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Gets score.
+     *
+     * @return the score
+     */
     public double getScore() {
         return score;
     }
 
+    /**
+     * Sets score.
+     *
+     * @param score the score
+     */
     public void setScore(double score) {
         this.score = score;
     }
 
+    /**
+     * Gets timestamp.
+     *
+     * @return the timestamp
+     */
     public Instant getTimestamp() {
         return timestamp;
     }
 
+    /**
+     * Sets timestamp.
+     *
+     * @param timestamp the timestamp
+     */
     public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Gets username.
+     *
+     * @return the username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets username.
+     *
+     * @param username the username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets photo name.
+     *
+     * @return the photo name
+     */
     public String getPhotoName() {
         return photoName;
     }
 
+    /**
+     * Sets photo name.
+     *
+     * @param photoName the photo name
+     */
     public void setPhotoName(String photoName) {
         this.photoName = photoName;
     }
 
+    /**
+     * Gets photo data.
+     *
+     * @return the photo data
+     */
     public String getPhotoData() {
         return photoData;
     }
 
+    /**
+     * Sets photo data.
+     *
+     * @param photoData the photo data
+     */
     public void setPhotoData(String photoData) {
         this.photoData = photoData;
     }

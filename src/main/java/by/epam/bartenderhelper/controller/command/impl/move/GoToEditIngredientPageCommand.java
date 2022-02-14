@@ -16,6 +16,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Go to edit ingredient page command.
+ */
 public class GoToEditIngredientPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

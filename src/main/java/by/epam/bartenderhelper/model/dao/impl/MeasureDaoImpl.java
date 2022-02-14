@@ -16,6 +16,9 @@ import java.util.Optional;
 
 import static by.epam.bartenderhelper.model.dao.sql.Column.*;
 
+/**
+ * The type Measure dao.
+ */
 public class MeasureDaoImpl extends AbstractDao<Measure> {
     private static final String FIND_ALL_MEASURES_QUERY = SqlBuilderFactory.commonSelect(Table.MEASURES).toString();
 

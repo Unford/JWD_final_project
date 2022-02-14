@@ -39,13 +39,7 @@
                         aria-selected="false">
                     <fmt:message key="profile.title" bundle="${lang}"/>
                 </button>
-                <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
-                        data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages"
-                        aria-selected="false">
-                    <fmt:message key="header.cocktails" bundle="${lang}"/>
-                    <span class="badge bg-secondary">${requestScope.user.cocktails.size()}</span>
 
-                </button>
                 <button class="nav-link" id="v-pills-reviews-tab" data-bs-toggle="pill"
                         data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews"
                         aria-selected="false">
@@ -220,75 +214,6 @@
                         </c:if>
 
 
-                    </div>
-
-
-                </div>
-                <div class="tab-pane fade py-2" id="v-pills-messages" role="tabpanel"
-                     aria-labelledby="v-pills-messages-tab">
-                    <div class="container">
-                        <div class="row bg-dark text-white text-center">
-                            <h4><fmt:message key="header.cocktails" bundle="${lang}"/></h4>
-                        </div>
-                        <div class="row">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                    <div class="d-flex w-100 ">
-                                        <div class="row">
-                                            <div class="col-4 col-md-3 col-lg-2">
-                                                <img src="https://github.com/mdo.png" alt="mdo" width="100%"
-                                                     style="max-width: 240px;"
-                                                     class="rounded float-left">
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="row">
-                                                <span class="mb-1 h3">
-                                                    Кровавая мэри
-                                                </span>
-                                                </div>
-                                                <div class="row">
-                                                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At
-                                                        illum
-                                                        minima magni
-                                                        quam placeat ipsa earum beatae nobis animi et. Aut fugiat fuga
-                                                        minus
-                                                        atque ab
-                                                        eveniet asperiores reiciendis earum...</small>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </a>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class=" mt-2">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-
-                        </div>
                     </div>
 
 

@@ -13,9 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The type Controller.
@@ -36,7 +34,7 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {//todo
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String stringCommand = request.getParameter(RequestParameter.COMMAND);
         Command command = CommandType.defineCommand(stringCommand);
         Router router = null;

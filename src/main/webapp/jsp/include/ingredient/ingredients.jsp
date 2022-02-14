@@ -21,7 +21,7 @@
                      alt="${ingredient.photo.name}"
                      style="width: 200px; height: 200px;">
             </div>
-            <div class="card-body">
+            <div class="card-body <c:if test="${not ingredient.verified}">bg-secondary</c:if>">
                 <p class="card-text m-0">${ingredient.name}</p>
                 <small class="card-text fw-light m-0">${ingredient.description}</small>
                 <a class="stretched-link"

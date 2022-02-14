@@ -58,7 +58,7 @@ public class SignUpCommand implements Command {
                             .isDeleted(false)
                             .build();
 
-                    service.createAccount(user, parameters.get(PASSWORD));//dto todo
+                    service.createAccount(user, parameters.get(PASSWORD));
                     logger.log(Level.INFO, "User was created");
 
                     router.setPage(PagePath.MAIN_JSP);

@@ -21,6 +21,9 @@ import java.util.Map;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.*;
 import static by.epam.bartenderhelper.controller.command.RequestParameter.REVIEW_MESSAGE;
 
+/**
+ * The type Edit user review command.
+ */
 public class EditUserReviewCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

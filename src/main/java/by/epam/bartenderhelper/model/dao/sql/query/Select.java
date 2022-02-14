@@ -152,6 +152,11 @@ public interface Select extends SqlQuery, CommonSqlQuery<Select> {
      */
     Select limit(long limit);
 
+    /**
+     * Limit select.
+     *
+     * @return the select
+     */
     Select limit();
 
 
