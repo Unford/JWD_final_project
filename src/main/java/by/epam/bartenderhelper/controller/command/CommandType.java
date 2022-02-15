@@ -47,6 +47,9 @@ public enum CommandType {
      */
     GO_TO_ADD_INGREDIENT(new GoToAddIngredientPageCommand(), ADMIN, BARTENDER),
 
+    GO_TO_ADD_COCKTAIL(new GoToAddCocktailPageCommand(), BARTENDER),
+
+
 
     /**
      * The Go to edit profile.
@@ -147,7 +150,9 @@ public enum CommandType {
     /**
      * The Show administration.
      */
-    SHOW_ADMINISTRATION(new ShowAdministrationCommand(), ADMIN);
+    SHOW_ADMINISTRATION(new ShowAdministrationCommand(), ADMIN),
+
+    CREATE_COCKTAIL(new CreateCocktailCommand(), BARTENDER);
 
     private static final Logger logger = LogManager.getLogger();
 

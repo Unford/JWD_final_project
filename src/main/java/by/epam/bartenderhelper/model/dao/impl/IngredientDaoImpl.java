@@ -30,7 +30,8 @@ import static by.epam.bartenderhelper.model.dao.sql.Column.PHOTO_DATA;
 public class IngredientDaoImpl extends AbstractDao<Ingredient> implements IngredientDao {
     private static final String INGREDIENTS_SIZE = "size";
 
-    private static final String FIND_ALL_INGREDIENTS_QUERY = getIngredientSelectQuery().toString();
+    private static final String FIND_ALL_INGREDIENTS_QUERY = getIngredientSelectQuery()
+            .where(INGREDIENT_STATUS, LogicOperator.EQUALS, "1").toString();
 
     private static final String FIND_PART_OF_ALL_INGREDIENTS_QUERY = getIngredientSelectQuery()
             .where(INGREDIENT_NAME).like()

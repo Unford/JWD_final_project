@@ -95,4 +95,6 @@ public interface IngredientService {
      * @throws ServiceException the service exception
      */
     List<Ingredient> findIngredientsByNameAndStatus(String name, boolean status, long page) throws ServiceException;
+
+    List<Ingredient> findAllVerifiedIngredients() throws ServiceException;
 }

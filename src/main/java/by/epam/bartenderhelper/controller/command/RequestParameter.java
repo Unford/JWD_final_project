@@ -184,6 +184,7 @@ public final class RequestParameter {
      * The constant SEARCH.
      */
     public static final String SEARCH = "search";
+    public static final String AMOUNT = "amount";
 
 
     private RequestParameter() {

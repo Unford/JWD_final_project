@@ -9,7 +9,6 @@ public final class Cocktail extends AbstractDaoEntity {
     private final String name;
     private final String description;
     private final String recipe;
-    private final boolean verified;
     private final Photo photo;
     private final long authorId;
     private final List<Long> reviews;
@@ -20,7 +19,6 @@ public final class Cocktail extends AbstractDaoEntity {
         this.name = builder.name;
         this.description = builder.description;
         this.recipe = builder.recipe;
-        this.verified = builder.verified;
         this.photo = builder.photo;
         this.authorId = builder.authorId;
         this.reviews = builder.reviews;
@@ -54,14 +52,6 @@ public final class Cocktail extends AbstractDaoEntity {
         return recipe;
     }
 
-    /**
-     * Is verified boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isVerified() {
-        return verified;
-    }
 
     /**
      * Gets photo.
@@ -107,7 +97,6 @@ public final class Cocktail extends AbstractDaoEntity {
 
         Cocktail cocktail = (Cocktail) o;
 
-        if (verified != cocktail.verified) return false;
         if (authorId != cocktail.authorId) return false;
         if (name != null ? !name.equals(cocktail.name) : cocktail.name != null) return false;
         if (description != null ? !description.equals(cocktail.description) : cocktail.description != null)
@@ -124,7 +113,6 @@ public final class Cocktail extends AbstractDaoEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (recipe != null ? recipe.hashCode() : 0);
-        result = 31 * result + (verified ? 1 : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (int) (authorId ^ (authorId >>> 32));
         result = 31 * result + (reviews != null ? reviews.hashCode() : 0);
@@ -139,7 +127,6 @@ public final class Cocktail extends AbstractDaoEntity {
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", recipe='").append(recipe).append('\'');
-        sb.append(", verified=").append(verified);
         sb.append(", photo=").append(photo);
         sb.append(", authorId=").append(authorId);
         sb.append(", comments=").append(reviews);
@@ -156,7 +143,6 @@ public final class Cocktail extends AbstractDaoEntity {
         private String name;
         private String description;
         private String recipe;
-        private boolean verified;
         private Photo photo;
         private long authorId;
         private List<Long> reviews;
@@ -168,7 +154,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param cocktailId the cocktail id
          * @return the cocktail builder
          */
-        public CocktailBuilder cocktailId(long cocktailId){
+        public CocktailBuilder cocktailId(long cocktailId) {
             this.cocktailId = cocktailId;
             return this;
         }
@@ -179,7 +165,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param name the name
          * @return the cocktail builder
          */
-        public CocktailBuilder name(String name){
+        public CocktailBuilder name(String name) {
             this.name = name;
             return this;
         }
@@ -190,7 +176,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param description the description
          * @return the cocktail builder
          */
-        public CocktailBuilder description(String description){
+        public CocktailBuilder description(String description) {
             this.description = description;
             return this;
         }
@@ -201,21 +187,11 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param recipe the recipe
          * @return the cocktail builder
          */
-        public CocktailBuilder recipe(String recipe){
+        public CocktailBuilder recipe(String recipe) {
             this.recipe = recipe;
             return this;
         }
 
-        /**
-         * Verified cocktail builder.
-         *
-         * @param verified the verified
-         * @return the cocktail builder
-         */
-        public CocktailBuilder verified(boolean verified){
-            this.verified = verified;
-            return this;
-        }
 
         /**
          * Photo cocktail builder.
@@ -223,7 +199,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param photo the photo
          * @return the cocktail builder
          */
-        public CocktailBuilder photo(Photo photo){
+        public CocktailBuilder photo(Photo photo) {
             this.photo = photo;
             return this;
         }
@@ -234,7 +210,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param authorId the author id
          * @return the cocktail builder
          */
-        public CocktailBuilder authorId(long authorId){
+        public CocktailBuilder authorId(long authorId) {
             this.authorId = authorId;
             return this;
         }
@@ -245,7 +221,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param reviews the reviews
          * @return the cocktail builder
          */
-        public CocktailBuilder comments(List<Long> reviews){
+        public CocktailBuilder comments(List<Long> reviews) {
             this.reviews = reviews;
             return this;
         }
@@ -256,7 +232,7 @@ public final class Cocktail extends AbstractDaoEntity {
          * @param ingredients the ingredients
          * @return the cocktail builder
          */
-        public CocktailBuilder ingredients(List<Long> ingredients){
+        public CocktailBuilder ingredients(List<Long> ingredients) {
             this.ingredients = ingredients;
             return this;
         }

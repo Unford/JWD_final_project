@@ -185,4 +185,19 @@ public class IngredientServiceImpl implements IngredientService {
         }
         return ingredients;
     }
+
+    @Override
+    public List<Ingredient> findAllVerifiedIngredients() throws ServiceException {
+        List<Ingredient> ingredients;
+        EntityTransaction transaction = new EntityTransaction();
+        try (transaction) {
+            IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
+            transaction.initialize(ingredientDao);
+            ingredients = ingredientDao.findAll();
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return ingredients;
+    }
 }

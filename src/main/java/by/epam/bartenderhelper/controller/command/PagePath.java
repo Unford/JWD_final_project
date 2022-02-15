@@ -31,6 +31,8 @@ public final class PagePath {
      */
     public static final String ADD_INGREDIENT_JSP = "jsp/bartender/addNewIngredient.jsp";
 
+    public static final String ADD_COCKTAIL_JSP = "jsp/bartender/addNewCocktail.jsp";
+
     /**
      * The constant ADMINISTRATION.
      */
